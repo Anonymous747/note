@@ -21,12 +21,13 @@ class HomePage extends StatelessWidget {
           child: Text("Notes"),
           color: Colors.grey,
           onPressed: () async {
+            FirebaseUser user = await auth.currentUser();
             // if (user != null) {
             return Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) {
               return BlocProvider<NoteBloc>(
                 create: (context) => NoteBloc(
-                  repository: new UserRepImpl(auth: auth),
+                  repository: new UserRepImpl(user: (user)),
                 ),
                 child: NotePage(),
               );

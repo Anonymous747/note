@@ -22,7 +22,7 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
     if (event is FetchNotes) {
       yield NoteLoadingState();
       try {
-        List<ElementNote> data = await repository.getNote();
+        List<ElementNote> data = await repository.getTask().toList();
         yield NoteLoadedState(element: data);
       } on PlatformException catch (e) {
         yield NoteErrorState(message: e.message);

@@ -5,33 +5,40 @@ import 'package:note/model/element_note.dart';
 import 'package:note/model/element_task.dart';
 
 abstract class UserRep {
-  FirebaseAuth auth;
+  FirebaseUser user;
 
-  UserRep(this.auth);
+  UserRep(this.user);
 
-  Future<ElementTask> getTask();
-  Future<List<ElementNote>> getNote();
+  Stream<ElementNote> getTask();
+  Stream<List<ElementNote>> getNote();
 }
 
 class UserRepImpl extends UserRep {
-  FirebaseAuth auth;
+  FirebaseUser user;
 
-  UserRepImpl({@required this.auth}) : super(auth);
-
-  @override
-  Future<ElementTask> getTask() async {}
+  UserRepImpl({@required this.user}) : super(user);
 
   @override
-  Future<List<ElementNote>> getNote() async {
-    FirebaseUser user = await auth.currentUser();
-    List<ElementNote> listElememt = new List();
-    Firestore.instance.collection((user).uid).snapshots().forEach((element) {
-      element.documents.map((e) => e.data.forEach((key, value) {
-            if (value.runtimeType is String) {
-              listElememt.add(new ElementNote(key, value));
-            }
-          }));
-    });
+  Stream<ElementNote> getTask() {
+    var db = Firestore.instance;
+    DocumentReference ref = db.collection("notes").document("note");
+    var ex = ref.snapshots().forEach((snap) => ElementNote.fromMap(snap.data));
+    return ref.snapshots().map((snap) => ElementNote.fromMap(snap.data));
+  }
+
+  @override
+  Stream<List<ElementNote>> getNote() {
+    var db = Firestore.instance;
+    CollectionReference ref =
+        db.collection("notes").document("note").collection('objects');
+    return ref.snapshots().map((list) =>
+        list.documents.map((doc) => ElementNote.fromFirestore(doc)).toList());
+    //   .forEach((element) {
+    // element.documents.map((e) => e.data.forEach((key, value) {
+    //       if (value.runtimeType is String) {
+    //         listElememt.add(new ElementNote(title: key, text: value));
+    //       }
+
     //.getDocuments()
     // .then((value) => value.documents.forEach((element) {
     //       print(element.data.length);
@@ -46,6 +53,5 @@ class UserRepImpl extends UserRep {
     //     });
     //   });
     // }
-    return listElememt;
   }
 }
