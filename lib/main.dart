@@ -1,50 +1,67 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note/bloc/bloc_authentication/authentication_bloc.dart';
+import 'package:note/bloc/bloc_authentication/authentication_observer.dart';
+import 'package:note/bloc/bloc_authentication/bloc.dart';
+import 'package:note/repository/user_repository.dart';
 import 'package:note/screens/home_page.dart';
+import 'package:note/screens/login_page.dart';
 import 'package:note/screens/note_page.dart';
+import 'package:note/screens/splash_screen.dart';
 
-final FirebaseAuth _auth = FirebaseAuth.instance;
+// final FirebaseAuth _auth = FirebaseAuth.instance;
 
-Future<FirebaseUser> _signInAnonymously() async {
-  FirebaseUser user = await _auth.signInAnonymously();
-  return user;
-}
+// Future<AuthResult> _signInAccount() async {
+//   final user = await _auth.signInWithEmailAndPassword(
+//       email: "email@mail.ru", password: "1111111");
+//   return user;
+// }
 
-Future<FirebaseUser> _signInAccount() async {
-  final user = await _auth.signInWithEmailAndPassword(
-      email: "email@mail.ru", password: "1111111");
-  return user;
-}
+// FirebaseUser _currentUser;
 
-FirebaseUser _currentUser;
-
-Future<Null> main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = AuthBlocObserver();
+  final UserRepository userRepository = UserRepository();
 
-  _currentUser = await _signInAccount();
-
-  runApp(new App());
+  // _currentUser = (await _signInAccount()).user;
+  runApp(
+    new BlocProvider<AuthenticationBloc>(
+      create: (context) => AuthenticationBloc(userRepository: userRepository)
+        ..add(AuthenticationStarted()),
+      child: App(
+        userRepository: userRepository,
+      ),
+    ),
+  );
 }
 
 class App extends StatelessWidget {
-  // UserRep repository;
+  final UserRepository _userRepository;
 
-  //App() {
-  //this.repository = new UserRepImpl(user: _currentUser);
-  //}
+  App({Key key, @required UserRepository userRepository})
+      : assert(userRepository != null),
+        _userRepository = userRepository,
+        super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "Note",
-      theme: ThemeData(primarySwatch: Colors.blueGrey),
-      routes: {
-        '/': (context) => HomePage(
-            // user: _currentUser,
-            ),
-        'note': (context) => NotePage(),
-      },
-      initialRoute: '/',
-    );
+        debugShowCheckedModeBanner: false,
+        title: "Note",
+        theme: ThemeData(primarySwatch: Colors.blueGrey),
+        home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+            builder: (context, state) {
+          if (state is AuthenticationInitial) {
+            return SplashScreen();
+          } else if (state is AuthenticationFailure) {
+            return LoginPage(userRepository: _userRepository);
+          } else if (state is AuthenticationSuccess) {
+            return LoginPage(
+              userRepository: _userRepository,
+            );
+          }
+          return Container();
+        }));
   }
 }

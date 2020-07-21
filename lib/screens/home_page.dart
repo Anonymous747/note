@@ -23,15 +23,15 @@ class HomePage extends StatelessWidget {
           onPressed: () async {
             FirebaseUser user = await auth.currentUser();
             // if (user != null) {
-            return Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) {
-              return BlocProvider<NoteBloc>(
-                create: (context) => NoteBloc(
-                  repository: new UserRepImpl(user: (user)),
-                ),
-                child: NotePage(),
-              );
-            }));
+            // return Navigator.of(context)
+            //     .push(MaterialPageRoute(builder: (context) {
+            //   return BlocProvider<NoteBloc>(
+            //     create: (context) => NoteBloc(
+            //       repository: new UserRepImpl(user: (user)),
+            //     ),
+            //     child: NotePage(),
+            //   );
+            // }));
             // }
           },
         ),
@@ -49,20 +49,20 @@ class HomePage extends StatelessWidget {
     ));
   }
 
-  Future<FirebaseUser> _signInAnonymously() async {
-    final user = await auth.signInAnonymously();
-    return user;
-  }
+  // Future<FirebaseUser> _signInAnonymously() async {
+  //   final user = await auth.signInAnonymously();
+  //   return user;
+  // }
 
   Future<FirebaseUser> _signInSomeAccount() async {
-    final user = await auth.createUserWithEmailAndPassword(
+    final res = await auth.createUserWithEmailAndPassword(
         email: "email@mail.ru", password: "1111111");
-    return user;
+    return res.user;
   }
 
   Future<FirebaseUser> _signInAccount() async {
-    final user = await auth.signInWithEmailAndPassword(
+    final res = await auth.signInWithEmailAndPassword(
         email: "email@mail.ru", password: "1111111");
-    return user;
+    return res.user;
   }
 }

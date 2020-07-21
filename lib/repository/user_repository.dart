@@ -1,57 +1,51 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:note/model/element_note.dart';
 import 'package:note/model/element_task.dart';
 
-abstract class UserRep {
-  FirebaseUser user;
+class UserRepository {
+  final FirebaseAuth _firebaseAuth;
+  final GoogleSignIn _googleSignIn;
 
-  UserRep(this.user);
+  UserRepository({FirebaseAuth firebaseAuth, GoogleSignIn googleSignIn})
+      : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
+        _googleSignIn = googleSignIn ?? GoogleSignIn();
 
-  Stream<ElementNote> getTask();
-  Stream<List<ElementNote>> getNote();
-}
-
-class UserRepImpl extends UserRep {
-  FirebaseUser user;
-
-  UserRepImpl({@required this.user}) : super(user);
-
-  @override
-  Stream<ElementNote> getTask() {
-    var db = Firestore.instance;
-    DocumentReference ref = db.collection("notes").document("note");
-    var ex = ref.snapshots().forEach((snap) => ElementNote.fromMap(snap.data));
-    return ref.snapshots().map((snap) => ElementNote.fromMap(snap.data));
+  Future<FirebaseUser> signInWithGoogle() async {
+    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+        idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
+    await _firebaseAuth.signInWithCredential(credential);
+    return _firebaseAuth.currentUser();
   }
 
-  @override
-  Stream<List<ElementNote>> getNote() {
-    var db = Firestore.instance;
-    CollectionReference ref =
-        db.collection("notes").document("note").collection('objects');
-    return ref.snapshots().map((list) =>
-        list.documents.map((doc) => ElementNote.fromFirestore(doc)).toList());
-    //   .forEach((element) {
-    // element.documents.map((e) => e.data.forEach((key, value) {
-    //       if (value.runtimeType is String) {
-    //         listElememt.add(new ElementNote(title: key, text: value));
-    //       }
+  Future<void> signInWithCredentials(String email, String password) {
+    return _firebaseAuth.signInWithEmailAndPassword(
+        email: email, password: password);
+  }
 
-    //.getDocuments()
-    // .then((value) => value.documents.forEach((element) {
-    //       print(element.data.length);
-    //     }));
+  Future<void> signUp({String email, String password}) async {
+    return await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email, password: password);
+  }
 
-    // if (user.uid.isNotEmpty) {
-    //   snapshot.data.documents.map((el) {
-    //     el.data.forEach((key, value) {
-    //       if (value.runtimeType is String) {
-    //         listElememt.add(new ElementNote(key, value));
-    //       }
-    //     });
-    //   });
-    // }
+  Future<void> signOut() async {
+    return Future.wait([
+      _firebaseAuth.signOut(),
+      _googleSignIn.signOut(),
+    ]);
+  }
+
+  Future<bool> isSignedIn() async {
+    final currentUser = await _firebaseAuth.currentUser();
+    return currentUser != null;
+  }
+
+  Future<String> getUser() async {
+    return (await _firebaseAuth.currentUser()).email;
   }
 }
