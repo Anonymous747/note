@@ -10,8 +10,8 @@ class ElementNote {
     Map data = doc.data;
 
     return ElementNote(
-      title: data['title'] ?? '',
-      text: data['text'] ?? '',
+      title: data['title'].toString() ?? '',
+      text: data['text'].toString() ?? '',
     );
   }
 

@@ -1,10 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/bloc/bloc_authentication/authentication_bloc.dart';
 import 'package:note/bloc/bloc_authentication/authentication_observer.dart';
 import 'package:note/bloc/bloc_authentication/bloc.dart';
 import 'package:note/repository/user_repository.dart';
+import 'package:note/screens/add_note_page.dart';
 import 'package:note/screens/home_page.dart';
 import 'package:note/screens/login_page.dart';
 import 'package:note/screens/note_page.dart';
@@ -50,6 +50,14 @@ class App extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: "Note",
         theme: ThemeData(primarySwatch: Colors.blueGrey),
+        routes: {
+          'hp': (context) => HomePage(),
+          'lp': (context) => LoginPage(
+                userRepository: _userRepository,
+              ),
+          'ap': (context) => AddingNotePage(),
+          'np': (context) => NotePage(),
+        },
         home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
             builder: (context, state) {
           if (state is AuthenticationInitial) {

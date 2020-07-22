@@ -1,9 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/bloc/bloc_note/bloc.dart';
-import 'package:note/repository/user_repository.dart';
+import 'package:note/repository/remote_data_repository.dart';
 import 'package:note/screens/note_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -21,18 +20,18 @@ class HomePage extends StatelessWidget {
           child: Text("Notes"),
           color: Colors.grey,
           onPressed: () async {
-            FirebaseUser user = await auth.currentUser();
-            // if (user != null) {
-            // return Navigator.of(context)
-            //     .push(MaterialPageRoute(builder: (context) {
-            //   return BlocProvider<NoteBloc>(
-            //     create: (context) => NoteBloc(
-            //       repository: new UserRepImpl(user: (user)),
-            //     ),
-            //     child: NotePage(),
-            //   );
-            // }));
-            // }
+            FirebaseUser user1 = await auth.currentUser();
+            if (user1 != null) {
+              return Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) {
+                return BlocProvider<NoteBloc>(
+                  create: (context) => NoteBloc(
+                    repository: new RemDataRepImpl(),
+                  ),
+                  child: NotePage(user: user1),
+                );
+              }));
+            }
           },
         ),
         MaterialButton(
@@ -54,15 +53,15 @@ class HomePage extends StatelessWidget {
   //   return user;
   // }
 
-  Future<FirebaseUser> _signInSomeAccount() async {
-    final res = await auth.createUserWithEmailAndPassword(
-        email: "email@mail.ru", password: "1111111");
-    return res.user;
-  }
+  // Future<FirebaseUser> _signInSomeAccount() async {
+  //   final res = await auth.createUserWithEmailAndPassword(
+  //       email: "email@mail.ru", password: "1111111");
+  //   return res.user;
+  // }
 
-  Future<FirebaseUser> _signInAccount() async {
-    final res = await auth.signInWithEmailAndPassword(
-        email: "email@mail.ru", password: "1111111");
-    return res.user;
-  }
+  // Future<FirebaseUser> _signInAccount() async {
+  //   final res = await auth.signInWithEmailAndPassword(
+  //       email: "email@mail.ru", password: "1111111");
+  //   return res.user;
+  // }
 }
