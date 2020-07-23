@@ -7,6 +7,7 @@ import 'package:note/screens/home_page.dart';
 import 'package:note/widgets/account_btn.dart';
 import 'package:note/widgets/google_login_btn.dart';
 import 'package:note/widgets/login_button.dart';
+import 'package:note/widgets/route_anim/fade_route.dart';
 
 class LoginForm extends StatefulWidget {
   final UserRepository _userRepository;
@@ -78,9 +79,8 @@ class _LoginFormState extends State<LoginForm> {
         if (state.isSuccess) {
           BlocProvider.of<AuthenticationBloc>(context)
               .add(AuthenticationLoggedIn());
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-            return HomePage();
-          }));
+          //navigation to home page if the user authenticated
+          Navigator.of(context).push(FadeRoute(page: HomePage()));
         }
       },
       child: BlocBuilder<LoginBloc, LoginState>(

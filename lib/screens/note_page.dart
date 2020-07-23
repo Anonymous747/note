@@ -5,6 +5,8 @@ import 'package:note/bloc/bloc_note/bloc.dart';
 import 'package:note/bloc/bloc_note/note_bloc.dart';
 import 'package:note/main.dart';
 import 'package:note/model/element_note.dart';
+import 'package:note/repository/user_repository.dart';
+import 'package:note/widgets/drawer.dart';
 
 class NotePage extends StatefulWidget {
   final FirebaseUser user;
@@ -61,11 +63,7 @@ class _NotePageState extends State<NotePage> {
   Widget buildLoaded(List<ElementNote> list) {
     return Scaffold(
       appBar: AppBar(title: Text("Title")),
-      drawer: Drawer(
-        child: Column(
-          children: <Widget>[ListView()],
-        ),
-      ),
+      drawer: CustomDrawer(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {

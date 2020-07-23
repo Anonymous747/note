@@ -1,4 +1,4 @@
-part of 'adding_note_bloc.dart';
+import 'package:equatable/equatable.dart';
 
 abstract class AddingNoteState extends Equatable {
   const AddingNoteState();

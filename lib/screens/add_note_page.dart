@@ -53,8 +53,29 @@ class _AddingNotePageState extends State<AddingNotePage> {
                           new TextFormField(
                             decoration: InputDecoration(
                               border: new OutlineInputBorder(
-                                borderSide: new BorderSide(color: Colors.teal),
+                                  borderSide:
+                                      new BorderSide(color: Colors.teal),
+                                  borderRadius: new BorderRadius.only(
+                                      bottomLeft: Radius.circular(30))),
+                              labelText: "Text",
+                              contentPadding: EdgeInsets.only(
+                                left: 16.0,
+                                top: 20.0,
+                                right: 16.0,
+                                bottom: 5.0,
                               ),
+                            ),
+                            controller: textController,
+                            style: TextStyle(
+                              fontSize: 22.0,
+                              color: Colors.black,
+                            ),
+                            keyboardType: TextInputType.text,
+                            textCapitalization: TextCapitalization.sentences,
+                          ),
+                          new TextField(
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
                               labelText: "Text",
                               contentPadding: EdgeInsets.only(
                                 left: 16.0,

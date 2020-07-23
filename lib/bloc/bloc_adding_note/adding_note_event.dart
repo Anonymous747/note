@@ -1,4 +1,4 @@
-part of 'adding_note_bloc.dart';
+import 'package:equatable/equatable.dart';
 
 abstract class AddingNoteEvent extends Equatable {
   const AddingNoteEvent();
