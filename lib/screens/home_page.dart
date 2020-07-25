@@ -11,8 +11,6 @@ import 'package:note/widgets/route_anim/fade_route.dart';
 class HomePage extends StatelessWidget {
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  // HomePage({@required this.user});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

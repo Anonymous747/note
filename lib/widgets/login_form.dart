@@ -80,7 +80,9 @@ class _LoginFormState extends State<LoginForm> {
           BlocProvider.of<AuthenticationBloc>(context)
               .add(AuthenticationLoggedIn());
           //navigation to home page if the user authenticated
-          Navigator.of(context).push(FadeRoute(page: HomePage()));
+          // Navigator.of(context).push(FadeRoute(page: HomePage()));
+          Navigator.of(context).pushAndRemoveUntil(
+              FadeRoute(page: HomePage()), ModalRoute.withName('hp'));
         }
       },
       child: BlocBuilder<LoginBloc, LoginState>(
