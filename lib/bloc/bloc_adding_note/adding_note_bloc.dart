@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/services.dart';
 import 'package:note/bloc/bloc_adding_note/bloc.dart';
 
 class AddingNoteBloc extends Bloc<AddingNoteEvent, AddingNoteState> {
@@ -11,6 +12,12 @@ class AddingNoteBloc extends Bloc<AddingNoteEvent, AddingNoteState> {
   Stream<AddingNoteState> mapEventToState(
     AddingNoteEvent event,
   ) async* {
-    // TODO: implement mapEventToState
+    if (event is AddingNoteEvent) {
+      try {
+        yield AddingNoteLoaded();
+      } on PlatformException catch (e) {
+        print(e.message);
+      }
+    }
   }
 }

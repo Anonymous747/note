@@ -49,7 +49,7 @@ class App extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "Note",
-        theme: ThemeData(primarySwatch: Colors.blueGrey),
+        theme: ThemeData(primarySwatch: Colors.amber),
         routes: {
           'hp': (context) => HomePage(),
           'lp': (context) => LoginPage(

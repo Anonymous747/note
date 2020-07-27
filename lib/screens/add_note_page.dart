@@ -1,105 +1,167 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note/bloc/bloc_adding_note/adding_note_bloc.dart';
+import 'package:note/bloc/bloc_adding_note/bloc.dart';
+import 'package:note/bloc/bloc_note/bloc.dart';
+import 'package:note/repository/remote_data_repository.dart';
+import 'package:note/screens/note_page.dart';
 
 class AddingNotePage extends StatefulWidget {
+  RemDataRepImpl repository;
+
+  AddingNotePage() {
+    repository = RemDataRepImpl();
+  }
+
   @override
   _AddingNotePageState createState() => _AddingNotePageState();
 }
 
 class _AddingNotePageState extends State<AddingNotePage> {
+  AddingNoteBloc bloc;
   TextEditingController titleController = new TextEditingController();
   TextEditingController textController = new TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
 
   @override
+  void initState() {
+    super.initState();
+    bloc = BlocProvider.of<AddingNoteBloc>(context);
+    bloc.add(AddingNoteEvent());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
-      body: ModalProgressHUD(
-          inAsyncCall: false,
-          child: new Stack(
+      appBar: AppBar(
+        title: Text("Adding new note"),
+        centerTitle: true,
+      ),
+      body: BlocListener<AddingNoteBloc, AddingNoteState>(
+        listener: (context, state) {
+          if (state is AddingNoteFailure) {
+            return buildError(state.message);
+          }
+        },
+        child: BlocBuilder<AddingNoteBloc, AddingNoteState>(
+          builder: (context, state) {
+            if (state is AddingNoteInitial) {
+              return Container();
+            } else if (state is AddingNoteLoading) {
+              return buidLoading();
+            } else if (state is AddingNoteLoaded) {
+              return buildFields();
+            } else if (state is AddingNoteFailure) {
+              return buildError(state.message);
+            }
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget buildFields() {
+    return Scaffold(
+        key: _scaffoldKey,
+        backgroundColor: Color.fromRGBO(249, 161, 154, 1),
+        body: Container(
+          child: Column(
             children: <Widget>[
-              Container(
+              Text(
+                "Fill the fields to create a note:",
+                style: TextStyle(letterSpacing: 2, fontSize: 20),
+              ),
+              Padding(
+                padding: EdgeInsets.only(),
                 child: Column(
                   children: <Widget>[
-                    Padding(
-                      padding:
-                          EdgeInsets.only(top: 50.0, left: 20.0, right: 20.0),
-                      child: Column(
-                        children: <Widget>[
-                          new TextFormField(
-                            decoration: InputDecoration(
-                              border: new OutlineInputBorder(
-                                borderSide: new BorderSide(color: Colors.teal),
-                              ),
-                              labelText: "Title",
-                              contentPadding: EdgeInsets.only(
-                                left: 16.0,
-                                top: 20.0,
-                                right: 16.0,
-                                bottom: 5.0,
-                              ),
-                            ),
-                            controller: titleController,
-                            autofocus: true,
-                            style: TextStyle(
-                              fontSize: 22.0,
-                              color: Colors.black,
-                            ),
-                            keyboardType: TextInputType.text,
-                            textCapitalization: TextCapitalization.sentences,
-                            maxLength: 20,
-                          ),
-                          new TextFormField(
-                            decoration: InputDecoration(
-                              border: new OutlineInputBorder(
-                                  borderSide:
-                                      new BorderSide(color: Colors.teal),
-                                  borderRadius: new BorderRadius.only(
-                                      bottomLeft: Radius.circular(30))),
-                              labelText: "Text",
-                              contentPadding: EdgeInsets.only(
-                                left: 16.0,
-                                top: 20.0,
-                                right: 16.0,
-                                bottom: 5.0,
-                              ),
-                            ),
-                            controller: textController,
-                            style: TextStyle(
-                              fontSize: 22.0,
-                              color: Colors.black,
-                            ),
-                            keyboardType: TextInputType.text,
-                            textCapitalization: TextCapitalization.sentences,
-                          ),
-                          new TextField(
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: "Text",
-                              contentPadding: EdgeInsets.only(
-                                left: 16.0,
-                                top: 20.0,
-                                right: 16.0,
-                                bottom: 5.0,
-                              ),
-                            ),
-                            controller: textController,
-                            style: TextStyle(
-                              fontSize: 22.0,
-                              color: Colors.black,
-                            ),
-                            keyboardType: TextInputType.text,
-                            textCapitalization: TextCapitalization.sentences,
-                          )
-                        ],
+                    new TextField(
+                      decoration: InputDecoration(
+                        hintText: "Title",
+                        hintStyle: TextStyle(
+                            fontStyle: FontStyle.normal, fontSize: 15),
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.only(
+                          left: 16.0,
+                          top: 20.0,
+                          right: 16.0,
+                          bottom: 5.0,
+                        ),
                       ),
-                    )
+                      controller: titleController,
+                      autofocus: true,
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.black,
+                      ),
+                      keyboardType: TextInputType.text,
+                      textCapitalization: TextCapitalization.sentences,
+                    ),
+                    new TextField(
+                      expands: false,
+                      decoration: InputDecoration(
+                        hintText: "Text",
+                        hintStyle: TextStyle(
+                            fontStyle: FontStyle.normal, fontSize: 15),
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.only(
+                          left: 16.0,
+                          top: 15.0,
+                          right: 16.0,
+                          bottom: 5.0,
+                        ),
+                      ),
+                      controller: textController,
+                      minLines: 3,
+                      maxLines: 10,
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.black,
+                      ),
+                      keyboardType: TextInputType.text,
+                      textCapitalization: TextCapitalization.sentences,
+                    ),
                   ],
                 ),
-              ),
+              )
             ],
-          )),
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.note_add),
+            onPressed: () async {
+              widget.repository
+                  .makeNote(titleController.text, textController.text);
+              FirebaseUser user = await FirebaseAuth.instance.currentUser();
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) {
+                  return BlocProvider<NoteBloc>.value(
+                    value: NoteBloc(repository: widget.repository),
+                    child: NotePage(
+                      user: user,
+                    ),
+                  );
+                }),
+              );
+            }));
+  }
+
+  Widget buidLoading() {
+    return Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+
+  Widget buildError(String error) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Text(
+          error,
+          style: TextStyle(color: Colors.red),
+        ),
+      ),
     );
   }
 }

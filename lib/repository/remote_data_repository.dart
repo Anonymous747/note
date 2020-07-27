@@ -1,12 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:note/model/element_note.dart';
 
 abstract class RemDataRep {}
 
 class RemDataRepImpl extends RemDataRep {
+  FirebaseAuth auth;
+
+  RemDataRepImpl() {
+    auth = FirebaseAuth.instance;
+  }
+
   Future<List<ElementNote>> fetchNotes() async {
-    var auth = FirebaseAuth.instance;
     FirebaseUser user = await auth.currentUser();
     if (user != null) {
       QuerySnapshot query =
@@ -18,8 +24,7 @@ class RemDataRepImpl extends RemDataRep {
     return new List<ElementNote>();
   }
 
-  Future<bool> makeNote(String title) async {
-    var auth = FirebaseAuth.instance;
+  Future<void> makeNote(String title, String text) async {
     try {
       FirebaseUser user = await auth.currentUser();
       if (user != null) {
@@ -27,13 +32,30 @@ class RemDataRepImpl extends RemDataRep {
         //    await Firestore.instance.collection(user.uid).getDocuments();
         await Firestore.instance.collection(user.uid).document(title).setData({
           "title": title,
-          "text": DateTime.now().minute,
+          "text": text,
         });
       }
       return true;
     } catch (e) {
       print(e);
       return false;
+    }
+  }
+
+  Future<void> removeNote(String text) async {
+    try {
+      FirebaseUser user = await auth.currentUser();
+      if (user != null) {
+        QuerySnapshot snap =
+            await Firestore.instance.collection(user.uid).getDocuments();
+        snap.documents.forEach((element) {
+          if (text == element.documentID) {
+            snap.documents.removeAt(snap.documents.indexOf(element));
+          }
+        });
+      }
+    } on PlatformException catch (e) {
+      print(e.message);
     }
   }
 }

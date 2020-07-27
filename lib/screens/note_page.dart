@@ -1,12 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note/bloc/bloc_adding_note/adding_note_bloc.dart';
 import 'package:note/bloc/bloc_note/bloc.dart';
 import 'package:note/bloc/bloc_note/note_bloc.dart';
-import 'package:note/main.dart';
 import 'package:note/model/element_note.dart';
-import 'package:note/repository/user_repository.dart';
+import 'package:note/screens/add_note_page.dart';
 import 'package:note/widgets/drawer.dart';
+import 'package:note/widgets/route_anim/fade_route.dart';
 
 class NotePage extends StatefulWidget {
   final FirebaseUser user;
@@ -19,6 +20,7 @@ class NotePage extends StatefulWidget {
 
 class _NotePageState extends State<NotePage> {
   NoteBloc bloc;
+  final GlobalKey<AnimatedListState> _listKey = GlobalKey();
 
   @override
   void initState() {
@@ -60,17 +62,40 @@ class _NotePageState extends State<NotePage> {
     );
   }
 
+  Widget _buildItem(ElementNote note, [int index]) {
+    return ListTile(
+      key: ValueKey<ElementNote>(note),
+      title: Text(note.title),
+      subtitle: Text(note.text),
+    );
+  }
+
   Widget buildLoaded(List<ElementNote> list) {
     return Scaffold(
-      appBar: AppBar(title: Text("Title")),
-      drawer: CustomDrawer(),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.of(context).pushNamed('ap');
-        },
-      ),
-      body: ListView.builder(
+        appBar: AppBar(title: Text("Title")),
+        drawer: CustomDrawer(),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.of(context).push(FadeRoute(
+                page: BlocProvider<AddingNoteBloc>(
+              create: (context) => AddingNoteBloc(),
+              child: AddingNotePage(),
+            )));
+          },
+        ),
+        body: AnimatedList(
+          key: _listKey,
+          initialItemCount: list.length,
+          itemBuilder: (BuildContext context, int index, Animation animation) {
+            return FadeTransition(
+              opacity: animation,
+              child: _buildItem(list[index]),
+            );
+          },
+        ));
+
+    /*ListView.builder(
         itemCount: list.length,
         itemBuilder: (context, index) {
           return Padding(
@@ -83,10 +108,10 @@ class _NotePageState extends State<NotePage> {
                     Navigator.of(context).pushNamed('ap');
                   },
                 ),
-              ));
-        },
-      ),
-    );
+              ));*/
+    // },
+    // ),
+    // );
   }
 
   Widget buildError(String message) {

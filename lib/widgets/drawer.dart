@@ -50,7 +50,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
             onTap: () {
               widget._repository.signOut();
               Navigator.of(context).pop();
-              Navigator.of(context).popUntil((route) => route.isFirst);
+              //Navigator.of(context).popUntil((route) => route.isFirst);
               Navigator.of(context).pushAndRemoveUntil(
                   FadeRoute(
                       page: LoginPage(
