@@ -13,6 +13,7 @@ class AddingNoteBloc extends Bloc<AddingNoteEvent, AddingNoteState> {
     AddingNoteEvent event,
   ) async* {
     if (event is AddingNoteEvent) {
+      yield AddingNoteLoading();
       try {
         yield AddingNoteLoaded();
       } on PlatformException catch (e) {

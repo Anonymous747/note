@@ -1,3 +1,4 @@
+import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/bloc/bloc_authentication/authentication_bloc.dart';
@@ -22,8 +23,14 @@ import 'package:note/screens/splash_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
   Bloc.observer = AuthBlocObserver();
   final UserRepository userRepository = UserRepository();
+
+  // Flame.images.loadAll(<String>[
+  //   'images/logo.png',
+  // ]);
+  ImageCache().clear();
 
   // _currentUser = (await _signInAccount()).user;
   runApp(
@@ -37,39 +44,46 @@ void main() {
   );
 }
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   final UserRepository _userRepository;
 
   App({Key key, @required UserRepository userRepository})
       : assert(userRepository != null),
         _userRepository = userRepository,
         super(key: key);
+
+  @override
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: "Note",
-        theme: ThemeData(primarySwatch: Colors.amber),
-        routes: {
-          'hp': (context) => HomePage(),
-          'lp': (context) => LoginPage(
-                userRepository: _userRepository,
-              ),
-          'ap': (context) => AddingNotePage(),
-          'np': (context) => NotePage(),
-        },
-        home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-            builder: (context, state) {
-          if (state is AuthenticationInitial) {
-            return SplashScreen();
-          } else if (state is AuthenticationFailure) {
-            return LoginPage(userRepository: _userRepository);
-          } else if (state is AuthenticationSuccess) {
-            return LoginPage(
-              userRepository: _userRepository,
-            );
-          }
-          return Container();
-        }));
+      //debugShowCheckedModeBanner: false,
+      title: "Note",
+      theme: ThemeData(primarySwatch: Colors.amber),
+      routes: {
+        'hp': (context) => HomePage(),
+        'lp': (context) => LoginPage(
+              userRepository: widget._userRepository,
+            ),
+        'ap': (context) => AddingNotePage(),
+        'np': (context) => NotePage(),
+      },
+      home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+          builder: (context, state) {
+        if (state is AuthenticationSuccess) {
+          return SplashScreen();
+        } //else if (state is AuthenticationFailure) {
+        //   return LoginPage(userRepository: widget._userRepository);
+        // } else if (state is AuthenticationSuccess) {
+        //   return LoginPage(
+        //     userRepository: widget._userRepository,
+        // );
+        // }
+        return Container();
+      }),
+    );
   }
 }
