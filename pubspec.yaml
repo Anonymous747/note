@@ -28,7 +28,6 @@ dependencies:
   http: ^0.12.0
   equatable: 
 
-  firebase_analytics: ^2.0.3
   firebase_auth: ^0.15.0+1
   firebase_core: ^0.4.0+8
   cloud_firestore: ^0.13.7

@@ -52,11 +52,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               Navigator.of(context).pop();
               //Navigator.of(context).popUntil((route) => route.isFirst);
               Navigator.of(context).pushAndRemoveUntil(
-                  FadeRoute(
-                      page: LoginPage(
-                    userRepository: widget._repository,
-                  )),
-                  ModalRoute.withName('lp'));
+                  FadeRoute(page: LoginPage()), ModalRoute.withName('lp'));
             }),
       ],
     ));

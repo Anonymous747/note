@@ -1,27 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note/bloc/bloc_authentication/bloc.dart';
 import 'package:note/bloc/bloc_login/bloc.dart';
 import 'package:note/repository/user_repository.dart';
 import 'package:note/widgets/login_form.dart';
 
-class LoginPage extends StatelessWidget {
-  final UserRepository _userRepository;
+class LoginPage extends StatefulWidget {
+  final Color _color;
+  // final UserRepository _userRepository;
 
-  LoginPage({Key key, @required UserRepository userRepository})
-      : assert(userRepository != null),
-        _userRepository = userRepository,
+  LoginPage({Key key, Color color})
+      : assert(color != null),
+        this._color = color,
         super(key: key);
 
   @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
-      body: BlocProvider<LoginBloc>(
-        create: (context) => LoginBloc(userRepository: _userRepository),
-        child: LoginForm(userRepository: _userRepository),
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(color: widget._color),
+      child: BlocListener<AuthenticationBloc, AuthenticationState>(
+        listener: (context, state) {
+          if (state is AuthenticationFailure) {
+            return _buildFailure();
+          }
+        },
+        child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+          bloc: AuthenticationBloc(),
+          builder: (context, state) {
+            if (state is AuthenticationInitial) {
+              return _buildLogIn(new UserRepository());
+            } else if (state is AuthenticationFailure) {
+              return _buildFailure();
+            } else if (state is AuthenticationSuccess) {}
+          },
+        ),
       ),
     );
   }
+}
+
+Widget _buildFailure() {
+  return Scaffold(
+    body: Center(
+      child: Text("Failure"),
+    ),
+  );
+}
+
+Widget _buildLogIn(UserRepository _userRepository) {
+  return BlocProvider<LoginBloc>(
+    create: (context) => LoginBloc(userRepository: _userRepository),
+    child: LoginForm(userRepository: _userRepository),
+  );
 }

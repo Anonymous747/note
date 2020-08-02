@@ -1,9 +1,7 @@
-import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:note/bloc/bloc_authentication/authentication_bloc.dart';
 import 'package:note/bloc/bloc_authentication/authentication_observer.dart';
-import 'package:note/bloc/bloc_authentication/bloc.dart';
+import 'package:note/repository/remote_data_repository.dart';
 import 'package:note/repository/user_repository.dart';
 import 'package:note/screens/add_note_page.dart';
 import 'package:note/screens/home_page.dart';
@@ -26,32 +24,16 @@ void main() {
 
   Bloc.observer = AuthBlocObserver();
   final UserRepository userRepository = UserRepository();
-
   // Flame.images.loadAll(<String>[
   //   'images/logo.png',
   // ]);
-  ImageCache().clear();
+  // ImageCache().clear();
 
   // _currentUser = (await _signInAccount()).user;
-  runApp(
-    new BlocProvider<AuthenticationBloc>(
-      create: (context) => AuthenticationBloc(userRepository: userRepository)
-        ..add(AuthenticationStarted()),
-      child: App(
-        userRepository: userRepository,
-      ),
-    ),
-  );
+  runApp(new App());
 }
 
 class App extends StatefulWidget {
-  final UserRepository _userRepository;
-
-  App({Key key, @required UserRepository userRepository})
-      : assert(userRepository != null),
-        _userRepository = userRepository,
-        super(key: key);
-
   @override
   _AppState createState() => _AppState();
 }
@@ -65,25 +47,19 @@ class _AppState extends State<App> {
       theme: ThemeData(primarySwatch: Colors.amber),
       routes: {
         'hp': (context) => HomePage(),
-        'lp': (context) => LoginPage(
-              userRepository: widget._userRepository,
-            ),
+        'lp': (context) => LoginPage(),
         'ap': (context) => AddingNotePage(),
         'np': (context) => NotePage(),
       },
-      home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-          builder: (context, state) {
-        if (state is AuthenticationSuccess) {
-          return SplashScreen();
-        } //else if (state is AuthenticationFailure) {
-        //   return LoginPage(userRepository: widget._userRepository);
-        // } else if (state is AuthenticationSuccess) {
-        //   return LoginPage(
-        //     userRepository: widget._userRepository,
-        // );
-        // }
-        return Container();
-      }),
+      home: SplashScreen(),
+
+      //else if (state is AuthenticationFailure) {
+      //   return LoginPage(userRepository: widget._userRepository);
+      // } else if (state is AuthenticationSuccess) {
+      //   return LoginPage(
+      //     userRepository: widget._userRepository,
+      // );
+      // }
     );
   }
 }

@@ -87,60 +87,118 @@ class _LoginFormState extends State<LoginForm> {
       },
       child: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
-          return Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Form(
-              child: ListView(
-                children: <Widget>[
-                  // Padding(
-                  //   padding: EdgeInsets.symmetric(vertical: 20),
-                  //   child: Image.asset('assets/flutter_logo.png', height: 200),
-                  // ),
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      icon: Icon(Icons.email),
-                      labelText: 'Email',
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                    autovalidate: true,
-                    autocorrect: false,
-                    validator: (_) {
-                      return !state.isEmailValid ? 'Invalid Email' : null;
-                    },
-                  ),
-                  TextFormField(
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      icon: Icon(Icons.lock),
-                      labelText: 'Password',
-                    ),
-                    obscureText: true,
-                    autovalidate: true,
-                    autocorrect: false,
-                    validator: (_) {
-                      return !state.isPasswordValid ? 'Invalid Password' : null;
-                    },
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        LoginButton(
-                          onPressed: isLoginButtonEnabled(state)
-                              ? _onFormSubmitted
-                              : null,
-                        ),
-                        GoogleLoginButton(),
-                        CreateAccountButton(userRepository: _userRepository),
-                      ],
-                    ),
-                  ),
-                ],
+          return Scaffold(
+              backgroundColor: Colors.transparent,
+              appBar: AppBar(
+                iconTheme: IconThemeData(color: Colors.white, opacity: 0.5),
+                backgroundColor: Colors.transparent,
+                elevation: 0.0,
               ),
-            ),
-          );
+              body: Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Form(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Align(
+                        alignment: Alignment.center,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            _logInText("Account"),
+                            _logInText("Login"),
+                          ],
+                        ),
+                      ),
+                      // Padding(
+                      //   padding: EdgeInsets.symmetric(vertical: 20),
+                      //   child: Image.asset('assets/flutter_logo.png', height: 200),
+                      // ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          TextFormField(
+                            expands: false,
+                            controller: _emailController,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Email",
+                                hintStyle: TextStyle(
+                                    fontSize: 20, color: Colors.white54)),
+                            keyboardType: TextInputType.emailAddress,
+                            autovalidate: true,
+                            autocorrect: false,
+                            validator: (_) {
+                              return !state.isEmailValid
+                                  ? 'Invalid Email'
+                                  : null;
+                            },
+                          ),
+                          Align(
+                            alignment: Alignment.bottomLeft,
+                            child:
+                                _textUnderForm("account email".toUpperCase()),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          TextFormField(
+                            controller: _passwordController,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Password",
+                                hintStyle: TextStyle(
+                                    fontSize: 20, color: Colors.white54)),
+                            style: TextStyle(color: Colors.white),
+                            obscureText: true,
+                            autovalidate: true,
+                            autocorrect: false,
+                            validator: (_) {
+                              return !state.isPasswordValid
+                                  ? 'Invalid Password'
+                                  : null;
+                            },
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Expanded(
+                                  child: _textUnderForm(
+                                      "account password".toUpperCase())),
+                              FlatButton(
+                                padding: EdgeInsets.only(bottom: 20),
+                                child: Text(
+                                  "forgot?".toUpperCase(),
+                                  style: TextStyle(color: Colors.white38),
+                                ),
+                                onPressed: () {},
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            LoginButton(
+                              onPressed: isLoginButtonEnabled(state)
+                                  ? _onFormSubmitted
+                                  : null,
+                            ),
+                            GoogleLoginButton(),
+                            // CreateAccountButton(
+                            //     userRepository: _userRepository),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ));
         },
       ),
     );
@@ -171,6 +229,23 @@ class _LoginFormState extends State<LoginForm> {
         email: _emailController.text,
         password: _passwordController.text,
       ),
+    );
+  }
+
+  Widget _logInText(String text) {
+    return Opacity(
+        opacity: 0.05,
+        child: Text(
+          text,
+          style: TextStyle(
+              fontSize: 50, letterSpacing: 2, fontWeight: FontWeight.bold),
+        ));
+  }
+
+  Widget _textUnderForm(String text) {
+    return Text(
+      text,
+      style: TextStyle(fontSize: 13, color: Colors.white38),
     );
   }
 }
