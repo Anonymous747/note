@@ -46,162 +46,171 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginBloc, LoginState>(
-      listener: (context, state) {
-        if (state.isFailure) {
-          Scaffold.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                content: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Text('Login Failure'), Icon(Icons.error)],
-                ),
-                backgroundColor: Colors.red,
-              ),
-            );
-        }
-        if (state.isSubmitting) {
-          Scaffold.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                content: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Logging In...'),
-                    CircularProgressIndicator(),
-                  ],
-                ),
-              ),
-            );
-        }
-        if (state.isSuccess) {
-          BlocProvider.of<AuthenticationBloc>(context)
-              .add(AuthenticationLoggedIn());
-          //navigation to home page if the user authenticated
-          // Navigator.of(context).push(FadeRoute(page: HomePage()));
-          Navigator.of(context).pushAndRemoveUntil(
-              FadeRoute(page: HomePage()), ModalRoute.withName('hp'));
-        }
-      },
-      child: BlocBuilder<LoginBloc, LoginState>(
-        builder: (context, state) {
-          return Scaffold(
-              backgroundColor: Colors.transparent,
-              appBar: AppBar(
-                iconTheme: IconThemeData(color: Colors.white, opacity: 0.5),
-                backgroundColor: Colors.transparent,
-                elevation: 0.0,
-              ),
-              body: Padding(
-                padding: EdgeInsets.all(20.0),
+    return Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.white, opacity: 0.5),
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+        ),
+        body: BlocListener<LoginBloc, LoginState>(
+          listener: (context, state) {
+            if (state.isFailure) {
+              Scaffold.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  SnackBar(
+                    content: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [Text('Login Failure'), Icon(Icons.error)],
+                    ),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+            }
+            if (state.isSubmitting) {
+              Scaffold.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  SnackBar(
+                    content: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Logging In...'),
+                        CircularProgressIndicator(),
+                      ],
+                    ),
+                  ),
+                );
+            }
+            if (state.isSuccess) {
+              BlocProvider.of<AuthenticationBloc>(context)
+                  .add(AuthenticationLoggedIn());
+              //navigation to home page if the user authenticated
+              // Navigator.of(context).push(FadeRoute(page: HomePage()));
+              Navigator.of(context).pushAndRemoveUntil(
+                  FadeRoute(page: HomePage()), ModalRoute.withName('hp'));
+            }
+          },
+          child: BlocBuilder<LoginBloc, LoginState>(
+            builder: (context, state) {
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.0),
                 child: Form(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Flex(
+                    textDirection: TextDirection.ltr,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    direction: Axis.vertical,
                     children: <Widget>[
-                      Align(
-                        alignment: Alignment.center,
+                      Expanded(
+                        flex: 1,
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
+                          // alignment: Alignment.bottomCenter,
                           children: <Widget>[
                             _logInText("Account"),
                             _logInText("Login"),
                           ],
                         ),
                       ),
-                      // Padding(
-                      //   padding: EdgeInsets.symmetric(vertical: 20),
-                      //   child: Image.asset('assets/flutter_logo.png', height: 200),
+                      // Expanded(
+                      //   flex: 1,
+                      //   child: Container(),
                       // ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          TextFormField(
-                            expands: false,
-                            controller: _emailController,
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "Email",
-                                hintStyle: TextStyle(
-                                    fontSize: 20, color: Colors.white54)),
-                            keyboardType: TextInputType.emailAddress,
-                            autovalidate: true,
-                            autocorrect: false,
-                            validator: (_) {
-                              return !state.isEmailValid
-                                  ? 'Invalid Email'
-                                  : null;
-                            },
-                          ),
-                          Align(
-                            alignment: Alignment.bottomLeft,
-                            child:
-                                _textUnderForm("account email".toUpperCase()),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          TextFormField(
-                            controller: _passwordController,
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "Password",
-                                hintStyle: TextStyle(
-                                    fontSize: 20, color: Colors.white54)),
-                            style: TextStyle(color: Colors.white),
-                            obscureText: true,
-                            autovalidate: true,
-                            autocorrect: false,
-                            validator: (_) {
-                              return !state.isPasswordValid
-                                  ? 'Invalid Password'
-                                  : null;
-                            },
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Expanded(
-                                  child: _textUnderForm(
-                                      "account password".toUpperCase())),
-                              FlatButton(
-                                padding: EdgeInsets.only(bottom: 20),
-                                child: Text(
-                                  "forgot?".toUpperCase(),
-                                  style: TextStyle(color: Colors.white38),
-                                ),
-                                onPressed: () {},
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                      Expanded(
+                        flex: 2,
+                        child: ListView(
                           children: <Widget>[
-                            LoginButton(
-                              onPressed: isLoginButtonEnabled(state)
-                                  ? _onFormSubmitted
-                                  : null,
+                            TextFormField(
+                              controller: _emailController,
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: "Email",
+                                  hintStyle: TextStyle(
+                                      fontSize: 20, color: Colors.white54)),
+                              keyboardType: TextInputType.emailAddress,
+                              autovalidate: true,
+                              style: TextStyle(color: Colors.white),
+                              autocorrect: false,
+                              validator: (_) {
+                                return !state.isEmailValid
+                                    ? 'Invalid Email'
+                                    : null;
+                              },
                             ),
-                            GoogleLoginButton(),
-                            // CreateAccountButton(
-                            //     userRepository: _userRepository),
+                            Align(
+                              alignment: Alignment.bottomLeft,
+                              child:
+                                  _textUnderForm("account email".toUpperCase()),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            TextFormField(
+                              controller: _passwordController,
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: "Password",
+                                  hintStyle: TextStyle(
+                                      fontSize: 20, color: Colors.white54)),
+                              style: TextStyle(color: Colors.white),
+                              obscureText: true,
+                              autovalidate: true,
+                              autocorrect: false,
+                              validator: (_) {
+                                return !state.isPasswordValid
+                                    ? 'Invalid Password'
+                                    : null;
+                              },
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Expanded(
+                                    child: _textUnderForm(
+                                        "account password".toUpperCase())),
+                                FlatButton(
+                                  padding: EdgeInsets.only(bottom: 20),
+                                  child: Text(
+                                    "forgot?".toUpperCase(),
+                                    style: TextStyle(color: Colors.white38),
+                                  ),
+                                  onPressed: () {},
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height / 5,
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: <Widget>[
+                                LoginButton(
+                                  onPressed: _onFormSubmitted,
+                                  // isLoginButtonEnabled(state)
+                                  //     ? _onFormSubmitted
+                                  //     : null,
+                                  color: Color.fromRGBO(249, 161, 154, 1),
+                                ),
+                                GoogleLoginButton(
+                                  color: Color.fromRGBO(249, 161, 154, 1),
+                                ),
+                                // CreateAccountButton(
+                                //     userRepository: _userRepository),
+                              ],
+                            ),
                           ],
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),
-              ));
-        },
-      ),
-    );
+              );
+            },
+          ),
+        ));
   }
 
   @override

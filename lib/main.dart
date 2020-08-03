@@ -50,6 +50,7 @@ class _AppState extends State<App> {
         'lp': (context) => LoginPage(),
         'ap': (context) => AddingNotePage(),
         'np': (context) => NotePage(),
+        'ss': (context) => SplashScreen(),
       },
       home: SplashScreen(),
 

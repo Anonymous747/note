@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/repository/user_repository.dart';
 import 'package:note/screens/login_page.dart';
+import 'package:note/screens/splash_screen.dart';
 import 'package:note/widgets/route_anim/fade_route.dart';
 
 class CustomDrawer extends StatefulWidget {
@@ -52,7 +54,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               Navigator.of(context).pop();
               //Navigator.of(context).popUntil((route) => route.isFirst);
               Navigator.of(context).pushAndRemoveUntil(
-                  FadeRoute(page: LoginPage()), ModalRoute.withName('lp'));
+                  FadeRoute(page: SplashScreen()), ModalRoute.withName('ss'));
             }),
       ],
     ));
