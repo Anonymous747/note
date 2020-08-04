@@ -6,8 +6,10 @@ import 'package:note/repository/user_repository.dart';
 import 'package:note/screens/add_note_page.dart';
 import 'package:note/screens/home_page.dart';
 import 'package:note/screens/login_page.dart';
+import 'package:note/screens/nickname_page.dart';
 import 'package:note/screens/note_page.dart';
-import 'package:note/screens/splash_screen.dart';
+import 'package:note/screens/first_screen.dart';
+import 'package:note/screens/start_page.dart';
 
 // final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -50,9 +52,11 @@ class _AppState extends State<App> {
         'lp': (context) => LoginPage(),
         'ap': (context) => AddingNotePage(),
         'np': (context) => NotePage(),
-        'ss': (context) => SplashScreen(),
+        'fs': (context) => FirstScreen(),
+        'nn': (context) => NicknamePage(),
+        '/': (context) => StartPage(),
       },
-      home: SplashScreen(),
+      initialRoute: '/',
 
       //else if (state is AuthenticationFailure) {
       //   return LoginPage(userRepository: widget._userRepository);

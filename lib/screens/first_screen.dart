@@ -8,15 +8,16 @@ import 'package:note/repository/user_repository.dart';
 import 'package:note/screens/login_page.dart';
 import 'package:note/screens/nickname_page.dart';
 import 'package:note/widgets/animation/fade_animation.dart';
+import 'package:note/widgets/logo_widget.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
-class SplashScreen extends StatefulWidget {
+class FirstScreen extends StatefulWidget {
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  _FirstScreenState createState() => _FirstScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
+class _FirstScreenState extends State<FirstScreen>
     with SingleTickerProviderStateMixin {
   Animation<double> animation;
   AnimationController controller;
@@ -80,12 +81,8 @@ class _SplashScreenState extends State<SplashScreen>
                   // FadeAnimation(
                   //   1000,
                   Padding(
-                    padding: const EdgeInsets.only(top: 100.0),
-                    child: Image.asset(
-                      'assets/images/logo.png',
-                      width: double.infinity,
-                    ),
-                  ),
+                      padding: const EdgeInsets.only(top: 100.0),
+                      child: LogoWidget()),
                   // ),
                   FadeAnimation(
                     1000,

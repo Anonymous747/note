@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/bloc/bloc_authentication/bloc.dart';
 import 'package:note/bloc/bloc_login/bloc.dart';
 import 'package:note/repository/user_repository.dart';
-import 'package:note/screens/splash_screen.dart';
+import 'package:note/screens/first_screen.dart';
 import 'package:note/widgets/login_form.dart';
 import 'package:page_transition/page_transition.dart';
 

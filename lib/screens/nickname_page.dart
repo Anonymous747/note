@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note/widgets/logo_widget.dart';
 
 class NicknamePage extends StatefulWidget {
   final Color _color;
@@ -15,8 +16,8 @@ class _NicknamePageState extends State<NicknamePage> {
   TextEditingController _nickController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Container(
+    return Scaffold(
+      body: Container(
           decoration: BoxDecoration(
             color: widget._color,
           ),
@@ -32,13 +33,7 @@ class _NicknamePageState extends State<NicknamePage> {
                   children: <Widget>[
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Image(
-                          image: AssetImage('assets/images/logo.png'),
-                          fit: BoxFit.scaleDown,
-                          height: 50,
-                        )
-                      ],
+                      children: <Widget>[LogoWidget()],
                     ),
                     SizedBox(
                       height: 10,
