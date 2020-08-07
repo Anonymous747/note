@@ -17,4 +17,12 @@ const List<LinearGradient> listColor = [
       Colors.purple,
     ],
   ),
+  LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      Colors.red,
+      Colors.orange,
+    ],
+  ),
 ];
