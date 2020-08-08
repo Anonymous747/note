@@ -6,6 +6,7 @@ import 'package:note/utils/animation_item.dart';
 import 'package:note/utils/consts.dart';
 import 'package:note/widgets/logo_widget.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class StartPage extends StatefulWidget {
   @override
@@ -17,12 +18,20 @@ class _StartPageState extends State<StartPage> {
   List<AnimationItem> animationList = [];
   Tween<double> positionLogo;
   int _currentIndex;
-  int _currentIndexColor = 0;
+  int _currentIndexColor;
   Tween _animationColor;
+
+  void _initialize() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    int colorIndex = pref.getInt('color');
+    _currentIndexColor = colorIndex ?? 0;
+  }
+
   @override
   void initState() {
     super.initState();
     setState(() {});
+    _initialize();
     delayAnimation(
         AnimationItem(
           name: 'logo_scale',

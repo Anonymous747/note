@@ -5,9 +5,10 @@ import 'package:note/bloc/bloc_authentication/authentication_bloc.dart';
 import 'package:note/bloc/bloc_authentication/bloc.dart';
 import 'package:note/screens/login_page.dart';
 import 'package:note/utils/animation_item.dart';
+import 'package:note/widgets/flat_transparent_button.dart';
 import 'package:note/widgets/logo_widget.dart';
+import 'package:note/widgets/raised_white_button.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
 class FirstScreen extends StatefulWidget {
   final PageController _pageController;
@@ -67,7 +68,7 @@ class _FirstScreenState extends State<FirstScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           TweenAnimationBuilder(
-            duration: Duration(milliseconds: 1000),
+            duration: Duration(milliseconds: 300),
             curve: Curves.easeOutCubic,
             tween: findAnimation('padding_top_lable', 20, animationList),
             builder: (context, value, child) {
@@ -93,7 +94,7 @@ class _FirstScreenState extends State<FirstScreen> {
                           EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                       child: AnimatedOpacity(
                           opacity: value == 20 ? 0 : 1,
-                          duration: Duration(milliseconds: 2000),
+                          duration: Duration(milliseconds: 500),
                           child: Text(
                             'I\'m Reflectly',
                             textAlign: TextAlign.center,
@@ -104,7 +105,7 @@ class _FirstScreenState extends State<FirstScreen> {
                             ),
                           ))),
                   TweenAnimationBuilder(
-                      duration: Duration(milliseconds: 3000),
+                      duration: Duration(milliseconds: 400),
                       curve: Curves.easeOutCubic,
                       tween: findAnimation(
                         'padding_top_lable',
@@ -114,7 +115,7 @@ class _FirstScreenState extends State<FirstScreen> {
                       builder: (context, value, child) {
                         return AnimatedOpacity(
                             opacity: value == 20 ? 0 : 1,
-                            duration: Duration(milliseconds: 3000),
+                            duration: Duration(milliseconds: 600),
                             child: Padding(
                                 padding: EdgeInsets.only(
                                     left: 30, right: 30, top: 15 + value),
@@ -142,7 +143,7 @@ class _FirstScreenState extends State<FirstScreen> {
               children: <Widget>[
                 TweenAnimationBuilder(
                   child: LogoWidget(),
-                  duration: Duration(milliseconds: 4000),
+                  duration: Duration(milliseconds: 800),
                   curve: Curves.elasticOut,
                   tween: _scaleHolder == 0.0
                       ? findAnimation('button_scale', 0.0, animationList)
@@ -156,37 +157,50 @@ class _FirstScreenState extends State<FirstScreen> {
                             child: Row(
                               children: <Widget>[
                                 Expanded(
-                                    child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(40),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.black38,
-                                            offset: Offset(0, 10),
-                                            blurRadius: 15)
-                                      ]),
-                                  height: _height * 0.075,
-                                  child: RaisedButton(
-                                    hoverColor: Colors.white,
-                                    hoverElevation: 0,
-                                    highlightColor: Colors.white,
-                                    highlightElevation: 0,
-                                    elevation: 0,
-                                    color: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(40),
+                                  child: RaisedWhiteButton(
+                                    text: Text(
+                                      'Hi, Reflectly'.toUpperCase(),
                                     ),
+                                    textColor: widget.textColor,
+                                    height: _height * 0.075,
                                     onPressed: () {
                                       widget._pageController.animateToPage(1,
                                           duration: Duration(milliseconds: 800),
                                           curve: Curves.easeInCubic);
                                     },
-                                    child: Text(
-                                      'Hi, Reflectly'.toUpperCase(),
-                                      style: TextStyle(color: widget.textColor),
-                                    ),
                                   ),
-                                ))
+                                )
+                                //     child: Container(
+                                //   decoration: BoxDecoration(
+                                //       borderRadius: BorderRadius.circular(40),
+                                //       boxShadow: [
+                                //         BoxShadow(
+                                //             color: Colors.black38,
+                                //             offset: Offset(0, 5),
+                                //             blurRadius: 15)
+                                //       ]),
+                                //   height: _height * 0.075,
+                                //   child: RaisedButton(
+                                //     hoverColor: Colors.white,
+                                //     hoverElevation: 0,
+                                //     highlightColor: Colors.white,
+                                //     highlightElevation: 0,
+                                //     elevation: 0,
+                                //     color: Colors.white,
+                                //     shape: RoundedRectangleBorder(
+                                //       borderRadius: BorderRadius.circular(40),
+                                //     ),
+                                //     onPressed: () {
+                                //       widget._pageController.animateToPage(1,
+                                //           duration: Duration(milliseconds: 800),
+                                //           curve: Curves.easeInCubic);
+                                //     },
+                                //     child: Text(
+                                //       'Hi, Reflectly'.toUpperCase(),
+                                //       style: TextStyle(color: widget.textColor),
+                                //     ),
+                                //   ),
+                                // ))
                               ],
                             )));
                   },
@@ -199,23 +213,37 @@ class _FirstScreenState extends State<FirstScreen> {
                   builder: (context, value, child) {
                     return Transform.scale(
                       scale: value,
-                      child: FlatButton(
-                        textColor: Colors.white,
-                        color: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onPressed: () {
+                      child: FlatTransparentButton(
+                        function: () {
                           Navigator.of(context).push(PageTransition(
                               type: PageTransitionType.rightToLeftWithFade,
                               child: BlocProvider<AuthenticationBloc>(
                                 create: (context) => AuthenticationBloc()
                                   ..add(AuthenticationStarted()),
-                                child: LoginPage(color: color),
+                                child: LoginPage(),
                               )));
                         },
-                        child: Text(
+                        text: Text(
                           'I already have an account'.toUpperCase(),
                         ),
                       ),
+                      // child: FlatButton(
+                      //   textColor: Colors.white,
+                      //   color: Colors.transparent,
+                      //   highlightColor: Colors.transparent,
+                      //   onPressed: () {
+                      //     Navigator.of(context).push(PageTransition(
+                      //         type: PageTransitionType.rightToLeftWithFade,
+                      //         child: BlocProvider<AuthenticationBloc>(
+                      //           create: (context) => AuthenticationBloc()
+                      //             ..add(AuthenticationStarted()),
+                      //           child: LoginPage(),
+                      //         )));
+                      //   },
+                      //   child: Text(
+                      //     'I already have an account'.toUpperCase(),
+                      //   ),
+                      // ),
                     );
                   },
                 ),

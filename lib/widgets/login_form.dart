@@ -5,8 +5,8 @@ import 'package:note/bloc/bloc_login/bloc.dart';
 import 'package:note/repository/user_repository.dart';
 import 'package:note/screens/home_page.dart';
 import 'package:note/widgets/account_btn.dart';
-import 'package:note/widgets/google_login_btn.dart';
-import 'package:note/widgets/login_button.dart';
+import 'package:note/widgets/flat_transparent_button.dart';
+import 'package:note/widgets/raised_white_button.dart';
 import 'package:note/widgets/route_anim/fade_route.dart';
 
 class LoginForm extends StatefulWidget {
@@ -46,6 +46,7 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+    double _height = MediaQuery.of(context).size.height;
     return Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
@@ -97,11 +98,14 @@ class _LoginFormState extends State<LoginForm> {
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30.0),
                 child: Form(
-                  child: Flex(
+                  child: Column(
                     textDirection: TextDirection.ltr,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
-                    direction: Axis.vertical,
                     children: <Widget>[
+                      Column(
+                        children: <Widget>[],
+                      ),
                       Expanded(
                         flex: 1,
                         child: Column(
@@ -187,15 +191,32 @@ class _LoginFormState extends State<LoginForm> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: <Widget>[
-                                LoginButton(
-                                  onPressed: _onFormSubmitted,
-                                  // isLoginButtonEnabled(state)
-                                  //     ? _onFormSubmitted
-                                  //     : null,
-                                  color: Color.fromRGBO(249, 161, 154, 1),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  child: RaisedWhiteButton(
+                                    onPressed: _onFormSubmitted,
+                                    text: Text(
+                                      'Sign in'.toUpperCase(),
+                                      style: TextStyle(fontSize: 15),
+                                    ),
+                                    height: _height * 0.07,
+                                    textColor: Colors.black54,
+                                    // isLoginButtonEnabled(state)
+                                    //     ? _onFormSubmitted
+                                    //     : null,
+                                    // color: Color.fromRGBO(249, 161, 154, 1),
+                                  ),
                                 ),
-                                GoogleLoginButton(
-                                  color: Color.fromRGBO(249, 161, 154, 1),
+                                FlatTransparentButton(
+                                  function: () {
+                                    BlocProvider.of<LoginBloc>(context).add(
+                                      LoginWithGooglePressed(),
+                                    );
+                                  },
+                                  text: Text(
+                                    'Sign in with Google',
+                                  ),
                                 ),
                                 // CreateAccountButton(
                                 //     userRepository: _userRepository),

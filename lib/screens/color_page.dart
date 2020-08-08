@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:note/utils/consts.dart';
 import 'package:note/widgets/change_color.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ColorPage extends StatefulWidget {
   final ValueChanged<int> valueChanged;
@@ -136,7 +137,7 @@ class _ColorPageState extends State<ColorPage> {
                                         color: listColor[_currentIndex.round()]
                                             .colors[1]),
                                   ),
-                                  onPressed: () {},
+                                  onPressed: _saveColor,
                                 ),
                               ),
                             )
@@ -148,5 +149,10 @@ class _ColorPageState extends State<ColorPage> {
                 ))
           ],
         ));
+  }
+
+  void _saveColor() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt('color', _currentIndex.round());
   }
 }
