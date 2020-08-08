@@ -5,6 +5,7 @@ import 'package:note/bloc/bloc_authentication/authentication_bloc.dart';
 import 'package:note/bloc/bloc_authentication/bloc.dart';
 import 'package:note/screens/login_page.dart';
 import 'package:note/utils/animation_item.dart';
+import 'package:note/widgets/animation/slide_right_animation.dart';
 import 'package:note/widgets/flat_transparent_button.dart';
 import 'package:note/widgets/logo_widget.dart';
 import 'package:note/widgets/raised_white_button.dart';
@@ -152,8 +153,7 @@ class _FirstScreenState extends State<FirstScreen> {
                     return Transform.scale(
                         scale: value,
                         child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 10),
+                            padding: const EdgeInsets.symmetric(horizontal: 30),
                             child: Row(
                               children: <Widget>[
                                 Expanded(
@@ -162,7 +162,7 @@ class _FirstScreenState extends State<FirstScreen> {
                                       'Hi, Reflectly'.toUpperCase(),
                                     ),
                                     textColor: widget.textColor,
-                                    height: _height * 0.075,
+                                    height: _height * 0.08,
                                     onPressed: () {
                                       widget._pageController.animateToPage(1,
                                           duration: Duration(milliseconds: 800),
@@ -215,13 +215,12 @@ class _FirstScreenState extends State<FirstScreen> {
                       scale: value,
                       child: FlatTransparentButton(
                         function: () {
-                          Navigator.of(context).push(PageTransition(
-                              type: PageTransitionType.rightToLeftWithFade,
+                          Navigator.of(context).push(SlideRightAnimation(
                               child: BlocProvider<AuthenticationBloc>(
-                                create: (context) => AuthenticationBloc()
-                                  ..add(AuthenticationStarted()),
-                                child: LoginPage(),
-                              )));
+                            create: (context) => AuthenticationBloc()
+                              ..add(AuthenticationStarted()),
+                            child: LoginPage(),
+                          )).buildRoute());
                         },
                         text: Text(
                           'I already have an account'.toUpperCase(),

@@ -30,8 +30,8 @@ class _StartPageState extends State<StartPage> {
   @override
   void initState() {
     super.initState();
-    setState(() {});
     _initialize();
+    setState(() {});
     delayAnimation(
         AnimationItem(
           name: 'logo_scale',
@@ -90,7 +90,8 @@ class _StartPageState extends State<StartPage> {
                     shape: BoxShape.circle,
                     gradient: _currentIndexColor != null
                         ? listColor[_currentIndexColor]
-                        : null),
+                        : LinearGradient(
+                            colors: [Colors.white, Colors.white70])),
               ),
               builder: (BuildContext context, value, Widget child) {
                 return Transform.scale(
