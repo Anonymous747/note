@@ -3,18 +3,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/bloc/bloc_authentication/bloc.dart';
 import 'package:note/bloc/bloc_login/bloc.dart';
 import 'package:note/repository/user_repository.dart';
-import 'package:note/screens/splash_screen.dart';
 import 'package:note/widgets/login_form.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:note/utils/consts.dart';
 
 class LoginPage extends StatefulWidget {
-  final Color _color;
   // final UserRepository _userRepository;
+  LinearGradient gradient;
 
-  LoginPage({Key key, Color color})
-      : assert(color != null),
-        this._color = color,
-        super(key: key);
+  LoginPage({Key key}) : super(key: key) {
+    _initialize();
+  }
+
+  void _initialize() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    int index = pref.getInt('color');
+    gradient = listColor[index ?? 0];
+  }
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -25,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(color: widget._color),
+      decoration: BoxDecoration(gradient: widget.gradient),
       child: BlocListener<AuthenticationBloc, AuthenticationState>(
         listener: (context, state) {
           if (state is AuthenticationFailure) {

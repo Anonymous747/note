@@ -4,9 +4,8 @@ import 'package:note/bloc/bloc_authentication/bloc.dart';
 import 'package:note/bloc/bloc_login/bloc.dart';
 import 'package:note/repository/user_repository.dart';
 import 'package:note/screens/home_page.dart';
-import 'package:note/widgets/account_btn.dart';
-import 'package:note/widgets/google_login_btn.dart';
-import 'package:note/widgets/login_button.dart';
+import 'package:note/widgets/flat_transparent_button.dart';
+import 'package:note/widgets/raised_white_button.dart';
 import 'package:note/widgets/route_anim/fade_route.dart';
 
 class LoginForm extends StatefulWidget {
@@ -46,6 +45,7 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+    double _height = MediaQuery.of(context).size.height;
     return Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
@@ -97,35 +97,31 @@ class _LoginFormState extends State<LoginForm> {
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30.0),
                 child: Form(
-                  child: Flex(
-                    textDirection: TextDirection.ltr,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    direction: Axis.vertical,
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Expanded(
-                        flex: 1,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          // alignment: Alignment.bottomCenter,
-                          children: <Widget>[
-                            _logInText("Account"),
-                            _logInText("Login"),
-                          ],
-                        ),
+                      Column(
+                        children: <Widget>[
+                          _logInText("Account"),
+                          _logInText("Login"),
+                        ],
                       ),
-                      // Expanded(
-                      //   flex: 1,
-                      //   child: Container(),
-                      // ),
-                      Expanded(
-                        flex: 2,
-                        child: ListView(
+                      Padding(
+                        padding: EdgeInsets.only(top: _height * 0.15),
+                        child: Column(
                           children: <Widget>[
+                            // Expanded(
+                            //   flex: 1,
+                            //   child: Container(),
+                            // ),
                             TextFormField(
                               controller: _emailController,
                               decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: "Email",
+                                  helperText: 'Accoun email'.toUpperCase(),
+                                  helperStyle: TextStyle(
+                                      fontSize: 13, color: Colors.white38),
                                   hintStyle: TextStyle(
                                       fontSize: 20, color: Colors.white54)),
                               keyboardType: TextInputType.emailAddress,
@@ -138,21 +134,20 @@ class _LoginFormState extends State<LoginForm> {
                                     : null;
                               },
                             ),
-                            Align(
-                              alignment: Alignment.bottomLeft,
-                              child:
-                                  _textUnderForm("account email".toUpperCase()),
-                            ),
                             SizedBox(
                               height: 20,
                             ),
                             TextFormField(
                               controller: _passwordController,
                               decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "Password",
-                                  hintStyle: TextStyle(
-                                      fontSize: 20, color: Colors.white54)),
+                                border: InputBorder.none,
+                                hintText: "Password",
+                                hintStyle: TextStyle(
+                                    fontSize: 20, color: Colors.white54),
+                                helperText: 'Accoun Password'.toUpperCase(),
+                                helperStyle: TextStyle(
+                                    fontSize: 13, color: Colors.white38),
+                              ),
                               style: TextStyle(color: Colors.white),
                               obscureText: true,
                               autovalidate: true,
@@ -164,14 +159,9 @@ class _LoginFormState extends State<LoginForm> {
                               },
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
-                                Expanded(
-                                    child: _textUnderForm(
-                                        "account password".toUpperCase())),
                                 FlatButton(
-                                  padding: EdgeInsets.only(bottom: 20),
                                   child: Text(
                                     "forgot?".toUpperCase(),
                                     style: TextStyle(color: Colors.white38),
@@ -180,30 +170,43 @@ class _LoginFormState extends State<LoginForm> {
                                 )
                               ],
                             ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height / 5,
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: <Widget>[
-                                LoginButton(
-                                  onPressed: _onFormSubmitted,
-                                  // isLoginButtonEnabled(state)
-                                  //     ? _onFormSubmitted
-                                  //     : null,
-                                  color: Color.fromRGBO(249, 161, 154, 1),
-                                ),
-                                GoogleLoginButton(
-                                  color: Color.fromRGBO(249, 161, 154, 1),
-                                ),
-                                // CreateAccountButton(
-                                //     userRepository: _userRepository),
-                              ],
-                            ),
                           ],
                         ),
-                      )
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              right: 10,
+                              left: 10,
+                              top: _height * 0.05,
+                              bottom: 30),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: <Widget>[
+                              RaisedWhiteButton(
+                                onPressed: _onFormSubmitted,
+                                text: Text(
+                                  'Sign in'.toUpperCase(),
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                                height: _height * 0.08,
+                                textColor: Colors.black54,
+                              ),
+                              FlatTransparentButton(
+                                function: () {
+                                  BlocProvider.of<LoginBloc>(context).add(
+                                    LoginWithGooglePressed(),
+                                  );
+                                },
+                                text: Text(
+                                  'Sign in with Google',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -249,12 +252,5 @@ class _LoginFormState extends State<LoginForm> {
           style: TextStyle(
               fontSize: 50, letterSpacing: 2, fontWeight: FontWeight.bold),
         ));
-  }
-
-  Widget _textUnderForm(String text) {
-    return Text(
-      text,
-      style: TextStyle(fontSize: 13, color: Colors.white38),
-    );
   }
 }
