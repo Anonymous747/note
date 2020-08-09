@@ -4,6 +4,7 @@ import 'package:note/bloc/bloc_authentication/bloc.dart';
 import 'package:note/bloc/bloc_login/bloc.dart';
 import 'package:note/repository/user_repository.dart';
 import 'package:note/screens/home_page.dart';
+import 'package:note/widgets/alert_dialogs.dart';
 import 'package:note/widgets/flat_transparent_button.dart';
 import 'package:note/widgets/raised_white_button.dart';
 import 'package:note/widgets/route_anim/fade_route.dart';
@@ -166,7 +167,8 @@ class _LoginFormState extends State<LoginForm> {
                                     "forgot?".toUpperCase(),
                                     style: TextStyle(color: Colors.white38),
                                   ),
-                                  onPressed: () {},
+                                  onPressed:
+                                      AlertDialogs(context).forgotPressed,
                                 )
                               ],
                             ),

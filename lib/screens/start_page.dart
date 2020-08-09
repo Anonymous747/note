@@ -4,8 +4,8 @@ import 'package:note/screens/first_screen.dart';
 import 'package:note/screens/nickname_page.dart';
 import 'package:note/utils/animation_item.dart';
 import 'package:note/utils/consts.dart';
+import 'package:note/widgets/alert_dialogs.dart';
 import 'package:note/widgets/logo_widget.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StartPage extends StatefulWidget {
@@ -47,35 +47,12 @@ class _StartPageState extends State<StartPage> {
     _animationColor = Tween(begin: 2.3, end: 2.3);
   }
 
-  Future<bool> _onBackPressed() async {
-    return Alert(
-        context: context,
-        type: AlertType.none,
-        title: "Are you sure?".toUpperCase(),
-        style: AlertStyle(
-            descStyle: TextStyle(fontSize: 15),
-            titleStyle: TextStyle(color: Colors.red[300])),
-        desc: "Are you certain that you want to close Mirroring?",
-        buttons: [
-          DialogButton(
-            color: Colors.white,
-            child: Icon(Icons.clear),
-            onPressed: () => Navigator.of(context).pop(false),
-          ),
-          DialogButton(
-            color: Colors.white,
-            child: Icon(Icons.check),
-            onPressed: () => Navigator.of(context).pop(true),
-          ),
-        ]).show();
-  }
-
   @override
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
     return WillPopScope(
-      onWillPop: _onBackPressed,
+      onWillPop: AlertDialogs(context).onBackPressed,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         extendBody: true,
