@@ -18,7 +18,7 @@ class _StartPageState extends State<StartPage> {
   List<AnimationItem> animationList = [];
   Tween<double> positionLogo;
   int _currentIndex;
-  int _currentIndexColor;
+  int _currentIndexColor = 0;
   Tween _animationColor;
 
   void _initialize() async {

@@ -1,4 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note/bloc/bloc_note/bloc.dart';
+import 'package:note/repository/remote_data_repository.dart';
+import 'package:note/screens/note_page.dart';
 import 'package:note/utils/consts.dart';
 import 'package:note/widgets/change_color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -137,7 +142,7 @@ class _ColorPageState extends State<ColorPage> {
                                         color: listColor[_currentIndex.round()]
                                             .colors[1]),
                                   ),
-                                  onPressed: _saveColor,
+                                  onPressed: _onNotePage,
                                 ),
                               ),
                             )
@@ -151,8 +156,19 @@ class _ColorPageState extends State<ColorPage> {
         ));
   }
 
-  void _saveColor() async {
+  void _onNotePage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt('color', _currentIndex.round());
+    FirebaseUser currentUser = await FirebaseAuth.instance.currentUser();
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => BlocProvider<NoteBloc>(
+            create: (context) => NoteBloc(repository: RemDataRepImpl()),
+            child: NotePage(
+              user: currentUser,
+            ),
+          ),
+        ),
+        ModalRoute.withName('np'));
   }
 }

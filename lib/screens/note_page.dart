@@ -7,6 +7,7 @@ import 'package:note/bloc/bloc_note/note_bloc.dart';
 import 'package:note/model/element_note.dart';
 import 'package:note/screens/add_note_page.dart';
 import 'package:note/widgets/drawer.dart';
+import 'package:note/widgets/modal_bottom_sheets.dart/modal_bottom_sheets.dart';
 import 'package:note/widgets/route_anim/fade_route.dart';
 
 class NotePage extends StatefulWidget {
@@ -76,23 +77,31 @@ class _NotePageState extends State<NotePage> {
         drawer: CustomDrawer(),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
-          onPressed: () {
-            Navigator.of(context).push(FadeRoute(
-                page: BlocProvider<AddingNoteBloc>(
-              create: (context) => AddingNoteBloc(),
-              child: AddingNotePage(),
-            )));
-          },
+          onPressed: () => ModalBottomSheets(context).buildIntermediateSheet(
+            title: 'I\'m so excited to start this journey with you, Name!',
+            firstSubTitle:
+                'Let\'s get your great new habit rolling by\ncreating your first story together!',
+            secSubTitle:
+                'Get started by clicking the \"Add Story\" card,\nand I\'ll guide you through the process.',
+            isSubTitleBold: true,
+            buttonText: 'Write on!',
+            buttonFunc: () {},
+          ),
         ),
-        body: AnimatedList(
-          key: _listKey,
-          initialItemCount: list.length,
-          itemBuilder: (BuildContext context, int index, Animation animation) {
-            return FadeTransition(
-              opacity: animation,
-              child: _buildItem(list[index]),
-            );
-          },
+        body: Stack(
+          children: [
+            AnimatedList(
+              key: _listKey,
+              initialItemCount: list.length,
+              itemBuilder:
+                  (BuildContext context, int index, Animation animation) {
+                return FadeTransition(
+                  opacity: animation,
+                  child: _buildItem(list[index]),
+                );
+              },
+            ),
+          ],
         ));
 
     /*ListView.builder(
