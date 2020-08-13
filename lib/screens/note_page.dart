@@ -1,14 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:note/bloc/bloc_adding_note/adding_note_bloc.dart';
 import 'package:note/bloc/bloc_note/bloc.dart';
 import 'package:note/bloc/bloc_note/note_bloc.dart';
 import 'package:note/model/element_note.dart';
-import 'package:note/screens/add_note_page.dart';
 import 'package:note/widgets/drawer.dart';
 import 'package:note/widgets/modal_bottom_sheets.dart/modal_bottom_sheets.dart';
-import 'package:note/widgets/route_anim/fade_route.dart';
 
 class NotePage extends StatefulWidget {
   final FirebaseUser user;

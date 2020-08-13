@@ -19,6 +19,7 @@ class ModalBottomSheets {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     int colorIndex = sharedPreferences.get('color');
     showModalBottomSheet(
+        isDismissible: false,
         elevation: 0,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         shape: RoundedRectangleBorder(

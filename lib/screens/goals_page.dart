@@ -8,6 +8,13 @@ class GoalsPage extends StatefulWidget {
 class _GoalsPageState extends State<GoalsPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Center(
+        child: Text(
+          'Hello',
+          style: TextStyle(fontSize: 30),
+        ),
+      ),
+    );
   }
 }

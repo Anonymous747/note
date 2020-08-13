@@ -216,11 +216,16 @@ class _FirstScreenState extends State<FirstScreen> {
                       child: FlatTransparentButton(
                         function: () {
                           Navigator.of(context).push(SlideRightAnimation(
-                              child: BlocProvider<AuthenticationBloc>(
-                            create: (context) => AuthenticationBloc()
-                              ..add(AuthenticationStarted()),
+                              child: BlocProvider<AuthenticationBloc>.value(
+                            value: AuthenticationBloc(),
                             child: LoginPage(),
-                          )).buildRoute());
+                          )
+
+                              //   (
+                              // create: (context) => AuthenticationBloc()
+                              //   ..add(AuthenticationStarted()),
+                              // child: LoginPage(),
+                              ).buildRoute());
                         },
                         text: Text(
                           'I already have an account'.toUpperCase(),
