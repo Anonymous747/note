@@ -4,6 +4,7 @@ import 'package:note/bloc/bloc_authentication/bloc.dart';
 import 'package:note/bloc/bloc_login/bloc.dart';
 import 'package:note/repository/user_repository.dart';
 import 'package:note/widgets/login_form.dart';
+import 'package:note/widgets/modal_bottom_sheets.dart/modal_bottom_sheets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:note/utils/consts.dart';
 
@@ -29,23 +30,26 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
+      // width: double.infinity,
       decoration: BoxDecoration(gradient: widget.gradient),
-      child: BlocListener<AuthenticationBloc, AuthenticationState>(
-        listener: (context, state) {
-          if (state is AuthenticationFailure) {
-            return _buildFailure();
-          }
-        },
-        child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-          bloc: AuthenticationBloc(),
-          builder: (context, state) {
-            if (state is AuthenticationInitial) {
-              return _buildLogIn(new UserRepository());
-            } else if (state is AuthenticationFailure) {
+      child: BlocProvider<AuthenticationBloc>.value(
+        value: AuthenticationBloc(),
+        child: BlocListener<AuthenticationBloc, AuthenticationState>(
+          listener: (context, state) {
+            if (state is AuthenticationFailure) {
               return _buildFailure();
-            } else if (state is AuthenticationSuccess) {}
+            }
           },
+          child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+            bloc: AuthenticationBloc(),
+            builder: (context, state) {
+              if (state is AuthenticationInitial) {
+                return _buildLogIn(new UserRepository());
+              } else if (state is AuthenticationFailure) {
+                return _buildFailure();
+              } else if (state is AuthenticationSuccess) {}
+            },
+          ),
         ),
       ),
     );

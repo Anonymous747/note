@@ -1,12 +1,11 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note/bloc/begining_bloc/bloc.dart';
 import 'package:note/bloc/bloc_authentication/authentication_bloc.dart';
 import 'package:note/bloc/bloc_authentication/bloc.dart';
-import 'package:note/bloc/bloc_splash_screen/bloc.dart';
 import 'package:note/screens/login_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BeginingBloc extends Bloc<BeginingEvent, BeginingState> {
   BeginingBloc() : super(BeginingInitial());
@@ -23,11 +22,14 @@ class BeginingBloc extends Bloc<BeginingEvent, BeginingState> {
               AuthenticationBloc()..add(AuthenticationStarted()),
           child: LoginPage(),
         );
-        print('success');
+
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        int colorIndex = pref.getInt('color');
+
         await Future.delayed(
-          Duration(seconds: 3),
+          Duration(seconds: 2),
         );
-        yield BeginingSucces(colorIndex: 1);
+        yield BeginingSucces(colorIndex: colorIndex);
       } on PlatformException catch (e) {
         yield BeginingFailure(message: e.message);
       }

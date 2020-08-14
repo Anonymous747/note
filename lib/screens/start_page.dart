@@ -9,28 +9,24 @@ import 'package:note/widgets/logo_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StartPage extends StatefulWidget {
+  int colorIndex;
+
+  StartPage({this.colorIndex});
   @override
   _StartPageState createState() => _StartPageState();
 }
 
 class _StartPageState extends State<StartPage> {
-  PageController _pageController;
+  PageController _pageController = PageController(initialPage: 0);
   List<AnimationItem> animationList = [];
   Tween<double> positionLogo;
   int _currentIndex;
-  int _currentIndexColor = 0;
+  int _currentIndexColor;
   Tween _animationColor;
-
-  void _initialize() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    int colorIndex = pref.getInt('color');
-    _currentIndexColor = colorIndex ?? 0;
-  }
 
   @override
   void initState() {
     super.initState();
-    _initialize();
     setState(() {});
     delayAnimation(
         AnimationItem(
@@ -42,7 +38,8 @@ class _StartPageState extends State<StartPage> {
         animationList.add(animation);
       });
     });
-    _pageController = PageController(initialPage: 0);
+    // _pageController = PageController(initialPage: 0);
+    _currentIndexColor = widget.colorIndex ?? 0;
     positionLogo = Tween(begin: 0.0, end: 0.0);
     _animationColor = Tween(begin: 2.3, end: 2.3);
   }

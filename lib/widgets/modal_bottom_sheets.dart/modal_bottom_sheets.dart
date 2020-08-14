@@ -19,9 +19,12 @@ class ModalBottomSheets {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     int colorIndex = sharedPreferences.get('color');
     showModalBottomSheet(
-        isDismissible: false,
+        enableDrag: false,
         elevation: 0,
-        clipBehavior: Clip.antiAliasWithSaveLayer,
+        backgroundColor: Colors.transparent,
+        barrierColor: Colors.black54,
+        isDismissible: false,
+        clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(30), topRight: Radius.circular(30)),
@@ -29,7 +32,7 @@ class ModalBottomSheets {
         context: _context,
         builder: (context) {
           return Container(
-            color: Colors.black54,
+            // height: MediaQuery.of(context).,
             child: Stack(
               alignment: Alignment.topCenter,
               children: [
@@ -66,7 +69,7 @@ class ModalBottomSheets {
                             height: 15,
                           ),
                           Text(
-                            secSubTitle,
+                            secSubTitle ?? '',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 17,

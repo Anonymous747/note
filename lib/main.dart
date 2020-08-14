@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/bloc/bloc_authentication/authentication_observer.dart';
-import 'package:note/bloc/bloc_splash_screen/bloc.dart';
-import 'package:note/repository/remote_data_repository.dart';
 import 'package:note/repository/user_repository.dart';
 import 'package:note/screens/add_note_page.dart';
-import 'package:note/screens/goals_page.dart';
 import 'package:note/screens/home_page.dart';
 import 'package:note/screens/login_page.dart';
 import 'package:note/screens/nickname_page.dart';
@@ -13,6 +10,8 @@ import 'package:note/screens/note_page.dart';
 import 'package:note/screens/first_screen.dart';
 import 'package:note/screens/splash_screen.dart';
 import 'package:note/screens/start_page.dart';
+
+import 'bloc/begining_bloc/bloc.dart';
 
 // final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -68,7 +67,9 @@ class _AppState extends State<App> {
           if (state is BeginingInitial || state is BeginingLoading) {
             return SplashScreen();
           } else if (state is BeginingSucces) {
-            return StartPage();
+            return StartPage(
+              colorIndex: state.colorIndex,
+            );
           } else if (state is BeginingFailure) {
             return Scaffold(
               body: Center(

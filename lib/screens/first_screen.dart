@@ -170,37 +170,6 @@ class _FirstScreenState extends State<FirstScreen> {
                                     },
                                   ),
                                 )
-                                //     child: Container(
-                                //   decoration: BoxDecoration(
-                                //       borderRadius: BorderRadius.circular(40),
-                                //       boxShadow: [
-                                //         BoxShadow(
-                                //             color: Colors.black38,
-                                //             offset: Offset(0, 5),
-                                //             blurRadius: 15)
-                                //       ]),
-                                //   height: _height * 0.075,
-                                //   child: RaisedButton(
-                                //     hoverColor: Colors.white,
-                                //     hoverElevation: 0,
-                                //     highlightColor: Colors.white,
-                                //     highlightElevation: 0,
-                                //     elevation: 0,
-                                //     color: Colors.white,
-                                //     shape: RoundedRectangleBorder(
-                                //       borderRadius: BorderRadius.circular(40),
-                                //     ),
-                                //     onPressed: () {
-                                //       widget._pageController.animateToPage(1,
-                                //           duration: Duration(milliseconds: 800),
-                                //           curve: Curves.easeInCubic);
-                                //     },
-                                //     child: Text(
-                                //       'Hi, Reflectly'.toUpperCase(),
-                                //       style: TextStyle(color: widget.textColor),
-                                //     ),
-                                //   ),
-                                // ))
                               ],
                             )));
                   },
@@ -216,38 +185,13 @@ class _FirstScreenState extends State<FirstScreen> {
                       child: FlatTransparentButton(
                         function: () {
                           Navigator.of(context).push(SlideRightAnimation(
-                              child: BlocProvider<AuthenticationBloc>.value(
-                            value: AuthenticationBloc(),
                             child: LoginPage(),
-                          )
-
-                              //   (
-                              // create: (context) => AuthenticationBloc()
-                              //   ..add(AuthenticationStarted()),
-                              // child: LoginPage(),
-                              ).buildRoute());
+                          ).buildRoute());
                         },
                         text: Text(
                           'I already have an account'.toUpperCase(),
                         ),
                       ),
-                      // child: FlatButton(
-                      //   textColor: Colors.white,
-                      //   color: Colors.transparent,
-                      //   highlightColor: Colors.transparent,
-                      //   onPressed: () {
-                      //     Navigator.of(context).push(PageTransition(
-                      //         type: PageTransitionType.rightToLeftWithFade,
-                      //         child: BlocProvider<AuthenticationBloc>(
-                      //           create: (context) => AuthenticationBloc()
-                      //             ..add(AuthenticationStarted()),
-                      //           child: LoginPage(),
-                      //         )));
-                      //   },
-                      //   child: Text(
-                      //     'I already have an account'.toUpperCase(),
-                      //   ),
-                      // ),
                     );
                   },
                 ),
