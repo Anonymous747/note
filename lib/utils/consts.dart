@@ -26,3 +26,5 @@ const List<LinearGradient> listColor = [
     ],
   ),
 ];
+
+const List<String> textList = ['Text1', 'Text2', 'Text3', 'Lol'];

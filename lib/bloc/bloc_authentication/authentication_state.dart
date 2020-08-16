@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:note/bloc/bloc_authentication/bloc.dart';
 import 'package:note/repository/user_repository.dart';
 
 abstract class AuthenticationState extends Equatable {

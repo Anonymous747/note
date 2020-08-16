@@ -102,7 +102,7 @@ class _StartPageState extends State<StartPage> {
                   ),
                   NicknamePage(),
                   ColorPage(
-                    initialIndex: _currentIndex,
+                    initialIndex: _currentIndexColor,
                     valueChanged: (index) {
                       setState(() {
                         _animationColor = Tween(begin: 4.0, end: 0.0);

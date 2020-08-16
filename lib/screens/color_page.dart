@@ -19,10 +19,11 @@ class ColorPage extends StatefulWidget {
 
 class _ColorPageState extends State<ColorPage> {
   PageController _pageController;
-  double _currentIndex = 0;
+  double _currentIndex;
   @override
   void initState() {
     super.initState();
+    _currentIndex = widget.initialIndex.roundToDouble();
     _pageController = PageController(
         initialPage: widget.initialIndex ?? 0, viewportFraction: 0.3);
     _pageController.addListener(() {
@@ -64,39 +65,22 @@ class _ColorPageState extends State<ColorPage> {
             Expanded(
               child: SizedBox(
                 width: double.infinity,
-                child: PageView(
+                child: PageView.builder(
                   onPageChanged: (index) {
                     widget.valueChanged(index);
                   },
                   physics: BouncingScrollPhysics(),
                   controller: _pageController,
                   pageSnapping: true,
-                  children: <Widget>[
-                    ChangeColor(
-                      onTap: () {
-                        widget.valueChanged(_pageController.page.round());
-                      },
-                      offset: _currentIndex,
-                      index: 0,
-                      linearGradient: listColor[0],
-                    ),
-                    ChangeColor(
-                      onTap: () {
-                        widget.valueChanged(_pageController.page.round());
-                      },
-                      offset: _currentIndex,
-                      index: 1,
-                      linearGradient: listColor[1],
-                    ),
-                    ChangeColor(
-                      onTap: () {
-                        widget.valueChanged(_pageController.page.round());
-                      },
-                      offset: _currentIndex,
-                      index: 2,
-                      linearGradient: listColor[2],
-                    ),
-                  ],
+                  itemCount: listColor.length,
+                  itemBuilder: (context, index) => ChangeColor(
+                    onTap: () {
+                      widget.valueChanged(_pageController.page.round());
+                    },
+                    offset: _currentIndex,
+                    index: index,
+                    linearGradient: listColor[index],
+                  ),
                 ),
               ),
             ),
@@ -166,6 +150,7 @@ class _ColorPageState extends State<ColorPage> {
             create: (context) => NoteBloc(repository: RemDataRepImpl()),
             child: NotePage(
               user: currentUser,
+              initialIndex: 1,
             ),
           ),
         ),
