@@ -16,11 +16,12 @@ class NoteLoadingState extends NoteState {
 
 class NoteLoadedState extends NoteState {
   final List<ElementNote> element;
+  final int colorIndex;
 
-  NoteLoadedState({@required this.element});
+  NoteLoadedState({@required this.element, this.colorIndex});
 
   @override
-  List<Object> get props => [this.element];
+  List<Object> get props => [this.element, this.colorIndex ?? 0];
 }
 
 class NoteErrorState extends NoteState {

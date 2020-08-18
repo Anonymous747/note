@@ -14,10 +14,11 @@ class ModalBottomSheets {
     String secSubTitle,
     bool isSubTitleBold,
     String buttonText,
+    int colorIndex,
     Function buttonFunc,
   }) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    int colorIndex = sharedPreferences.get('color');
+    // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    // int colorIndex = sharedPreferences.get('color');
     showModalBottomSheet(
         enableDrag: false,
         elevation: 0,

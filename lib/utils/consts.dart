@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note/model/element_note.dart';
 
 const List<LinearGradient> listColor = [
   LinearGradient(
@@ -26,5 +27,3 @@ const List<LinearGradient> listColor = [
     ],
   ),
 ];
-
-const List<String> textList = ['Text1', 'Text2', 'Text3', 'Lol'];

@@ -5,13 +5,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note/bloc/bloc_adding_note/adding_note_bloc.dart';
 import 'package:note/bloc/bloc_note/bloc.dart';
 import 'package:note/bloc/bloc_note/note_bloc.dart';
 import 'package:note/model/element_note.dart';
+import 'package:note/screens/add_note_page.dart';
+import 'package:note/screens/home_page.dart';
 import 'package:note/widgets/cells/add_cell.dart';
 import 'package:note/widgets/drawer.dart';
 import 'package:note/widgets/cells/list_cell.dart';
 import 'package:note/utils/consts.dart';
+import 'package:note/widgets/modal_bottom_sheets.dart/modal_bottom_sheets.dart';
 
 class NotePage extends StatefulWidget {
   final FirebaseUser user;
@@ -29,6 +33,16 @@ class _NotePageState extends State<NotePage> {
   double viewportFraction = 0.8;
   double pageOffset = 0;
   final GlobalKey<AnimatedListState> _listKey = GlobalKey();
+  List<ElementNote> textList = [
+    new ElementNote(
+        date: DateTime.parse('11.11.2000'.split('.').reversed.join()),
+        title: 'My Title1',
+        happened: 'Some things'),
+    new ElementNote(
+        date: DateTime.parse('11.11.2000'.split('.').reversed.join()),
+        title: 'My Title2',
+        happened: 'Some things'),
+  ];
 
   @override
   void initState() {
@@ -61,7 +75,7 @@ class _NotePageState extends State<NotePage> {
             } else if (state is NoteLoadingState) {
               return buidLoading();
             } else if (state is NoteLoadedState) {
-              return buildLoaded(state.element);
+              return buildLoaded(state.element, state.colorIndex);
             } else if (state is NoteErrorState) {
               return buildError(state.message);
             }
@@ -78,17 +92,31 @@ class _NotePageState extends State<NotePage> {
     );
   }
 
-  Widget _buildItem(ElementNote note, [int index]) {
-    return ListTile(
-      key: ValueKey<ElementNote>(note),
-      title: Text(note.title),
-      subtitle: Text(note.text),
-    );
-  }
+  // Widget _buildItem(ElementNote note, [int index]) {
+  //   return ListTile(
+  //     key: ValueKey<ElementNote>(note),
+  //     title: Text(note.title),
+  //     subtitle: Text(note.),
+  //   );
+  // }
 
-  Widget buildLoaded(List<ElementNote> list) {
+  Widget buildLoaded(List<ElementNote> list, int colorIndex) {
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
+    // ModalBottomSheets(context).buildIntermediateSheet(
+    //   title: 'I\'m so excited to start this journey with you, Name!',
+    //   firstSubTitle:
+    //       'Let\'s get your great new habit rolling by\ncreating your first story together!',
+    //   secSubTitle:
+    //       'Get started by clicking the \"Add Story\" card,\nand I\'ll guide you through the process.',
+    //   isSubTitleBold: true,
+    //   buttonText: 'Write on!',
+    //   buttonFunc: () {
+    //     Navigator.of(context).pop(false);
+    //     print('ok' );
+    //   },
+    //   colorIndex: colorIndex,
+    // );
     return Scaffold(
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Colors.black,
@@ -103,7 +131,7 @@ class _NotePageState extends State<NotePage> {
             BottomNavigationBarItem(
                 icon: Icon(CupertinoIcons.pencil), title: Text('●')),
             BottomNavigationBarItem(
-                icon: Icon(Icons.ad_units_sharp), title: Text('●')),
+                icon: Icon(Icons.assessment), title: Text('●')),
             BottomNavigationBarItem(
                 icon: Icon(Icons.person_outline), title: Text('●')),
           ],
@@ -113,14 +141,14 @@ class _NotePageState extends State<NotePage> {
             Align(
               alignment: Alignment.bottomRight,
               child: Container(
-                width: _width * 0.25,
+                width: _width * 0.2,
                 color: Colors.black12,
               ),
             ),
             // Padding(
             // padding: const EdgeInsets.only(top: 50, left: 30),
             Padding(
-              padding: EdgeInsets.only(top: _height * 0.1),
+              padding: EdgeInsets.only(top: _height * 0.07),
               child: Column(
                 children: [
                   Row(
@@ -128,11 +156,9 @@ class _NotePageState extends State<NotePage> {
                     children: [
                       IconButton(
                           padding:
-                              EdgeInsets.symmetric(horizontal: _height * 0.05),
+                              EdgeInsets.symmetric(horizontal: _height * 0.04),
                           icon: Icon(Icons.settings, size: 30),
-                          onPressed: () {
-                            Scaffold.of(context).openDrawer();
-                          })
+                          onPressed: () {})
                     ],
                   ),
                   SizedBox(
@@ -154,14 +180,16 @@ class _NotePageState extends State<NotePage> {
                               ),
                               Text('Name',
                                   style: TextStyle(
-                                      fontSize: 28, color: Colors.black87)),
+                                      fontSize: 28,
+                                      color: Colors.black87,
+                                      fontWeight: FontWeight.bold)),
                             ],
                           ),
                         ),
                       ),
                       IconButton(
                           padding:
-                              EdgeInsets.symmetric(horizontal: _height * 0.05),
+                              EdgeInsets.symmetric(horizontal: _height * 0.04),
                           icon: Icon(
                             Icons.add,
                             size: 30,
@@ -187,19 +215,24 @@ class _NotePageState extends State<NotePage> {
                             return Container(
                                 alignment: Alignment.centerRight,
                                 padding: EdgeInsets.only(
-                                    right: 60,
+                                    right: _height * 0.05,
                                     top: 100 - scale * 35,
                                     bottom: 75 - scale * 15),
-                                child: AddCell());
+                                child: AddCell(
+                                  gradient: listColor[colorIndex ?? 0],
+                                  onTap: onAddCellTap,
+                                ));
                           }
+                          ElementNote currentElement = textList[index - 1];
                           return Container(
                               alignment: Alignment.centerRight,
                               padding: EdgeInsets.only(
-                                  right: 60,
+                                  right: _height * 0.05,
                                   top: 100 - scale * 35,
                                   bottom: 75 - scale * 15),
                               child: ListCell(
-                                text: textList[index - 1],
+                                text: currentElement.title,
+                                date: currentElement.date,
                               ));
 
                           // if (controller.page == index) {
@@ -273,6 +306,12 @@ class _NotePageState extends State<NotePage> {
     // },
     // ),
     // );
+  }
+
+  void onAddCellTap() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+      return HomePage();
+    }));
   }
 
   Widget buildError(String message) {
