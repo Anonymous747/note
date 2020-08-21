@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,11 +12,13 @@ import 'package:note/bloc/bloc_note/note_bloc.dart';
 import 'package:note/model/element_note.dart';
 import 'package:note/screens/add_note_page.dart';
 import 'package:note/screens/home_page.dart';
+import 'package:note/screens/creation_note_page/make_note_activiry.dart';
 import 'package:note/widgets/cells/add_cell.dart';
 import 'package:note/widgets/drawer.dart';
 import 'package:note/widgets/cells/list_cell.dart';
 import 'package:note/utils/consts.dart';
 import 'package:note/widgets/modal_bottom_sheets.dart/modal_bottom_sheets.dart';
+import 'package:note/widgets/route_anim/fade_route.dart';
 
 class NotePage extends StatefulWidget {
   final FirebaseUser user;
@@ -30,9 +33,10 @@ class NotePage extends StatefulWidget {
 class _NotePageState extends State<NotePage> {
   PageController controller;
   NoteBloc bloc;
-  double viewportFraction = 0.8;
-  double pageOffset = 0;
-  final GlobalKey<AnimatedListState> _listKey = GlobalKey();
+  final double viewportFraction = 0.8;
+  double pageOffset;
+  ValueNotifier<double> _pageNotifier;
+  // final GlobalKey<AnimatedListState> _listKey = GlobalKey();
   List<ElementNote> textList = [
     new ElementNote(
         date: DateTime.parse('11.11.2000'.split('.').reversed.join()),
@@ -49,12 +53,13 @@ class _NotePageState extends State<NotePage> {
     super.initState();
     bloc = BlocProvider.of<NoteBloc>(context);
     bloc.add(FetchNotes());
+    pageOffset = 0;
     controller = PageController(
         initialPage: pageOffset.round(), viewportFraction: viewportFraction);
+    _pageNotifier = ValueNotifier<double>(pageOffset);
     controller.addListener(() {
-      setState(() {
-        pageOffset = controller.page;
-      });
+      pageOffset = controller.page;
+      _pageNotifier.value = controller.page;
     });
   }
 
@@ -91,14 +96,6 @@ class _NotePageState extends State<NotePage> {
       child: CircularProgressIndicator(),
     );
   }
-
-  // Widget _buildItem(ElementNote note, [int index]) {
-  //   return ListTile(
-  //     key: ValueKey<ElementNote>(note),
-  //     title: Text(note.title),
-  //     subtitle: Text(note.),
-  //   );
-  // }
 
   Widget buildLoaded(List<ElementNote> list, int colorIndex) {
     double _height = MediaQuery.of(context).size.height;
@@ -200,59 +197,120 @@ class _NotePageState extends State<NotePage> {
                   Expanded(
                       child: SizedBox(
                     width: double.infinity,
-                    child: PageView.builder(
-                        controller: controller,
-                        physics: BouncingScrollPhysics(),
-                        // scrollDirection: Axis.horizontal,
-                        itemCount: textList.length + 1,
-                        itemBuilder: (context, index) {
-                          double scale = max(
-                              viewportFraction,
-                              (1 -
-                                  (pageOffset - index).abs() +
-                                  viewportFraction));
-                          if (index == 0) {
+                    child: ValueListenableBuilder<double>(
+                      valueListenable: _pageNotifier,
+                      builder: (_, page, __) {
+                        return PageView.builder(
+                            // physics: BouncingScrollPhysics(),
+                            controller: controller,
+                            itemCount: textList.length + 1,
+                            itemBuilder: (context, index) {
+                              if (index + 2 >= page && index - 2 <= page) {
+                                double scale = max(
+                                    viewportFraction,
+                                    (1 -
+                                        (page - index).abs() +
+                                        viewportFraction));
+                                if (index == 0) {
+                                  return Container(
+                                      alignment: Alignment.centerRight,
+                                      padding: EdgeInsets.only(
+                                          left: page * 20,
+                                          right: _height * 0.05,
+                                          top: 100 - scale * 35,
+                                          bottom: 75 - scale * 15),
+                                      child: AddCell(
+                                          gradient: listColor[colorIndex ?? 0],
+                                          onTap: () {
+                                            Navigator.of(context)
+                                                .push(FadeRoute(
+                                                    page: MakeNoteActivity(
+                                              colorIndex: colorIndex,
+                                            )));
+                                          }));
+                                }
+                                ElementNote currentElement =
+                                    textList[index - 1];
+                                return Container(
+                                    alignment: Alignment.centerRight,
+                                    padding: EdgeInsets.only(
+                                        right: _height * 0.05,
+                                        top: 100 - scale * 35,
+                                        bottom: 75 - scale * 15),
+                                    child: ListCell(
+                                      title: currentElement.title,
+                                      date: currentElement.date,
+                                    ));
+                              }
+                            });
+                      },
+                      child: PageView.builder(
+                          controller: controller,
+                          itemCount: textList.length + 1,
+                          itemBuilder: (context, index) {
+                            double scale = max(viewportFraction,
+                                (1 - (index - index).abs() + viewportFraction));
+                            if (index == 0) {
+                              return Container(
+                                  alignment: Alignment.centerRight,
+                                  padding: EdgeInsets.only(
+                                      right: _height * 0.05,
+                                      top: 100 - scale * 35,
+                                      bottom: 75 - scale * 15),
+                                  child: AddCell(
+                                      gradient: listColor[colorIndex ?? 0],
+                                      onTap: () {
+                                        Navigator.of(context).push(FadeRoute(
+                                            page: MakeNoteActivity(
+                                          colorIndex: colorIndex,
+                                        )));
+                                      }));
+                            }
+                            ElementNote currentElement = textList[index - 1];
                             return Container(
                                 alignment: Alignment.centerRight,
                                 padding: EdgeInsets.only(
                                     right: _height * 0.05,
                                     top: 100 - scale * 35,
                                     bottom: 75 - scale * 15),
-                                child: AddCell(
-                                  gradient: listColor[colorIndex ?? 0],
-                                  onTap: onAddCellTap,
+                                child: ListCell(
+                                  title: currentElement.title,
+                                  date: currentElement.date,
                                 ));
-                          }
-                          ElementNote currentElement = textList[index - 1];
-                          return Container(
-                              alignment: Alignment.centerRight,
-                              padding: EdgeInsets.only(
-                                  right: _height * 0.05,
-                                  top: 100 - scale * 35,
-                                  bottom: 75 - scale * 15),
-                              child: ListCell(
-                                text: currentElement.title,
-                                date: currentElement.date,
-                              ));
-
-                          // if (controller.page == index) {
-                          //   return Padding(
-                          //     padding:
-                          //         const EdgeInsets.only(top: 40, bottom: 20),
-                          //     child: ListCell(
-                          //       text: textList[index],
-                          //     ),
-                          //   );
-                          // } else {
-                          //   return Padding(
-                          //     padding:
-                          //         const EdgeInsets.only(top: 80, bottom: 20),
-                          //     child: ListCell(
-                          //       text: textList[index],
-                          //     ),
-                          //   );
-                          // }
-                        }),
+                          }),
+                      // builder: (context, value, child) {
+                      //   return Container();
+                      //   double scale = max(
+                      //       viewportFraction,
+                      //       (1 -
+                      //           (pageOffset - value).abs() +
+                      //           viewportFraction));
+                      //   if (value == 0) {
+                      //     return Container(
+                      //         alignment: Alignment.centerRight,
+                      //         padding: EdgeInsets.only(
+                      //             right: _height * 0.05,
+                      //             top: 100 - scale * 35,
+                      //             bottom: 75 - scale * 15),
+                      //         child: AddCell(
+                      //           gradient: listColor[colorIndex ?? 0],
+                      //           onTap: onAddCellTap,
+                      //         ));
+                      //   }
+                      //   ElementNote currentElement =
+                      //       textList[value.round() - 1];
+                      //   return Container(
+                      //       alignment: Alignment.centerRight,
+                      //       padding: EdgeInsets.only(
+                      //           right: _height * 0.05,
+                      //           top: 100 - scale * 35,
+                      //           bottom: 75 - scale * 15),
+                      //       child: ListCell(
+                      //         title: currentElement.title,
+                      //         date: currentElement.date,
+                      //       ));
+                      // },
+                    ),
                   ))
                 ],
               ),
@@ -289,29 +347,8 @@ class _NotePageState extends State<NotePage> {
     //   ],
     // ));
 
-    /*ListView.builder(
-        itemCount: list.length,
-        itemBuilder: (context, index) {
-          return Padding(
-              padding: const EdgeInsets.all(8),
-              child: InkWell(
-                child: ListTile(
-                  title: Text(list[index].title),
-                  subtitle: Text(list[index].text),
-                  onTap: () {
-                    Navigator.of(context).pushNamed('ap');
-                  },
-                ),
-              ));*/
-    // },
     // ),
     // );
-  }
-
-  void onAddCellTap() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-      return HomePage();
-    }));
   }
 
   Widget buildError(String message) {

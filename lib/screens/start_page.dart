@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:note/screens/color_page.dart';
 import 'package:note/screens/first_screen.dart';
@@ -9,7 +10,7 @@ import 'package:note/widgets/logo_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StartPage extends StatefulWidget {
-  int colorIndex;
+  final int colorIndex;
 
   StartPage({this.colorIndex});
   @override
@@ -19,6 +20,7 @@ class StartPage extends StatefulWidget {
 class _StartPageState extends State<StartPage> {
   PageController _pageController = PageController(initialPage: 0);
   List<AnimationItem> animationList = [];
+  ValueNotifier pageNotifier;
   Tween<double> positionLogo;
   int _currentIndex;
   int _currentIndexColor;

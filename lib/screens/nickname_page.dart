@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:note/widgets/logo_widget.dart';
+import 'package:note/widgets/texts/font_white_text.dart';
 
 class NicknamePage extends StatefulWidget {
-  // final Color _color;
-
-  // NicknamePage({Color color})
-  //     : assert(color != null),
-  //       this._color = color;
-
   @override
   _NicknamePageState createState() => _NicknamePageState();
 }
@@ -26,10 +20,9 @@ class _NicknamePageState extends State<NicknamePage> {
       ),
       child: Column(
         children: <Widget>[
-          Text(
-            "Nice to meet you! What do your friends call you?",
-            style: TextStyle(color: Colors.white70, fontSize: 25.0),
-            textAlign: TextAlign.center,
+          TitleWhiteText(
+            text: "Nice to meet you! What do your friends call you?",
+            align: TextAlign.center,
           ),
           Padding(
             padding: EdgeInsets.only(top: _height * 0.22),
@@ -48,12 +41,9 @@ class _NicknamePageState extends State<NicknamePage> {
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         counterText: "",
-                        // counter: Text('${_nickController.text.length} / 32'),
                         hintText: "Nickname",
                         hintStyle:
                             TextStyle(fontSize: 20, color: Colors.white54)),
-                    // onEditingComplete: () =>,
-                    // onEditingComplete: () {},
                     keyboardType: TextInputType.emailAddress,
                     style: TextStyle(color: Colors.white),
                     autocorrect: false,

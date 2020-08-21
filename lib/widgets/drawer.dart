@@ -44,7 +44,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
             trailing: Icon(Icons.arrow_back),
             onTap: () {
               if (Navigator.canPop(context)) {
-                Navigator.of(context).pop(false);
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
               }
             }),
         ListTile(
