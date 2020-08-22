@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:note/screens/color_page.dart';
-import 'package:note/screens/first_screen.dart';
-import 'package:note/screens/nickname_page.dart';
+import 'package:note/startPages/color_page.dart';
+import 'package:note/startPages/first_screen.dart';
+import 'package:note/startPages/nickname_page.dart';
 import 'package:note/utils/animation_item.dart';
 import 'package:note/utils/consts.dart';
 import 'package:note/widgets/alert_dialogs.dart';

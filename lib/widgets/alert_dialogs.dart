@@ -110,4 +110,51 @@ class AlertDialogs {
     );
     return true;
   }
+
+  Future<bool> onBackPressedInCreatingNote() async {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        title: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Text("Are you sure?".toUpperCase(),
+                  style: TextStyle(color: Colors.red[300])),
+            ),
+            Text(
+              "This story will not be saved and you cannot get it back!",
+              style: TextStyle(fontSize: 15, color: Colors.black45),
+              textAlign: TextAlign.center,
+            )
+          ],
+        ),
+        content: Container(
+          margin: EdgeInsets.only(top: 30),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: DialogButton(
+                  color: Colors.white,
+                  child: Icon(Icons.clear),
+                  onPressed: () => Navigator.of(context).pop(false),
+                ),
+              ),
+              Expanded(
+                child: DialogButton(
+                    color: Colors.white,
+                    child: Icon(Icons.check),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                    }),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    return true;
+  }
 }

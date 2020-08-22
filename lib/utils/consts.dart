@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:note/model/element_note.dart';
 
 const List<LinearGradient> listColor = [
   LinearGradient(
@@ -22,8 +21,8 @@ const List<LinearGradient> listColor = [
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [
-      Colors.red,
-      Colors.orange,
+      Color.fromRGBO(249, 161, 154, 1),
+      Colors.pinkAccent,
     ],
   ),
 ];
@@ -41,4 +40,19 @@ const List<String> months = [
   'Oct',
   'Nov',
   'Dec'
+];
+
+const List<String> fullMonths = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
 ];

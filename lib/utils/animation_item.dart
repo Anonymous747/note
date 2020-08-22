@@ -29,3 +29,5 @@ Future<void> delayAnimation(AnimationItem animation, Duration duration,
   await Future.delayed(duration, () {});
   function(animation);
 }
+
+Tween delayWidgetAnimation(Duration delayDuration, double initCValue) {}

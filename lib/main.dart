@@ -5,11 +5,11 @@ import 'package:note/repository/user_repository.dart';
 import 'package:note/screens/add_note_page.dart';
 import 'package:note/screens/home_page.dart';
 import 'package:note/screens/login_page.dart';
-import 'package:note/screens/nickname_page.dart';
+import 'package:note/startPages/nickname_page.dart';
 import 'package:note/screens/note_page.dart';
-import 'package:note/screens/first_screen.dart';
+import 'package:note/startPages/first_screen.dart';
 import 'package:note/screens/splash_screen.dart';
-import 'package:note/screens/start_page.dart';
+import 'package:note/startPages/start_page.dart';
 
 import 'bloc/begining_bloc/bloc.dart';
 

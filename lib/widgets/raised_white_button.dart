@@ -5,17 +5,20 @@ class RaisedWhiteButton extends StatelessWidget {
   final Color _textColor;
   final Text _text;
   final double _height;
+  final double _width;
 
-  RaisedWhiteButton(
-      {Key key,
-      VoidCallback onPressed,
-      Text text,
-      double height,
-      Color textColor})
-      : _onPressed = onPressed,
+  RaisedWhiteButton({
+    Key key,
+    VoidCallback onPressed,
+    Text text,
+    double height,
+    double width,
+    Color textColor,
+  })  : _onPressed = onPressed,
         _textColor = textColor,
         _text = text,
         _height = height,
+        _width = width,
         super(key: key);
 
   @override
@@ -30,6 +33,7 @@ class RaisedWhiteButton extends StatelessWidget {
                   color: Colors.black38, offset: Offset(0, 10), blurRadius: 15)
             ]),
         height: _height,
+        width: _width ?? MediaQuery.of(context).size.width,
         child: RaisedButton(
           hoverColor: Colors.white,
           hoverElevation: 0,

@@ -1,15 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:note/bloc/bloc_authentication/authentication_bloc.dart';
-import 'package:note/bloc/bloc_authentication/bloc.dart';
 import 'package:note/screens/login_page.dart';
 import 'package:note/utils/animation_item.dart';
 import 'package:note/widgets/animation/slide_right_animation.dart';
 import 'package:note/widgets/flat_transparent_button.dart';
 import 'package:note/widgets/logo_widget.dart';
 import 'package:note/widgets/raised_white_button.dart';
-import 'package:page_transition/page_transition.dart';
 
 class FirstScreen extends StatefulWidget {
   final PageController _pageController;
