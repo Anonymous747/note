@@ -51,7 +51,9 @@ class _AppState extends State<App> {
     return MaterialApp(
       //debugShowCheckedModeBanner: false,
       title: "Note",
-      theme: ThemeData(primarySwatch: Colors.blueGrey),
+      theme: ThemeData(
+        primarySwatch: Colors.cyan,
+      ),
       routes: {
         'hp': (context) => HomePage(),
         'lp': (context) => LoginPage(),

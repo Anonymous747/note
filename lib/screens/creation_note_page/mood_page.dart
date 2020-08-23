@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:note/model/smile_element.dart';
+import 'package:note/widgets/smiles/smile_export.dart';
 import 'package:note/widgets/texts/font_white_text.dart';
 
 class MoodPage extends StatefulWidget {
@@ -9,10 +11,20 @@ class MoodPage extends StatefulWidget {
 class _MoodPageState extends State<MoodPage> {
   ValueNotifier<double> sliderNotifier;
 
+  List<SmileElement> smiles = [
+    new SmileElement(RealyTerribleSmile(), 'really terrible'),
+    new SmileElement(SomewhatBadSmile(), 'somewhat bad'),
+    new SmileElement(CompletelyOkaySmile(), 'completely okay'),
+    new SmileElement(PrettyGoodSmile(), 'pretty good'),
+    new SmileElement(SuperAwesomeSmile(), 'super awesome'),
+  ];
+
   @override
   void initState() {
     super.initState();
     sliderNotifier = ValueNotifier<double>(50);
+
+    sliderNotifier.addListener(() {});
   }
 
   @override
@@ -25,26 +37,62 @@ class _MoodPageState extends State<MoodPage> {
         left: _width * 0.05,
         right: _width * 0.05,
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: Stack(
         children: [
           TitleWhiteText(
             text: 'How was your day today?',
             align: TextAlign.start,
           ),
-          ValueListenableBuilder(
+          ValueListenableBuilder<double>(
               valueListenable: sliderNotifier,
               builder: (context, points, child) {
-                return child;
-              },
-              child: Slider(
-                  value: 50,
-                  min: 0,
-                  max: 100,
-                  onChanged: (double value) {
-                    sliderNotifier.value = value;
-                  })),
+                int index = (points / 20).floor();
+                return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      smiles[index].smile,
+                      SizedBox(
+                        height: _height * 0.05,
+                      ),
+                      SliderTheme(
+                        data: SliderThemeData(
+                          trackHeight: 3,
+                          inactiveTickMarkColor: Colors.white,
+                          activeTickMarkColor: Colors.white,
+                          activeTrackColor: Colors.white70,
+                          disabledActiveTrackColor: Colors.white,
+                          valueIndicatorColor: Colors.white,
+                          inactiveTrackColor: Colors.black26,
+                          thumbColor: Colors.white,
+                          overlayColor: Colors.transparent,
+                        ),
+                        child: Slider(
+                          value: sliderNotifier.value,
+                          min: 0,
+                          max: 99,
+                          onChanged: (double value) {
+                            sliderNotifier.value = value;
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Rate your day'.toUpperCase(),
+                            style: TextStyle(color: Colors.white24),
+                          ),
+                          Text(
+                            smiles[index].smileName.toUpperCase(),
+                            style: TextStyle(color: Colors.white),
+                          )
+                        ],
+                      )
+                    ]);
+              })
         ],
       ),
     );
