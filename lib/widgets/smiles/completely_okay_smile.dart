@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:note/widgets/painting/line.dart';
-import 'package:note/widgets/painting/my_custom_painter.dart';
 import 'package:note/widgets/smiles/smile.dart';
 
 class CompletelyOkaySmile extends Smile {

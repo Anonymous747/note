@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:note/widgets/painting/line.dart';
 import 'package:note/widgets/smiles/smile.dart';
 
 class PrettyGoodSmile extends Smile {

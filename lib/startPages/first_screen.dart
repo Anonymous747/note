@@ -8,12 +8,11 @@ import 'package:note/widgets/logo_widget.dart';
 import 'package:note/widgets/raised_white_button.dart';
 
 class FirstScreen extends StatefulWidget {
-  final PageController _pageController;
+  // final PageController _pageController;
   final Color textColor;
+  final Function buttonFunction;
 
-  FirstScreen({PageController pageController, this.textColor})
-      : assert(pageController != null),
-        _pageController = pageController;
+  FirstScreen({this.textColor, this.buttonFunction});
 
   @override
   _FirstScreenState createState() => _FirstScreenState();
@@ -159,11 +158,12 @@ class _FirstScreenState extends State<FirstScreen> {
                                     ),
                                     textColor: widget.textColor,
                                     height: _height * 0.08,
-                                    onPressed: () {
-                                      widget._pageController.animateToPage(1,
-                                          duration: Duration(milliseconds: 800),
-                                          curve: Curves.easeInCubic);
-                                    },
+                                    onPressed: widget.buttonFunction,
+                                    // onPressed: () {
+                                    // widget._pageController.animateToPage(1,
+                                    //     duration: Duration(milliseconds: 800),
+                                    //     curve: Curves.easeInCubic);
+                                    // },
                                   ),
                                 )
                               ],
