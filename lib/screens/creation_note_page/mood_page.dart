@@ -4,6 +4,10 @@ import 'package:note/widgets/smiles/smile_export.dart';
 import 'package:note/widgets/texts/font_white_text.dart';
 
 class MoodPage extends StatefulWidget {
+  final Function sliderFunction;
+
+  MoodPage({this.sliderFunction});
+
   @override
   _MoodPageState createState() => _MoodPageState();
 }
@@ -67,13 +71,16 @@ class _MoodPageState extends State<MoodPage> {
                           overlayColor: Colors.transparent,
                         ),
                         child: Slider(
-                          value: sliderNotifier.value,
-                          min: 0,
-                          max: 99,
-                          onChanged: (double value) {
-                            sliderNotifier.value = value;
-                          },
-                        ),
+                            value: sliderNotifier.value,
+                            min: 0,
+                            max: 99,
+                            onChanged: (double value) {
+                              sliderNotifier.value = value;
+                            },
+                            onChangeEnd: (point) {
+                              print(point.round());
+                              widget.sliderFunction();
+                            }),
                       ),
                       SizedBox(
                         height: 10,
