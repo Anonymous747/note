@@ -3,6 +3,7 @@ import 'package:note/screens/creation_note_page/day_value_page.dart';
 import 'package:note/screens/creation_note_page/first_note_page.dart';
 import 'package:note/screens/creation_note_page/happened_page.dart';
 import 'package:note/screens/creation_note_page/mood_page.dart';
+import 'package:note/screens/creation_note_page/random_question_page.dart';
 import 'package:note/screens/creation_note_page/smile_page.dart';
 import 'package:note/utils/consts.dart';
 import 'package:note/widgets/alert_dialogs.dart';
@@ -89,7 +90,10 @@ class _MakeNoteActivityState extends State<MakeNoteActivity> {
                     textColor: listColor[widget.colorIndex].colors.last,
                     buttonFunction: transitionFunction,
                   ),
-                  SmilePage()
+                  SmilePage(
+                    buttonFunction: transitionFunction,
+                  ),
+                  RandomQuestionPage(),
                 ],
               ),
             ),

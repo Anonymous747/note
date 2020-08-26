@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class IconElement {
-  Icon icon;
-  String iconName;
+  final Icon icon;
+  final String iconName;
   Color iconColor;
 
-  IconElement(this.icon, this.iconName, this.iconColor);
+  IconElement(this.icon, this.iconName, {this.iconColor});
 }

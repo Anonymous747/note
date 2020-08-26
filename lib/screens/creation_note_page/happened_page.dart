@@ -29,7 +29,7 @@ class _HappenedPageState extends State<HappenedPage> {
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
-    textFieldNotifier.value = false;
+    // textFieldNotifier.value = false;
     return Padding(
       padding: EdgeInsets.only(top: _height * 0.2, left: 20, right: 20),
       child: Stack(
@@ -43,32 +43,38 @@ class _HappenedPageState extends State<HappenedPage> {
               // top: 0,
               left: _width * 0.2,
               duration: Duration(milliseconds: 400),
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                // crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  RaisedWhiteButton(
-                    width: _height * 0.25,
-                    text: Text(
-                      'YES!',
+              child: AnimatedOpacity(
+                duration: Duration(milliseconds: 150),
+                opacity: truth ? 1 : 0,
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  // crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    RaisedWhiteButton(
+                      width: _height * 0.25,
+                      text: Text(
+                        'YES!',
+                      ),
+                      textColor: widget.textColor ?? Colors.black54,
+                      height: _height * 0.08,
+                      onPressed: () {
+                        textFieldNotifier.value = false;
+                      },
                     ),
-                    textColor: widget.textColor ?? Colors.black54,
-                    height: _height * 0.08,
-                    onPressed: () {},
-                  ),
 
-                  SizedBox(
-                    height: 5,
-                  ),
-                  // bottom: ,
-                  FlatTransparentButton(
-                    text: Text(
-                      'No Thanks'.toUpperCase(),
-                      style: TextStyle(color: Colors.white24),
+                    SizedBox(
+                      height: 5,
                     ),
-                    function: widget.buttonFunction,
-                  ),
-                ],
+                    // bottom: ,
+                    FlatTransparentButton(
+                      text: Text(
+                        'No Thanks'.toUpperCase(),
+                        style: TextStyle(color: Colors.white24),
+                      ),
+                      function: widget.buttonFunction,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -76,18 +82,22 @@ class _HappenedPageState extends State<HappenedPage> {
               valueListenable: textFieldNotifier,
               builder: (_, truth, __) {
                 return AnimatedPositioned(
-                    top: truth ? _height : _height * 0.15,
-                    // bottom: truth ? 240 : _height * 0.3,
-                    duration: Duration(milliseconds: 400),
-                    child: ConstrainedBox(
-                      constraints:
-                          BoxConstraints.loose(Size(_width, _height * 0.5)),
-                      child: CustomTextField(
-                        controller: textController,
-                        hintText: 'Today was MOOD becouse...',
-                        minLines: 10,
-                      ),
-                    ));
+                  top: truth ? _height : _height * 0.1,
+                  // bottom: truth ? 240 : _height * 0.3,
+                  duration: Duration(milliseconds: 400),
+                  child: AnimatedOpacity(
+                      opacity: truth ? 0 : 1,
+                      duration: Duration(milliseconds: 150),
+                      child: ConstrainedBox(
+                        constraints:
+                            BoxConstraints.loose(Size(_width, _height * 0.5)),
+                        child: CustomTextField(
+                          controller: textController,
+                          hintText: 'Today was MOOD becouse...',
+                          minLines: 10,
+                        ),
+                      )),
+                );
               })
         ],
       ),

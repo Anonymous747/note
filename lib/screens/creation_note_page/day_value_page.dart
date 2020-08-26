@@ -14,16 +14,19 @@ class DayValuePage extends StatefulWidget {
 
 class _DayValuePageState extends State<DayValuePage> {
   List<IconElement> icons = [
-    new IconElement(Icon(Icons.work), 'work', Colors.white),
-    new IconElement(Icon(Icons.home_sharp), 'family', Colors.white),
-    new IconElement(
-        Icon(Icons.ring_volume_sharp), 'relationship', Colors.white),
-    new IconElement(Icon(Icons.masks), 'education', Colors.white),
-    new IconElement(Icon(Icons.access_time), 'food', Colors.white),
-    new IconElement(Icon(Icons.access_time), 'traveling', Colors.white),
-    new IconElement(Icon(Icons.access_time), 'friends', Colors.white),
-    new IconElement(Icon(Icons.public), 'exercise', Colors.white),
-    new IconElement(Icon(Icons.add), 'other', Colors.black26),
+    new IconElement(Icon(Icons.work), 'work', iconColor: Colors.white),
+    new IconElement(Icon(Icons.home_sharp), 'family', iconColor: Colors.white),
+    new IconElement(Icon(Icons.ring_volume_sharp), 'relationship',
+        iconColor: Colors.white),
+    new IconElement(Icon(Icons.masks), 'education', iconColor: Colors.white),
+    new IconElement(Icon(Icons.emoji_flags), 'food', iconColor: Colors.white),
+    new IconElement(Icon(Icons.emoji_emotions), 'traveling',
+        iconColor: Colors.white),
+    new IconElement(Icon(Icons.emoji_events), 'friends',
+        iconColor: Colors.white),
+    new IconElement(Icon(Icons.emoji_nature), 'exercise',
+        iconColor: Colors.white),
+    new IconElement(Icon(Icons.add), 'other', iconColor: Colors.black26),
   ];
 
   @override
