@@ -8,7 +8,6 @@ class NicknamePage extends StatefulWidget {
 
 class _NicknamePageState extends State<NicknamePage> {
   TextEditingController _nickController = new TextEditingController();
-  String _nickname = '';
   @override
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
@@ -28,39 +27,28 @@ class _NicknamePageState extends State<NicknamePage> {
             padding: EdgeInsets.only(top: _height * 0.22),
             child: SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  // CustomTextField(
+                  //     controller: _nickController,
+                  //     helperText: 'your nickname'.toUpperCase(),
+                  //     hintText: "Nickname",
+                  //     minLines: 1,
+                  //     maxLines: 1, ),
                   TextField(
-                    onChanged: (text) {
-                      setState(() {
-                        _nickname = text;
-                      });
-                    },
-                    smartQuotesType: SmartQuotesType.enabled,
                     controller: _nickController,
                     decoration: InputDecoration(
                         border: InputBorder.none,
-                        counterText: "",
+                        helperText: 'your nickname'.toUpperCase(),
+                        helperStyle: TextStyle(color: Colors.white30),
+                        counterStyle: TextStyle(color: Colors.white30),
                         hintText: "Nickname",
                         hintStyle:
                             TextStyle(fontSize: 20, color: Colors.white54)),
-                    keyboardType: TextInputType.emailAddress,
+                    keyboardType: TextInputType.name,
                     style: TextStyle(color: Colors.white),
-                    autocorrect: false,
                     maxLength: 32,
-                    maxLengthEnforced: true,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        'your nickname'.toUpperCase(),
-                        style: TextStyle(color: Colors.white30),
-                      ),
-                      Text('${_nickname.length} / 32',
-                          style: TextStyle(color: Colors.white30)),
-                    ],
-                  )
                 ],
               ),
             ),

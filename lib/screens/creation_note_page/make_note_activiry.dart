@@ -5,6 +5,7 @@ import 'package:note/screens/creation_note_page/happened_page.dart';
 import 'package:note/screens/creation_note_page/mood_page.dart';
 import 'package:note/screens/creation_note_page/random_question_page.dart';
 import 'package:note/screens/creation_note_page/smile_page.dart';
+import 'package:note/screens/creation_note_page/title_page.dart';
 import 'package:note/utils/consts.dart';
 import 'package:note/widgets/alert_dialogs.dart';
 import 'package:note/widgets/logo_widget.dart';
@@ -25,6 +26,7 @@ class _MakeNoteActivityState extends State<MakeNoteActivity> {
   Tween<double> positionLogo;
   ValueNotifier<double> logoNotifier;
   bool isLogoStartState;
+  List<Widget> pages;
 
   @override
   void initState() {
@@ -39,16 +41,45 @@ class _MakeNoteActivityState extends State<MakeNoteActivity> {
       _currentIndex = controller.page.round();
       logoNotifier.value = controller.page;
     });
+    Color currentColor = listColor[widget.colorIndex].colors.last;
+    pages = [
+      FirstNotePage(
+        index: widget.colorIndex,
+        buttonFunction: transitionFunction,
+      ),
+      MoodPage(
+        sliderFunction: transitionFunction,
+      ),
+      DayValuePage(
+        buttonFunction: transitionFunction,
+      ),
+      HappenedPage(
+        textColor: currentColor,
+        buttonFunction: transitionFunction,
+      ),
+      SmilePage(
+        buttonFunction: transitionFunction,
+      ),
+      RandomQuestionPage(
+        buttonFunction: transitionFunction,
+        textColor: currentColor,
+      ),
+      TitlePage(
+        textColor: currentColor,
+      )
+    ];
   }
 
   void transitionFunction() {
     if (controller.page == 0) isLogoStartState = false;
+    if (controller.page == pages.length - 2) isLogoStartState = true;
     controller.animateToPage(_currentIndex + 1,
         duration: Duration(milliseconds: 1000), curve: Curves.easeInExpo);
   }
 
   Future<bool> onBackPressed() async {
     if (controller.page != 0) {
+      if (controller.page == pages.length - 1) isLogoStartState = false;
       if (controller.page == 1) isLogoStartState = true;
       controller.animateToPage(_currentIndex - 1,
           duration: Duration(milliseconds: 1000), curve: Curves.easeInOut);
@@ -71,30 +102,36 @@ class _MakeNoteActivityState extends State<MakeNoteActivity> {
             AnimatedContainer(
               duration: Duration(milliseconds: 400),
               decoration: BoxDecoration(gradient: listColor[widget.colorIndex]),
-              child: PageView(
+              child: PageView.builder(
                 physics: NeverScrollableScrollPhysics(parent: null),
                 scrollDirection: Axis.vertical,
                 controller: controller,
-                children: [
-                  FirstNotePage(
-                    index: widget.colorIndex,
-                    buttonFunction: transitionFunction,
-                  ),
-                  MoodPage(
-                    sliderFunction: transitionFunction,
-                  ),
-                  DayValuePage(
-                    buttonFunction: transitionFunction,
-                  ),
-                  HappenedPage(
-                    textColor: listColor[widget.colorIndex].colors.last,
-                    buttonFunction: transitionFunction,
-                  ),
-                  SmilePage(
-                    buttonFunction: transitionFunction,
-                  ),
-                  RandomQuestionPage(),
-                ],
+                itemCount: pages.length,
+                itemBuilder: (context, index) => pages[index],
+                // children: [
+                //   FirstNotePage(
+                //     index: widget.colorIndex,
+                //     buttonFunction: transitionFunction,
+                //   ),
+                //   MoodPage(
+                //     sliderFunction: transitionFunction,
+                //   ),
+                //   DayValuePage(
+                //     buttonFunction: transitionFunction,
+                //   ),
+                //   HappenedPage(
+                //     textColor: listColor[widget.colorIndex].colors.last,
+                //     buttonFunction: transitionFunction,
+                //   ),
+                //   SmilePage(
+                //     buttonFunction: transitionFunction,
+                //   ),
+                //   RandomQuestionPage(
+                //     buttonFunction: transitionFunction,
+                //     textColor: listColor[widget.colorIndex].colors.last,
+                //   ),
+                //   TitlePage()
+                // ],
               ),
             ),
             TweenAnimationBuilder<double>(

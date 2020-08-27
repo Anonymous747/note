@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:note/startPages/color_page.dart';
 import 'package:note/startPages/first_screen.dart';
 import 'package:note/startPages/nickname_page.dart';
@@ -26,6 +27,7 @@ class _StartPageState extends State<StartPage> {
   int _currentIndexColor;
   Tween _animationColor;
   bool isLogoStartState;
+  List<Widget> pages;
 
   @override
   void initState() {
@@ -54,6 +56,25 @@ class _StartPageState extends State<StartPage> {
       _currentIndex = _pageController.page.round();
       pageNotifier.value = _pageController.page;
     });
+
+    pages = [
+      FirstScreen(
+        // pageController: _pageController,
+        textColor: listColor[_currentIndexColor].colors[1],
+        buttonFunction: transitionFunction,
+      ),
+      NicknamePage(),
+      ColorPage(
+        initialIndex: _currentIndexColor,
+        valueChanged: (index) {
+          setState(() {
+            _animationColor = Tween(begin: 4.0, end: 0.0);
+            _currentIndexColor = index;
+            _animationColor = Tween(begin: 0.0, end: 2.3);
+          });
+        },
+      ),
+    ];
   }
 
   void transitionFunction() {
@@ -108,28 +129,12 @@ class _StartPageState extends State<StartPage> {
             SizedBox(
               height: _height,
               width: _width,
-              child: PageView(
+              child: PageView.builder(
                 physics: NeverScrollableScrollPhysics(parent: null),
                 controller: _pageController,
                 scrollDirection: Axis.vertical,
-                children: <Widget>[
-                  FirstScreen(
-                    // pageController: _pageController,
-                    textColor: listColor[_currentIndexColor].colors[1],
-                    buttonFunction: transitionFunction,
-                  ),
-                  NicknamePage(),
-                  ColorPage(
-                    initialIndex: _currentIndexColor,
-                    valueChanged: (index) {
-                      setState(() {
-                        _animationColor = Tween(begin: 4.0, end: 0.0);
-                        _currentIndexColor = index;
-                        _animationColor = Tween(begin: 0.0, end: 2.3);
-                      });
-                    },
-                  ),
-                ],
+                itemCount: pages.length,
+                itemBuilder: (context, index) => pages[index],
               ),
             ),
             TweenAnimationBuilder<double>(
@@ -157,7 +162,7 @@ class _StartPageState extends State<StartPage> {
                             );
                           },
                         ),
-                        top: _height * 0.1,
+                        top: _height * 0.05,
                         left: isLogoStartState ? _width / 2 - 50 : 0,
                       );
                     },
@@ -225,54 +230,73 @@ class _StartPageState extends State<StartPage> {
                 valueListenable: pageNotifier,
                 builder: (_, page, __) {
                   return AnimatedPositioned(
-                      top: _height * 0.15,
-                      right: isLogoStartState ? -40 : 10,
-                      width: 40,
-                      duration: Duration(milliseconds: 400),
-                      curve: Curves.easeOutCubic,
-                      child: Column(
-                        children: <Widget>[
-                          AnimatedContainer(
-                            duration: Duration(milliseconds: 300),
-                            height: 8,
-                            width: 8,
-                            decoration: BoxDecoration(
-                              color: _currentIndex == 1
-                                  ? Colors.white
-                                  : Colors.white54,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 12,
-                          ),
-                          AnimatedContainer(
-                            duration: Duration(milliseconds: 300),
-                            height: 8,
-                            width: 8,
-                            decoration: BoxDecoration(
-                              color: _currentIndex == 2
-                                  ? Colors.white
-                                  : Colors.white54,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 12,
-                          ),
-                          AnimatedContainer(
-                            duration: Duration(milliseconds: 300),
-                            height: 8,
-                            width: 8,
-                            decoration: BoxDecoration(
-                              color: _currentIndex == 3
-                                  ? Colors.white
-                                  : Colors.white54,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                        ],
-                      ));
+                    top: _height * 0.1,
+                    right: isLogoStartState ? -40 : 10,
+                    width: 40,
+                    duration: Duration(milliseconds: 400),
+                    curve: Curves.easeOutCubic,
+                    // child: Column(
+                    // children: <Widget>[
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints.loose(
+                          Size(_width * 0.1, _height * 0.1)),
+                      child: ListView.builder(
+                          itemCount: pages.length - 1,
+                          itemBuilder: (context, index) {
+                            return AnimatedContainer(
+                              margin: EdgeInsets.only(bottom: 10),
+                              duration: Duration(milliseconds: 300),
+                              height: 8,
+                              width: 8,
+                              decoration: BoxDecoration(
+                                color: page - 1 == index
+                                    ? Colors.white
+                                    : Colors.white54,
+                                shape: BoxShape.circle,
+                              ),
+                            );
+                          }),
+                    ),
+                    // AnimatedContainer(
+                    //   duration: Duration(milliseconds: 300),
+                    //   height: 8,
+                    //   width: 8,
+                    //   decoration: BoxDecoration(
+                    //     color: _currentIndex == 1
+                    //         ? Colors.white
+                    //         : Colors.white54,
+                    //     shape: BoxShape.circle,
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: 12,
+                    // ),
+                    // AnimatedContainer(
+                    //   duration: Duration(milliseconds: 300),
+                    //   height: 8,
+                    //   width: 8,
+                    //   decoration: BoxDecoration(
+                    //     color: _currentIndex == 2
+                    //         ? Colors.white
+                    //         : Colors.white54,
+                    //     shape: BoxShape.circle,
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: 12,
+                    // ),
+                    // AnimatedContainer(
+                    //   duration: Duration(milliseconds: 300),
+                    //   height: 8,
+                    //   width: 8,
+                    //   decoration: BoxDecoration(
+                    //     color: _currentIndex == 3
+                    //         ? Colors.white
+                    //         : Colors.white54,
+                    //     shape: BoxShape.circle,
+                    //   ),
+                    // ),
+                  );
                 }),
           ],
         ),

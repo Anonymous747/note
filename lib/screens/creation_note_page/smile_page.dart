@@ -89,8 +89,7 @@ class _SmilePageState extends State<SmilePage> {
                             opacity: max<double>(
                                 0, 1 - (currentSmile - index).abs()),
                             child: Text(icons[index].iconName,
-                                style:
-                                    TextStyle(color: icons[index].iconColor)),
+                                style: TextStyle(color: Colors.white)),
                           ),
                         ],
                       ),
