@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note/bloc/bloc_creation/bloc.dart';
 import 'package:note/widgets/custom_text_field.dart';
 import 'package:note/widgets/flat_transparent_button.dart';
 import 'package:note/widgets/raised_white_button.dart';
@@ -39,6 +41,7 @@ class _RandomQuestionPageState extends State<RandomQuestionPage> {
     double _width = MediaQuery.of(context).size.width;
     Random number = Random();
     // textFieldNotifier.value = false;
+    String question = questions[number.nextInt(questions.length)];
     return Padding(
       padding: EdgeInsets.only(top: _height * 0.2, left: 20, right: 20),
       child: Stack(
@@ -46,7 +49,7 @@ class _RandomQuestionPageState extends State<RandomQuestionPage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              TitleWhiteText(text: questions[number.nextInt(questions.length)]),
+              TitleWhiteText(text: question),
               SizedBox(
                 height: 15,
               ),
@@ -92,7 +95,12 @@ class _RandomQuestionPageState extends State<RandomQuestionPage> {
                         'No Thanks'.toUpperCase(),
                         style: TextStyle(color: Colors.white24),
                       ),
-                      function: widget.buttonFunction,
+                      function: () {
+                        BlocProvider.of<CreationBloc>(context).add(
+                            CreationRandomQuestionChanged(
+                                randomQuestion: question, answer: ''));
+                        widget.buttonFunction();
+                      },
                     ),
                   ],
                 ),
@@ -116,6 +124,13 @@ class _RandomQuestionPageState extends State<RandomQuestionPage> {
                           controller: textController,
                           hintText: 'Hmm, well...',
                           minLines: 20,
+                          onEditingComplete: () {
+                            BlocProvider.of<CreationBloc>(context).add(
+                                CreationRandomQuestionChanged(
+                                    randomQuestion: question,
+                                    answer: textController.text));
+                            widget.buttonFunction();
+                          },
                         ),
                       )),
                 );

@@ -6,13 +6,15 @@ class CustomTextField extends StatelessWidget {
   final String helperText;
   final int minLines;
   final int maxLines;
+  final Function onEditingComplete;
 
   CustomTextField(
       {this.controller,
       this.hintText,
       this.helperText,
       this.maxLines,
-      this.minLines});
+      this.minLines,
+      this.onEditingComplete});
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,7 @@ class CustomTextField extends StatelessWidget {
       minLines: minLines,
       maxLines: maxLines,
       style: TextStyle(color: Colors.white),
+      onEditingComplete: onEditingComplete,
     );
   }
 }

@@ -55,13 +55,12 @@ class _HomePageState extends State<HomePage> {
                 if (user1 != null) {
                   return Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return BlocProvider.of<NoteBloc>(context) ??
-                        BlocProvider<NoteBloc>(
-                          create: (context) => NoteBloc(
-                            repository: new RemDataRepImpl(),
-                          ),
-                          child: NotePage(user: user1),
-                        );
+                    return BlocProvider<NoteBloc>(
+                      create: (context) => NoteBloc(
+                        repository: new RemDataRepImpl(),
+                      ),
+                      child: NotePage(user: user1),
+                    );
                   }));
                 }
               },

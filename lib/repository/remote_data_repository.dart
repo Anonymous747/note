@@ -6,14 +6,14 @@ import 'package:note/model/element_note.dart';
 abstract class RemDataRep {}
 
 class RemDataRepImpl extends RemDataRep {
-  FirebaseAuth auth;
+  FirebaseAuth authentication;
 
   RemDataRepImpl() {
-    auth = FirebaseAuth.instance;
+    authentication = FirebaseAuth.instance;
   }
 
   Future<List<ElementNote>> fetchNotes() async {
-    FirebaseUser user = await auth.currentUser();
+    FirebaseUser user = await authentication.currentUser();
     if (user != null) {
       QuerySnapshot query =
           await Firestore.instance.collection(user.uid).getDocuments();
@@ -24,15 +24,28 @@ class RemDataRepImpl extends RemDataRep {
     return new List<ElementNote>();
   }
 
-  Future<void> makeNote(String title, String text) async {
+  Future<void> makeNote(
+      {DateTime date,
+      String title,
+      String happened,
+      int percentFun,
+      int iconPreferences,
+      int feelingIcon,
+      String randomQuestion,
+      String answer}) async {
     try {
-      FirebaseUser user = await auth.currentUser();
+      FirebaseUser user = await authentication.currentUser();
       if (user != null) {
         //QuerySnapshot query =
         //    await Firestore.instance.collection(user.uid).getDocuments();
         await Firestore.instance.collection(user.uid).document(title).setData({
-          "title": title,
-          "text": text,
+          'title': title,
+          'date': '${date.month}.${date.day}.${date.year}',
+          'happened': happened,
+          'percentFun': percentFun,
+          'feelingIcon': feelingIcon,
+          'randomQuestion': randomQuestion,
+          'answer': answer
         });
       }
       return true;
@@ -44,7 +57,7 @@ class RemDataRepImpl extends RemDataRep {
 
   Future<void> removeNote(String text) async {
     try {
-      FirebaseUser user = await auth.currentUser();
+      FirebaseUser user = await authentication.currentUser();
       if (user != null) {
         QuerySnapshot snap =
             await Firestore.instance.collection(user.uid).getDocuments();

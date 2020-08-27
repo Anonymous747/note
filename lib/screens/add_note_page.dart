@@ -131,8 +131,8 @@ class _AddingNotePageState extends State<AddingNotePage> {
         floatingActionButton: FloatingActionButton(
             child: Icon(Icons.note_add),
             onPressed: () async {
-              widget.repository
-                  .makeNote(titleController.text, textController.text);
+              // widget.repository
+              //     .makeNote(titleController.text, textController.text);
               FirebaseUser user = await FirebaseAuth.instance.currentUser();
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) {

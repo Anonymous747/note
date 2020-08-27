@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note/bloc/bloc_creation/bloc.dart';
 import 'package:note/model/icon_element.dart';
 import 'package:note/widgets/texts/font_white_text.dart';
 
@@ -46,6 +48,9 @@ class _DayValuePageState extends State<DayValuePage> {
                     9,
                     (index) => InkWell(
                           onTap: () {
+                            BlocProvider.of<CreationBloc>(context).add(
+                                CreationIconPreferencesChanged(
+                                    iconPreferences: index));
                             widget.buttonFunction();
                           },
                           child: Column(

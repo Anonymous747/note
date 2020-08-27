@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note/bloc/bloc_creation/bloc.dart';
 import 'package:note/model/icon_element.dart';
 import 'package:note/widgets/texts/font_white_text.dart';
 
@@ -70,7 +72,11 @@ class _SmilePageState extends State<SmilePage> {
                   return Padding(
                     padding: EdgeInsets.only(top: 100 - scale * 30),
                     child: InkWell(
-                      onTap: widget.buttonFunction,
+                      onTap: () {
+                        BlocProvider.of<CreationBloc>(context).add(
+                            CreationFeelingIconChanged(feelingIcon: index));
+                        widget.buttonFunction();
+                      },
                       child: Column(
                         children: [
                           AnimatedOpacity(

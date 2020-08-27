@@ -6,7 +6,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/bloc/bloc_note/bloc.dart';
-import 'package:note/bloc/bloc_note/note_bloc.dart';
 import 'package:note/model/element_note.dart';
 import 'package:note/screens/creation_note_page/make_note_activiry.dart';
 import 'package:note/widgets/cells/add_cell.dart';

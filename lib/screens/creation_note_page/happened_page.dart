@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note/bloc/bloc_creation/bloc.dart';
 import 'package:note/widgets/custom_text_field.dart';
 import 'package:note/widgets/flat_transparent_button.dart';
 import 'package:note/widgets/raised_white_button.dart';
@@ -95,6 +97,12 @@ class _HappenedPageState extends State<HappenedPage> {
                           controller: textController,
                           hintText: 'Today was MOOD becouse...',
                           minLines: 10,
+                          onEditingComplete: () {
+                            BlocProvider.of<CreationBloc>(context).add(
+                                CreationHappenedChanged(
+                                    happened: textController.text));
+                            widget.buttonFunction();
+                          },
                         ),
                       )),
                 );

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note/bloc/bloc_creation/bloc.dart';
 import 'package:note/model/smile_element.dart';
 import 'package:note/widgets/smiles/smile_export.dart';
 import 'package:note/widgets/texts/font_white_text.dart';
@@ -79,6 +81,9 @@ class _MoodPageState extends State<MoodPage> {
                             },
                             onChangeEnd: (point) {
                               print(point.round());
+                              BlocProvider.of<CreationBloc>(context).add(
+                                  CreationPercentFunChanged(
+                                      percentFun: point.round()));
                               widget.sliderFunction();
                             }),
                       ),

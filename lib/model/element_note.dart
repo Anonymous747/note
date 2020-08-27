@@ -1,18 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 class ElementNote {
-  final DateTime date;
-  final String title;
-  final String happened;
-  final int percentFun;
-  final int iconPreferences;
-  final int feelingIcon;
-  final String randomQuestion;
-  final String answer;
+  DateTime date;
+  String title;
+  String happened;
+  int percentFun;
+  int iconPreferences;
+  int feelingIcon;
+  String randomQuestion;
+  String answer;
 
   ElementNote(
-      {@required this.date,
+      {this.date,
       this.title,
       this.happened,
       this.percentFun,
