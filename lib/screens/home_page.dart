@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                       create: (context) => NoteBloc(
                         repository: new RemDataRepImpl(),
                       ),
-                      child: NotePage(user: user1),
+                      child: NotePage(),
                     );
                   }));
                 }

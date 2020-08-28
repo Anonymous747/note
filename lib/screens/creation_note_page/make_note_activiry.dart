@@ -68,6 +68,7 @@ class _MakeNoteActivityState extends State<MakeNoteActivity> {
       ),
       TitlePage(
         textColor: currentColor,
+        backFunction: onBackPressed,
       )
     ];
   }

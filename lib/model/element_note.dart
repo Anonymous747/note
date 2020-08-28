@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class ElementNote {
   DateTime date;
@@ -22,11 +23,11 @@ class ElementNote {
 
   factory ElementNote.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data;
-
+    DateFormat dateFormat = DateFormat.yMMMd();
     return ElementNote(
       title: data['title'].toString() ?? '',
       happened: data['happened'].toString() ?? '',
-      date: DateTime.parse(data['date'].toString()) ?? DateTime.now(),
+      date: dateFormat.parse(data['date']),
       percentFun: int.parse(data['percentFun'].toString()),
       iconPreferences: int.parse(data['iconPreferences'].toString()),
       feelingIcon: int.parse(data['iconPreferences'].toString()),

@@ -138,9 +138,7 @@ class _AddingNotePageState extends State<AddingNotePage> {
                 MaterialPageRoute(builder: (context) {
                   return BlocProvider<NoteBloc>.value(
                     value: NoteBloc(repository: widget.repository),
-                    child: NotePage(
-                      user: user,
-                    ),
+                    child: NotePage(),
                   );
                 }),
               );

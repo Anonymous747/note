@@ -15,10 +15,9 @@ import 'package:note/utils/consts.dart';
 import 'package:note/widgets/route_anim/fade_route.dart';
 
 class NotePage extends StatefulWidget {
-  final FirebaseUser user;
   final int initialIndex;
 
-  NotePage({this.user, this.initialIndex});
+  NotePage({this.initialIndex});
 
   @override
   _NotePageState createState() => _NotePageState();
@@ -197,7 +196,7 @@ class _NotePageState extends State<NotePage> {
                         return PageView.builder(
                             // physics: BouncingScrollPhysics(),
                             controller: controller,
-                            itemCount: textList.length + 1,
+                            itemCount: list.length + 1,
                             itemBuilder: (context, index) {
                               if (index + 2 >= page && index - 2 <= page) {
                                 double scale = max(
@@ -223,8 +222,7 @@ class _NotePageState extends State<NotePage> {
                                             )));
                                           }));
                                 }
-                                ElementNote currentElement =
-                                    textList[index - 1];
+                                ElementNote currentElement = list[index - 1];
                                 return Container(
                                     alignment: Alignment.centerRight,
                                     padding: EdgeInsets.only(

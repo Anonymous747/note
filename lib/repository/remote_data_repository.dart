@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:note/model/element_note.dart';
+import 'package:intl/date_symbol_data_file.dart';
 
 abstract class RemDataRep {}
 
@@ -40,8 +42,9 @@ class RemDataRepImpl extends RemDataRep {
         //    await Firestore.instance.collection(user.uid).getDocuments();
         await Firestore.instance.collection(user.uid).document(title).setData({
           'title': title,
-          'date': '${date.month}.${date.day}.${date.year}',
+          'date': new DateFormat.yMMMd().format(new DateTime.now()),
           'happened': happened,
+          'iconPreferences': iconPreferences,
           'percentFun': percentFun,
           'feelingIcon': feelingIcon,
           'randomQuestion': randomQuestion,

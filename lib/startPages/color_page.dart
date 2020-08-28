@@ -149,7 +149,6 @@ class _ColorPageState extends State<ColorPage> {
           builder: (context) => BlocProvider<NoteBloc>(
             create: (context) => NoteBloc(repository: RemDataRepImpl()),
             child: NotePage(
-              user: currentUser,
               initialIndex: 1,
             ),
           ),
