@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:note/utils/consts.dart';
-import 'package:note/screens/goals_page.dart';
 
 class ListCell extends StatelessWidget {
   final DateTime date;

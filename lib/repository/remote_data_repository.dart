@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:note/model/element_note.dart';
-import 'package:intl/date_symbol_data_file.dart';
 
 abstract class RemDataRep {}
 

@@ -25,27 +25,16 @@ class NotePage extends StatefulWidget {
 
 class _NotePageState extends State<NotePage> {
   PageController controller;
-  NoteBloc bloc;
+  // NoteBloc bloc;
   final double viewportFraction = 0.8;
   double pageOffset;
   ValueNotifier<double> _pageNotifier;
   // final GlobalKey<AnimatedListState> _listKey = GlobalKey();
-  List<ElementNote> textList = [
-    new ElementNote(
-        date: DateTime.parse('11.11.2000'.split('.').reversed.join()),
-        title: 'My Title1',
-        happened: 'Some things'),
-    new ElementNote(
-        date: DateTime.parse('11.11.2000'.split('.').reversed.join()),
-        title: 'My Title2',
-        happened: 'Some things'),
-  ];
-
   @override
   void initState() {
     super.initState();
-    bloc = BlocProvider.of<NoteBloc>(context);
-    bloc.add(FetchNotes());
+    // bloc = BlocProvider.of<NoteBloc>(context);
+    // bloc.add(FetchNotes());
     pageOffset = 0;
     controller = PageController(
         initialPage: pageOffset.round(), viewportFraction: viewportFraction);
@@ -60,25 +49,28 @@ class _NotePageState extends State<NotePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: CustomDrawer(),
-      body: BlocListener<NoteBloc, NoteState>(
-        listener: (context, state) {
-          if (state is NoteErrorState) {
-            buildError(state.message);
-          }
-        },
-        child: BlocBuilder<NoteBloc, NoteState>(
-          builder: (context, state) {
-            if (state is NoteInitState) {
-              return Container();
-            } else if (state is NoteLoadingState) {
-              return buidLoading();
-            } else if (state is NoteLoadedState) {
-              return buildLoaded(state.element, state.colorIndex);
-            } else if (state is NoteErrorState) {
-              return buildError(state.message);
+      body: BlocProvider<NoteBloc>(
+        create: (context) => NoteBloc()..add(FetchNotes()),
+        child: BlocListener<NoteBloc, NoteState>(
+          listener: (context, state) {
+            if (state is NoteErrorState) {
+              buildError(state.message);
             }
-            return Container();
           },
+          child: BlocBuilder<NoteBloc, NoteState>(
+            builder: (context, state) {
+              if (state is NoteInitState) {
+                return Container();
+              } else if (state is NoteLoadingState) {
+                return buidLoading();
+              } else if (state is NoteLoadedState) {
+                return buildLoaded(state.element, state.colorIndex);
+              } else if (state is NoteErrorState) {
+                return buildError(state.message);
+              }
+              return Container();
+            },
+          ),
         ),
       ),
     );
@@ -238,7 +230,7 @@ class _NotePageState extends State<NotePage> {
                       },
                       child: PageView.builder(
                           controller: controller,
-                          itemCount: textList.length + 1,
+                          itemCount: list.length + 1,
                           itemBuilder: (context, index) {
                             double scale = max(viewportFraction,
                                 (1 - (index - index).abs() + viewportFraction));
@@ -258,7 +250,7 @@ class _NotePageState extends State<NotePage> {
                                         )));
                                       }));
                             }
-                            ElementNote currentElement = textList[index - 1];
+                            ElementNote currentElement = list[index - 1];
                             return Container(
                                 alignment: Alignment.centerRight,
                                 padding: EdgeInsets.only(

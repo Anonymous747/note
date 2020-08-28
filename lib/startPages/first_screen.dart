@@ -11,8 +11,9 @@ class FirstScreen extends StatefulWidget {
   // final PageController _pageController;
   final Color textColor;
   final Function buttonFunction;
+  final int colorIndex;
 
-  FirstScreen({this.textColor, this.buttonFunction});
+  FirstScreen({this.textColor, this.buttonFunction, this.colorIndex});
 
   @override
   _FirstScreenState createState() => _FirstScreenState();
@@ -53,12 +54,6 @@ class _FirstScreenState extends State<FirstScreen> {
   Widget build(BuildContext context) {
     Color color = Color.fromRGBO(249, 161, 154, 1);
     double _height = MediaQuery.of(context).size.height;
-
-    // Tween tween = new Tween(begin: 10.0, end: 180.0);
-    // animation.addListener(() {
-    //   setState(() {});
-    // });
-    // controller.forward();
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -181,7 +176,7 @@ class _FirstScreenState extends State<FirstScreen> {
                       child: FlatTransparentButton(
                         function: () {
                           Navigator.of(context).push(SlideRightAnimation(
-                            child: LoginPage(),
+                            child: LoginPage(colorIndex: widget.colorIndex),
                           ).buildRoute());
                         },
                         text: Text(

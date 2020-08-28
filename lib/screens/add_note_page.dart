@@ -1,19 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/bloc/bloc_adding_note/adding_note_bloc.dart';
 import 'package:note/bloc/bloc_adding_note/bloc.dart';
 import 'package:note/bloc/bloc_note/bloc.dart';
-import 'package:note/repository/remote_data_repository.dart';
 import 'package:note/screens/note_page.dart';
 
 class AddingNotePage extends StatefulWidget {
-  RemDataRepImpl repository;
-
-  AddingNotePage() {
-    repository = RemDataRepImpl();
-  }
-
   @override
   _AddingNotePageState createState() => _AddingNotePageState();
 }
@@ -55,6 +47,7 @@ class _AddingNotePageState extends State<AddingNotePage> {
             } else if (state is AddingNoteFailure) {
               return buildError(state.message);
             }
+            return Container();
           },
         ),
       ),
@@ -133,11 +126,11 @@ class _AddingNotePageState extends State<AddingNotePage> {
             onPressed: () async {
               // widget.repository
               //     .makeNote(titleController.text, textController.text);
-              FirebaseUser user = await FirebaseAuth.instance.currentUser();
+              // FirebaseUser user = await FirebaseAuth.instance.currentUser();
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) {
                   return BlocProvider<NoteBloc>.value(
-                    value: NoteBloc(repository: widget.repository),
+                    value: NoteBloc(),
                     child: NotePage(),
                   );
                 }),

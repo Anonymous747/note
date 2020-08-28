@@ -4,11 +4,9 @@ import 'package:flutter/rendering.dart';
 import 'package:note/startPages/color_page.dart';
 import 'package:note/startPages/first_screen.dart';
 import 'package:note/startPages/nickname_page.dart';
-import 'package:note/utils/animation_item.dart';
 import 'package:note/utils/consts.dart';
 import 'package:note/widgets/alert_dialogs.dart';
 import 'package:note/widgets/logo_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class StartPage extends StatefulWidget {
   final int colorIndex;
@@ -20,9 +18,8 @@ class StartPage extends StatefulWidget {
 
 class _StartPageState extends State<StartPage> {
   PageController _pageController;
-  List<AnimationItem> animationList = [];
+  // List<AnimationItem> animationList = [];
   ValueNotifier<double> pageNotifier;
-  Tween<double> positionLogo;
   int _currentIndex;
   int _currentIndexColor;
   Tween _animationColor;
@@ -49,7 +46,6 @@ class _StartPageState extends State<StartPage> {
     isLogoStartState = true;
     _pageController = PageController(initialPage: 0);
     _currentIndexColor = widget.colorIndex ?? 0;
-    // positionLogo = Tween(begin: 0.0, end: 0.0);
     _animationColor = Tween(begin: 2.3, end: 2.3);
 
     _pageController.addListener(() {
@@ -60,7 +56,8 @@ class _StartPageState extends State<StartPage> {
     pages = [
       FirstScreen(
         // pageController: _pageController,
-        textColor: listColor[_currentIndexColor].colors[1],
+        colorIndex: widget.colorIndex,
+        textColor: listColor[widget.colorIndex].colors[1],
         buttonFunction: transitionFunction,
       ),
       NicknamePage(),
@@ -162,7 +159,7 @@ class _StartPageState extends State<StartPage> {
                             );
                           },
                         ),
-                        top: _height * 0.05,
+                        top: _height * 0.1,
                         left: isLogoStartState ? _width / 2 - 50 : 0,
                       );
                     },

@@ -28,9 +28,9 @@ class ElementNote {
       title: data['title'].toString() ?? '',
       happened: data['happened'].toString() ?? '',
       date: dateFormat.parse(data['date']),
-      percentFun: int.parse(data['percentFun'].toString()),
-      iconPreferences: int.parse(data['iconPreferences'].toString()),
-      feelingIcon: int.parse(data['iconPreferences'].toString()),
+      percentFun: int.parse((data['percentFun'] ?? 0).toString()),
+      iconPreferences: int.parse((data['iconPreferences'] ?? 0).toString()),
+      feelingIcon: int.parse((data['iconPreferences'] ?? 0).toString()),
       randomQuestion: data['randomQuestion'].toString() ?? '',
       answer: data['answer'].toString() ?? '',
     );

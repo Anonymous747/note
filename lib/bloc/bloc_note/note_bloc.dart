@@ -1,15 +1,16 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
 import 'package:note/bloc/bloc_note/bloc.dart';
 import 'package:note/model/element_note.dart';
 import 'package:note/repository/remote_data_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NoteBloc extends Bloc<NoteEvent, NoteState> {
-  final RemDataRepImpl repository;
+  RemDataRepImpl repository;
 
-  NoteBloc({@required this.repository}) : super(NoteInitState());
+  NoteBloc() : super(NoteInitState()) {
+    repository = RemDataRepImpl();
+  }
 
   @override
   Stream<NoteState> mapEventToState(

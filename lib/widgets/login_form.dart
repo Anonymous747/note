@@ -2,20 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/bloc/bloc_authentication/bloc.dart';
 import 'package:note/bloc/bloc_login/bloc.dart';
-import 'package:note/repository/user_repository.dart';
 import 'package:note/screens/home_page.dart';
+import 'package:note/utils/consts.dart';
 import 'package:note/widgets/alert_dialogs.dart';
 import 'package:note/widgets/flat_transparent_button.dart';
 import 'package:note/widgets/raised_white_button.dart';
 import 'package:note/widgets/route_anim/fade_route.dart';
 
 class LoginForm extends StatefulWidget {
-  final UserRepository _userRepository;
+  // final UserRepository _userRepository;
+  final int colorIndex;
 
-  LoginForm({Key key, @required UserRepository userRepository})
-      : assert(userRepository != null),
-        _userRepository = userRepository,
-        super(key: key);
+  LoginForm({Key key, this.colorIndex}) : super(key: key);
 
   @override
   _LoginFormState createState() => _LoginFormState();
@@ -27,7 +25,7 @@ class _LoginFormState extends State<LoginForm> {
 
   LoginBloc _loginBloc;
 
-  UserRepository get _userRepository => widget._userRepository;
+  // UserRepository get _userRepository => widget._userRepository;
 
   bool get isPopulated =>
       _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty;
@@ -193,7 +191,8 @@ class _LoginFormState extends State<LoginForm> {
                                   style: TextStyle(fontSize: 15),
                                 ),
                                 height: _height * 0.08,
-                                textColor: Colors.black54,
+                                textColor:
+                                    listColor[widget.colorIndex].colors.last,
                               ),
                               FlatTransparentButton(
                                 function: () {

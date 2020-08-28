@@ -24,6 +24,18 @@ class BeginingSucces extends BeginingState {
   String toString() => 'BeginingSucces';
 }
 
+class BeginingSuccesButEnered extends BeginingState {
+  final int colorIndex;
+
+  BeginingSuccesButEnered({this.colorIndex});
+
+  @override
+  List<Object> get props => [this.colorIndex];
+
+  @override
+  String toString() => 'BeginingSucces';
+}
+
 class BeginingFailure extends BeginingState {
   final String message;
 

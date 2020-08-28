@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:note/bloc/bloc_creation/bloc.dart';
 import 'package:note/model/element_note.dart';
 import 'package:note/repository/remote_data_repository.dart';
-import 'package:note/repository/user_repository.dart';
 
 class CreationBloc extends Bloc<CreationEvent, CreationState> {
   ElementNote note;

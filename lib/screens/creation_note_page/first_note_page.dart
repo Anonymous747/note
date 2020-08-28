@@ -5,12 +5,10 @@ import 'package:note/widgets/texts/font_white_text.dart';
 import 'package:note/widgets/texts/opacity_text.dart';
 
 class FirstNotePage extends StatefulWidget {
-  int colorIndex;
+  final int colorIndex;
   final Function buttonFunction;
 
-  FirstNotePage({int index, @required this.buttonFunction}) {
-    colorIndex = index ?? 0;
-  }
+  FirstNotePage({this.colorIndex, @required this.buttonFunction});
 
   @override
   _FirstNotePageState createState() => _FirstNotePageState();

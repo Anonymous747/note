@@ -1,8 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/bloc/bloc_note/bloc.dart';
-import 'package:note/repository/remote_data_repository.dart';
 import 'package:note/screens/note_page.dart';
 import 'package:note/utils/consts.dart';
 import 'package:note/widgets/change_color.dart';
@@ -143,11 +141,10 @@ class _ColorPageState extends State<ColorPage> {
   void _onNotePage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt('color', _currentIndex.round());
-    FirebaseUser currentUser = await FirebaseAuth.instance.currentUser();
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (context) => BlocProvider<NoteBloc>(
-            create: (context) => NoteBloc(repository: RemDataRepImpl()),
+            create: (context) => NoteBloc(),
             child: NotePage(
               initialIndex: 1,
             ),

@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserRepository {
   final FirebaseAuth _firebaseAuth;
@@ -17,10 +17,15 @@ class UserRepository {
     final AuthCredential credential = GoogleAuthProvider.getCredential(
         idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
     await _firebaseAuth.signInWithCredential(credential);
+    SharedPreferences sharedPreferences = //кеширование
+        await SharedPreferences.getInstance();
+    sharedPreferences.setBool('isEntered', true);
     return _firebaseAuth.currentUser();
   }
 
-  Future<void> signInWithCredentials(String email, String password) {
+  Future<void> signInWithCredentials(String email, String password) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setBool('isEntered', true);
     return _firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password);
   }
@@ -31,6 +36,8 @@ class UserRepository {
   }
 
   Future<void> signOut() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setBool('isEntered', false);
     return Future.wait([
       _firebaseAuth.signOut(),
       _googleSignIn.signOut(),

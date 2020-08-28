@@ -67,7 +67,7 @@ class _TitlePageState extends State<TitlePage> {
                         Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(builder: (context) {
                           return BlocProvider<NoteBloc>.value(
-                            value: NoteBloc(repository: RemDataRepImpl()),
+                            value: NoteBloc(),
                             child: NotePage(),
                           );
                         }), ModalRoute.withName('np'));

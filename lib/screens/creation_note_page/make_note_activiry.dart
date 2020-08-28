@@ -41,12 +41,11 @@ class _MakeNoteActivityState extends State<MakeNoteActivity> {
     controller.addListener(() {
       _currentIndex = controller.page.round();
       logoNotifier.value = controller.page;
-      print(controller.page.round());
     });
     Color currentColor = listColor[widget.colorIndex].colors.last;
     pages = [
       FirstNotePage(
-        index: widget.colorIndex,
+        colorIndex: widget.colorIndex,
         buttonFunction: transitionFunction,
       ),
       MoodPage(

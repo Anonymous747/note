@@ -19,15 +19,16 @@ class BeginingBloc extends Bloc<BeginingEvent, BeginingState> {
     if (event is BeginingStartEvent) {
       yield BeginingLoading();
       try {
-        BlocProvider<AuthenticationBloc>(
-          create: (context) =>
-              AuthenticationBloc()..add(AuthenticationStarted()),
-          child: LoginPage(),
-        );
-
         SharedPreferences pref = await SharedPreferences.getInstance();
         int colorIndex = pref.getInt('color');
 
+        BlocProvider<AuthenticationBloc>(
+          create: (context) =>
+              AuthenticationBloc()..add(AuthenticationStarted()),
+          child: LoginPage(
+            colorIndex: colorIndex,
+          ),
+        );
         BlocProvider<CreationBloc>(
           create: (context) => CreationBloc(),
           child: MakeNoteActivity(
@@ -35,10 +36,11 @@ class BeginingBloc extends Bloc<BeginingEvent, BeginingState> {
           ),
         );
 
-        await Future.delayed(
-          Duration(seconds: 2),
-        );
-        yield BeginingSucces(colorIndex: colorIndex);
+        if (pref.getBool('isEntered') ?? false) {
+          yield BeginingSuccesButEnered(colorIndex: colorIndex);
+        } else {
+          yield BeginingSucces(colorIndex: colorIndex);
+        }
       } on PlatformException catch (e) {
         yield BeginingFailure(message: e.message);
       }

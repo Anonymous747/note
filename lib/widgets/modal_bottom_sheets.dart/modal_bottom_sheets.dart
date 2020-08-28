@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:note/widgets/buttons/dialog_button.dart';
 import 'package:note/widgets/logo_widget.dart';
 import 'package:note/utils/consts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ModalBottomSheets {
   BuildContext _context;
