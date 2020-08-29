@@ -33,8 +33,7 @@ class _TitlePageState extends State<TitlePage> {
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
     return Padding(
-      padding:
-          EdgeInsets.only(top: _height * 0.3, right: 20, left: 20, bottom: 20),
+      padding: EdgeInsets.only(top: _height * 0.3, right: 20, left: 20),
       child: Stack(
         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -52,7 +51,7 @@ class _TitlePageState extends State<TitlePage> {
             ),
           ),
           Positioned.fill(
-            top: _height * 0.5,
+            top: _height * 0.50,
             child: Column(
               // mainAxisAlignment: MainAxisAlignment.end,
               children: [

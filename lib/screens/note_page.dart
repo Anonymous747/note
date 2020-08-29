@@ -1,13 +1,12 @@
 import 'dart:math';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/bloc/bloc_note/bloc.dart';
 import 'package:note/model/element_note.dart';
-import 'package:note/screens/creation_note_page/make_note_activiry.dart';
+import 'package:note/screens/creation_note_page/creation_extends.dart';
 import 'package:note/widgets/cells/add_cell.dart';
 import 'package:note/widgets/drawer.dart';
 import 'package:note/widgets/cells/list_cell.dart';

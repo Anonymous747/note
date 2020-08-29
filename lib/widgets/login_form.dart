@@ -97,7 +97,7 @@ class _LoginFormState extends State<LoginForm> {
                 padding: EdgeInsets.symmetric(horizontal: 30.0),
                 child: Form(
                   child: Column(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Column(
                         children: <Widget>[
@@ -105,14 +105,11 @@ class _LoginFormState extends State<LoginForm> {
                           _logInText("Login"),
                         ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(top: _height * 0.15),
+                      // Padding(
+                      //   padding: EdgeInsets.only(top: _height * 0.15),
+                      Expanded(
                         child: Column(
                           children: <Widget>[
-                            // Expanded(
-                            //   flex: 1,
-                            //   child: Container(),
-                            // ),
                             TextFormField(
                               controller: _emailController,
                               decoration: InputDecoration(
@@ -140,6 +137,13 @@ class _LoginFormState extends State<LoginForm> {
                               controller: _passwordController,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
+                                counter: InkWell(
+                                  child: Text(
+                                    "forgot?".toUpperCase(),
+                                    style: TextStyle(color: Colors.white38),
+                                  ),
+                                  onTap: AlertDialogs(context).forgotPressed,
+                                ),
                                 hintText: "Password",
                                 hintStyle: TextStyle(
                                     fontSize: 20, color: Colors.white54),
@@ -157,55 +161,53 @@ class _LoginFormState extends State<LoginForm> {
                                     : null;
                               },
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: <Widget>[
-                                FlatButton(
-                                  child: Text(
-                                    "forgot?".toUpperCase(),
-                                    style: TextStyle(color: Colors.white38),
-                                  ),
-                                  onPressed:
-                                      AlertDialogs(context).forgotPressed,
-                                )
-                              ],
-                            ),
                           ],
                         ),
                       ),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              right: 10,
-                              left: 10,
-                              top: _height * 0.05,
-                              bottom: 30),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: <Widget>[
-                              RaisedWhiteButton(
-                                onPressed: _onFormSubmitted,
-                                text: Text(
-                                  'Sign in'.toUpperCase(),
-                                  style: TextStyle(fontSize: 15),
-                                ),
-                                height: _height * 0.08,
-                                textColor:
-                                    listColor[widget.colorIndex].colors.last,
+                      // Expanded(
+                      Positioned(
+                        bottom: 1,
+                        child: Column(
+                          // mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            RaisedWhiteButton(
+                              onPressed: _onFormSubmitted,
+                              text: Text(
+                                'Sign in'.toUpperCase(),
+                                style: TextStyle(fontSize: 15),
                               ),
-                              FlatTransparentButton(
-                                function: () {
-                                  BlocProvider.of<LoginBloc>(context).add(
-                                    LoginWithGooglePressed(),
-                                  );
-                                },
-                                text: Text(
+                              height: _height * 0.08,
+                              textColor:
+                                  listColor[widget.colorIndex].colors.last,
+                            ),
+                            InkWell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Text(
                                   'Sign in with Google',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 15, color: Colors.white),
                                 ),
                               ),
-                            ],
-                          ),
+                              onTap: () {
+                                BlocProvider.of<LoginBloc>(context).add(
+                                  LoginWithGooglePressed(),
+                                );
+                              },
+                            )
+                            // FlatTransparentButton(
+                            //   function: () {
+                            //     BlocProvider.of<LoginBloc>(context).add(
+                            //       LoginWithGooglePressed(),
+                            //     );
+                            //   },
+                            //   text: Text(
+                            //     'Sign in with Google',
+                            //   ),
+                            // ),
+                          ],
                         ),
                       ),
                     ],

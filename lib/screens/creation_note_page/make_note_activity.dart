@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/bloc/bloc_creation/bloc.dart';
-import 'package:note/screens/creation_note_page/day_value_page.dart';
-import 'package:note/screens/creation_note_page/first_note_page.dart';
-import 'package:note/screens/creation_note_page/happened_page.dart';
-import 'package:note/screens/creation_note_page/mood_page.dart';
-import 'package:note/screens/creation_note_page/random_question_page.dart';
-import 'package:note/screens/creation_note_page/smile_page.dart';
-import 'package:note/screens/creation_note_page/title_page.dart';
+import 'package:note/screens/creation_note_page/creation_extends.dart';
 import 'package:note/utils/consts.dart';
 import 'package:note/widgets/alert_dialogs.dart';
 import 'package:note/widgets/logo_widget.dart';
@@ -79,6 +73,14 @@ class _MakeNoteActivityState extends State<MakeNoteActivity> {
         duration: Duration(milliseconds: 1000), curve: Curves.easeInExpo);
   }
 
+  void clearFunction() {
+    if (controller.page == 0)
+      Navigator.of(context).pop();
+    else {
+      AlertDialogs(context).onBackPressedInCreatingNote();
+    }
+  }
+
   Future<bool> onBackPressed() async {
     if (controller.page != 0) {
       if (controller.page == pages.length - 1) isLogoStartState = false;
@@ -114,30 +116,17 @@ class _MakeNoteActivityState extends State<MakeNoteActivity> {
                         scrollDirection: Axis.vertical,
                         controller: controller,
                         itemBuilder: (context, index) => pages[index],
-                        // children: [
-                        //   FirstNotePage(
-                        //     index: widget.colorIndex,
-                        //     buttonFunction: transitionFunction,
-                        //   ),
-                        //   MoodPage(
-                        //     sliderFunction: transitionFunction,
-                        //   ),
-                        //   DayValuePage(
-                        //     buttonFunction: transitionFunction,
-                        //   ),
-                        //   HappenedPage(
-                        //     textColor: listColor[widget.colorIndex].colors.last,
-                        //     buttonFunction: transitionFunction,
-                        //   ),
-                        //   SmilePage(
-                        //     buttonFunction: transitionFunction,
-                        //   ),
-                        //   RandomQuestionPage(
-                        //     buttonFunction: transitionFunction,
-                        //     textColor: listColor[widget.colorIndex].colors.last,
-                        //   ),
-                        //   TitlePage()
-                        // ],
+                      ),
+                    ),
+                    AnimatedPositioned(
+                      right: _width * 0.01,
+                      top: _height * 0.03,
+                      duration: Duration(milliseconds: 500),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.clear,
+                        ),
+                        onPressed: clearFunction,
                       ),
                     ),
                     TweenAnimationBuilder<double>(

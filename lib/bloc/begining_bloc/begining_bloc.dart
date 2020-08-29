@@ -5,7 +5,7 @@ import 'package:note/bloc/begining_bloc/bloc.dart';
 import 'package:note/bloc/bloc_authentication/authentication_bloc.dart';
 import 'package:note/bloc/bloc_authentication/bloc.dart';
 import 'package:note/bloc/bloc_creation/bloc.dart';
-import 'package:note/screens/creation_note_page/make_note_activiry.dart';
+import 'package:note/screens/creation_note_page/make_note_activity.dart';
 import 'package:note/screens/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

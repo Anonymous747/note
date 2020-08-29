@@ -1,0 +1,9 @@
+export 'package:note/screens/creation_note_page/creation_extends.dart';
+export 'package:note/screens/creation_note_page/title_page.dart';
+export 'package:note/screens/creation_note_page/random_question_page.dart';
+export 'package:note/screens/creation_note_page/make_note_activity.dart';
+export 'package:note/screens/creation_note_page/happened_page.dart';
+export 'package:note/screens/creation_note_page/first_note_page.dart';
+export 'package:note/screens/creation_note_page/day_value_page.dart';
+export 'package:note/screens/creation_note_page/mood_page.dart';
+export 'package:note/screens/creation_note_page/smile_page.dart';

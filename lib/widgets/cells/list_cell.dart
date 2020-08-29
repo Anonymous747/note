@@ -15,16 +15,16 @@ class ListCell extends StatelessWidget {
       children: [
         ClipRRect(
             borderRadius: BorderRadius.circular(30),
-            child: Hero(
-              transitionOnUserGestures: true,
-              tag: 'hero-tag1',
-              child: Image(
-                image: AssetImage(
-                  'assets/images/back1.jpg',
-                ),
-                fit: BoxFit.cover,
-                width: _width,
+            // child: Hero(
+            //   transitionOnUserGestures: true,
+            //   tag: 'hero-tag1',
+            child: Image(
+              image: AssetImage(
+                'assets/images/back1.jpg',
               ),
+              fit: BoxFit.cover,
+              width: _width,
+              // ),
             )),
         Padding(
             padding: EdgeInsets.only(
