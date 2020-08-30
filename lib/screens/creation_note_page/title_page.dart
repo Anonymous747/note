@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/bloc/bloc_creation/bloc.dart';
 import 'package:note/bloc/bloc_note/bloc.dart';
 import 'package:note/repository/remote_data_repository.dart';
-import 'package:note/screens/note_page.dart';
+import 'package:note/screens/note_pages/note_activity.dart';
+import 'package:note/screens/note_pages/note_page.dart';
 import 'package:note/widgets/custom_text_field.dart';
 import 'package:note/widgets/flat_transparent_button.dart';
 import 'package:note/widgets/raised_white_button.dart';
@@ -67,7 +68,7 @@ class _TitlePageState extends State<TitlePage> {
                             MaterialPageRoute(builder: (context) {
                           return BlocProvider<NoteBloc>.value(
                             value: NoteBloc(),
-                            child: NotePage(),
+                            child: NoteActivity(),
                           );
                         }), ModalRoute.withName('np'));
                       }

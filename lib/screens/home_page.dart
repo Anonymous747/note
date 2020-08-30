@@ -4,7 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/bloc/bloc_note/bloc.dart';
 import 'package:note/repository/remote_data_repository.dart';
 import 'package:note/screens/goals_page.dart';
-import 'package:note/screens/note_page.dart';
+import 'package:note/screens/note_pages/note_activity.dart';
+import 'package:note/screens/note_pages/note_page.dart';
 import 'package:note/widgets/alert_dialogs.dart';
 import 'package:note/widgets/drawer.dart';
 import 'package:note/widgets/route_anim/fade_route.dart';
@@ -16,26 +17,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   FirebaseAuth auth = FirebaseAuth.instance;
-
-  // Future<bool> _onBackPressed() async {
-  //   return showDialog(
-  //     context: context,
-  //     builder: (context) => AlertDialog(
-  //       title: Text("Do you want to exit from the app?"),
-  //       actions: <Widget>[
-  //         FlatButton(
-  //           child: Text("No"),
-  //           onPressed: () => Navigator.pop(context, false),
-  //         ),
-  //         FlatButton(
-  //           child: Text("Yes"),
-  //           onPressed: () => Navigator.pop(context, true),
-  //         )
-  //       ],
-  //     ),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -57,7 +38,7 @@ class _HomePageState extends State<HomePage> {
                       .push(MaterialPageRoute(builder: (context) {
                     return BlocProvider<NoteBloc>(
                       create: (context) => NoteBloc(),
-                      child: NotePage(),
+                      child: NoteActivity(),
                     );
                   }));
                 }

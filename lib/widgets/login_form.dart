@@ -96,77 +96,82 @@ class _LoginFormState extends State<LoginForm> {
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30.0),
                 child: Form(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Stack(
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          _logInText("Account"),
-                          _logInText("Login"),
-                        ],
-                      ),
-                      // Padding(
-                      //   padding: EdgeInsets.only(top: _height * 0.15),
-                      Expanded(
+                      Center(
                         child: Column(
                           children: <Widget>[
-                            TextFormField(
-                              controller: _emailController,
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "Email",
-                                  helperText: 'Accoun email'.toUpperCase(),
-                                  helperStyle: TextStyle(
-                                      fontSize: 13, color: Colors.white38),
-                                  hintStyle: TextStyle(
-                                      fontSize: 20, color: Colors.white54)),
-                              keyboardType: TextInputType.emailAddress,
-                              autovalidate: true,
-                              style: TextStyle(color: Colors.white),
-                              autocorrect: false,
-                              validator: (_) {
-                                return !state.isEmailValid
-                                    ? 'Invalid Email'
-                                    : null;
-                              },
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            TextFormField(
-                              controller: _passwordController,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                counter: InkWell(
-                                  child: Text(
-                                    "forgot?".toUpperCase(),
-                                    style: TextStyle(color: Colors.white38),
-                                  ),
-                                  onTap: AlertDialogs(context).forgotPressed,
-                                ),
-                                hintText: "Password",
-                                hintStyle: TextStyle(
-                                    fontSize: 20, color: Colors.white54),
-                                helperText: 'Accoun Password'.toUpperCase(),
-                                helperStyle: TextStyle(
-                                    fontSize: 13, color: Colors.white38),
-                              ),
-                              style: TextStyle(color: Colors.white),
-                              obscureText: true,
-                              autovalidate: true,
-                              autocorrect: false,
-                              validator: (_) {
-                                return !state.isPasswordValid
-                                    ? 'Invalid Password'
-                                    : null;
-                              },
-                            ),
+                            _logInText("Account"),
+                            _logInText("Login"),
                           ],
                         ),
                       ),
+                      // Padding(
+                      //   padding: EdgeInsets.only(top: _height * 0.15),
+                      SingleChildScrollView(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: _height * 0.25),
+                          child: Column(
+                            children: <Widget>[
+                              TextFormField(
+                                controller: _emailController,
+                                decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: "Email",
+                                    helperText: 'Accoun email'.toUpperCase(),
+                                    helperStyle: TextStyle(
+                                        fontSize: 13, color: Colors.white38),
+                                    hintStyle: TextStyle(
+                                        fontSize: 20, color: Colors.white54)),
+                                keyboardType: TextInputType.emailAddress,
+                                autovalidate: true,
+                                style: TextStyle(color: Colors.white),
+                                autocorrect: false,
+                                validator: (_) {
+                                  return !state.isEmailValid
+                                      ? 'Invalid Email'
+                                      : null;
+                                },
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              TextFormField(
+                                controller: _passwordController,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  counter: InkWell(
+                                    child: Text(
+                                      "forgot?".toUpperCase(),
+                                      style: TextStyle(color: Colors.white38),
+                                    ),
+                                    onTap: AlertDialogs(context).forgotPressed,
+                                  ),
+                                  hintText: "Password",
+                                  hintStyle: TextStyle(
+                                      fontSize: 20, color: Colors.white54),
+                                  helperText: 'Accoun Password'.toUpperCase(),
+                                  helperStyle: TextStyle(
+                                      fontSize: 13, color: Colors.white38),
+                                ),
+                                style: TextStyle(color: Colors.white),
+                                obscureText: true,
+                                autovalidate: true,
+                                autocorrect: false,
+                                validator: (_) {
+                                  return !state.isPasswordValid
+                                      ? 'Invalid Password'
+                                      : null;
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                       // Expanded(
-                      Positioned(
-                        bottom: 1,
+                      Padding(
+                        padding: EdgeInsets.only(top: _height * 0.7),
                         child: Column(
                           // mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.stretch,

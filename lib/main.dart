@@ -4,11 +4,10 @@ import 'package:note/bloc/bloc_authentication/authentication_observer.dart';
 import 'package:note/screens/add_note_page.dart';
 import 'package:note/screens/home_page.dart';
 import 'package:note/screens/login_page.dart';
-import 'package:note/startPages/nickname_page.dart';
-import 'package:note/screens/note_page.dart';
-import 'package:note/startPages/first_screen.dart';
+import 'package:note/screens/note_pages/note_activity.dart';
+import 'package:note/screens/note_pages/note_page.dart';
 import 'package:note/screens/splash_screen.dart';
-import 'package:note/startPages/start_page.dart';
+import 'package:note/screens/start_pages/start_exports.dart';
 
 import 'bloc/begining_bloc/bloc.dart';
 
@@ -44,6 +43,7 @@ class _AppState extends State<App> {
         'fs': (context) => FirstScreen(),
         'nn': (context) => NicknamePage(),
         'sp': (context) => StartPage(),
+        'na': (context) => NoteActivity(),
       },
       home: BlocBuilder<BeginingBloc, BeginingState>(
         // bloc: BeginingBloc(),
@@ -55,9 +55,7 @@ class _AppState extends State<App> {
               colorIndex: state.colorIndex,
             );
           } else if (state is BeginingSuccesButEnered) {
-            return NotePage(
-              initialIndex: state.colorIndex,
-            );
+            return NoteActivity();
           } else if (state is BeginingFailure) {
             return Scaffold(
               body: Center(
@@ -68,14 +66,6 @@ class _AppState extends State<App> {
           return Container();
         },
       ),
-
-      //else if (state is AuthenticationFailure) {
-      //   return LoginPage(userRepository: widget._userRepository);
-      // } else if (state is AuthenticationSuccess) {
-      //   return LoginPage(
-      //     userRepository: widget._userRepository,
-      // );
-      // }
     );
   }
 }

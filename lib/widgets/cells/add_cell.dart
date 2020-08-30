@@ -4,11 +4,13 @@ import 'package:note/utils/consts.dart';
 class AddCell extends StatelessWidget {
   final Gradient gradient;
   final Function onTap;
+  final Function onLongPress;
 
-  AddCell({this.gradient, this.onTap});
+  AddCell({this.gradient, this.onTap, this.onLongPress});
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onLongPress: onLongPress,
       onTap: onTap,
       child: Container(
         width: MediaQuery.of(context).size.width,

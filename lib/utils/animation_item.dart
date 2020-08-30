@@ -30,4 +30,4 @@ Future<void> delayAnimation(AnimationItem animation, Duration duration,
   function(animation);
 }
 
-Tween delayWidgetAnimation(Duration delayDuration, double initCValue) {}
+// Tween delayWidgetAnimation(Duration delayDuration, double initCValue) {}

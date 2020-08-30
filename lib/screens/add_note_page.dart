@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/bloc/bloc_adding_note/adding_note_bloc.dart';
 import 'package:note/bloc/bloc_adding_note/bloc.dart';
 import 'package:note/bloc/bloc_note/bloc.dart';
-import 'package:note/screens/note_page.dart';
+import 'package:note/screens/note_pages/note_page.dart';
 
 class AddingNotePage extends StatefulWidget {
   @override

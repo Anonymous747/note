@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:note/repository/user_repository.dart';
-import 'package:note/startPages/start_page.dart';
+import 'package:note/screens/start_pages/start_exports.dart';
 import 'package:note/widgets/route_anim/fade_route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
