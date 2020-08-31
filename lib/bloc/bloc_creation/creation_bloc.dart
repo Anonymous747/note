@@ -24,8 +24,8 @@ class CreationBloc extends Bloc<CreationEvent, CreationState> {
       note.iconPreferences = event.iconPreferences;
     } else if (event is CreationHappenedChanged) {
       note.happened = event.happened;
-    } else if (event is CreationFeelingIconChanged) {
-      note.feelingIcon = event.feelingIcon;
+    } else if (event is CreationemojiChanged) {
+      note.emoji = event.emoji;
     } else if (event is CreationRandomQuestionChanged) {
       note.randomQuestion = event.randomQuestion;
       note.answer = event.answer;
@@ -39,7 +39,7 @@ class CreationBloc extends Bloc<CreationEvent, CreationState> {
           happened: note.happened,
           percentFun: note.percentFun,
           iconPreferences: note.iconPreferences,
-          feelingIcon: note.feelingIcon,
+          emoji: note.emoji,
           randomQuestion: note.randomQuestion,
           answer: note.answer,
         );

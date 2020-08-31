@@ -1,11 +1,8 @@
 import 'package:note/widgets/smiles/smile.dart';
 
 class SmileElement {
-  Smile smile;
-  String smileName;
+  final Smile smile;
+  final String smileName;
 
-  SmileElement(Smile newSmile, String newSmileName) {
-    smile = newSmile;
-    smileName = newSmileName;
-  }
+  const SmileElement(this.smile, this.smileName);
 }

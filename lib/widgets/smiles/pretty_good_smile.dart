@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:note/widgets/smiles/smile.dart';
 
 class PrettyGoodSmile extends Smile {
+  final Color smileColor;
+
+  const PrettyGoodSmile({this.smileColor = Colors.white});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -10,7 +14,7 @@ class PrettyGoodSmile extends Smile {
       decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.transparent,
-          border: Border.all(width: 5, color: Colors.white)),
+          border: Border.all(width: 5, color: smileColor)),
       child: Stack(
         overflow: Overflow.visible,
         children: [
@@ -25,7 +29,7 @@ class PrettyGoodSmile extends Smile {
                       height: 10,
                       width: 12,
                       decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: smileColor,
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(20),
                               topRight: Radius.circular(20),
@@ -36,7 +40,7 @@ class PrettyGoodSmile extends Smile {
                       height: 10,
                       width: 12,
                       decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: smileColor,
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(20),
                               topRight: Radius.circular(20),
@@ -50,7 +54,7 @@ class PrettyGoodSmile extends Smile {
                 width: 30,
                 height: 15,
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: smileColor,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(3),
                       topRight: Radius.circular(3),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/bloc/bloc_creation/bloc.dart';
 import 'package:note/model/smile_element.dart';
+import 'package:note/utils/consts.dart';
 import 'package:note/widgets/smiles/smile_export.dart';
 import 'package:note/widgets/texts/font_white_text.dart';
 
@@ -17,13 +18,13 @@ class MoodPage extends StatefulWidget {
 class _MoodPageState extends State<MoodPage> {
   ValueNotifier<double> sliderNotifier;
 
-  List<SmileElement> smiles = [
-    new SmileElement(RealyTerribleSmile(), 'really terrible'),
-    new SmileElement(SomewhatBadSmile(), 'somewhat bad'),
-    new SmileElement(CompletelyOkaySmile(), 'completely okay'),
-    new SmileElement(PrettyGoodSmile(), 'pretty good'),
-    new SmileElement(SuperAwesomeSmile(), 'super awesome'),
-  ];
+  //  List<SmileElement> smiles = [
+  //   const SmileElement(RealyTerribleSmile(), 'really terrible'),
+  //   const SmileElement(SomewhatBadSmile(), 'somewhat bad'),
+  //   const SmileElement(CompletelyOkaySmile(), 'completely okay'),
+  //   const SmileElement(PrettyGoodSmile(), 'pretty good'),
+  //   const SmileElement(SuperAwesomeSmile(), 'super awesome'),
+  // ];
 
   @override
   void initState() {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/bloc/bloc_creation/bloc.dart';
 import 'package:note/model/icon_element.dart';
+import 'package:note/utils/consts.dart';
 import 'package:note/widgets/texts/font_white_text.dart';
 
 class DayValuePage extends StatefulWidget {
@@ -15,21 +16,21 @@ class DayValuePage extends StatefulWidget {
 }
 
 class _DayValuePageState extends State<DayValuePage> {
-  List<IconElement> icons = [
-    new IconElement(Icon(Icons.work), 'work', iconColor: Colors.white),
-    new IconElement(Icon(Icons.home_sharp), 'family', iconColor: Colors.white),
-    new IconElement(Icon(Icons.ring_volume_sharp), 'relationship',
-        iconColor: Colors.white),
-    new IconElement(Icon(Icons.masks), 'education', iconColor: Colors.white),
-    new IconElement(Icon(Icons.emoji_flags), 'food', iconColor: Colors.white),
-    new IconElement(Icon(Icons.emoji_emotions), 'traveling',
-        iconColor: Colors.white),
-    new IconElement(Icon(Icons.emoji_events), 'friends',
-        iconColor: Colors.white),
-    new IconElement(Icon(Icons.emoji_nature), 'exercise',
-        iconColor: Colors.white),
-    new IconElement(Icon(Icons.add), 'other', iconColor: Colors.black26),
-  ];
+  // List<IconElement> icons = [
+  //   new IconElement(Icon(Icons.work), 'work', iconColor: Colors.white),
+  //   new IconElement(Icon(Icons.home_sharp), 'family', iconColor: Colors.white),
+  //   new IconElement(Icon(Icons.ring_volume_sharp), 'relationship',
+  //       iconColor: Colors.white),
+  //   new IconElement(Icon(Icons.masks), 'education', iconColor: Colors.white),
+  //   new IconElement(Icon(Icons.emoji_flags), 'food', iconColor: Colors.white),
+  //   new IconElement(Icon(Icons.emoji_emotions), 'traveling',
+  //       iconColor: Colors.white),
+  //   new IconElement(Icon(Icons.emoji_events), 'friends',
+  //       iconColor: Colors.white),
+  //   new IconElement(Icon(Icons.emoji_nature), 'exercise',
+  //       iconColor: Colors.white),
+  //   new IconElement(Icon(Icons.add), 'other', iconColor: Colors.black26),
+  // ];
 
   @override
   Widget build(BuildContext context) {

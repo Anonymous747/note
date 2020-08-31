@@ -31,7 +31,7 @@ class RemDataRepImpl extends RemDataRep {
       String happened,
       int percentFun,
       int iconPreferences,
-      int feelingIcon,
+      int emoji,
       String randomQuestion,
       String answer}) async {
     try {
@@ -45,7 +45,7 @@ class RemDataRepImpl extends RemDataRep {
           'happened': happened,
           'iconPreferences': iconPreferences,
           'percentFun': percentFun,
-          'feelingIcon': feelingIcon,
+          'emoji': emoji,
           'randomQuestion': randomQuestion,
           'answer': answer
         });

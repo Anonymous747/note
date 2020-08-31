@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/bloc/bloc_creation/bloc.dart';
+import 'package:note/utils/consts.dart';
 import 'package:note/widgets/custom_text_field.dart';
 import 'package:note/widgets/flat_transparent_button.dart';
 import 'package:note/widgets/raised_white_button.dart';
@@ -22,11 +23,11 @@ class _RandomQuestionPageState extends State<RandomQuestionPage> {
   ValueNotifier<bool> textFieldNotifier;
   TextEditingController textController;
 
-  List<String> questions = [
-    'Some question',
-    'What\'s the craziest thing you\'ve ever done?',
-    'fdfd',
-  ];
+  // List<String> questions = [
+  //   'Some question',
+  //   'What\'s the craziest thing you\'ve ever done?',
+  //   'fdfd',
+  // ];
 
   @override
   void initState() {

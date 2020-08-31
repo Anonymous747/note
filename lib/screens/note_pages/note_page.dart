@@ -3,12 +3,9 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:note/bloc/bloc_note/bloc.dart';
 import 'package:note/model/element_note.dart';
 import 'package:note/screens/creation_note_page/creation_extends.dart';
 import 'package:note/widgets/cells/add_cell.dart';
-import 'package:note/widgets/drawer.dart';
 import 'package:note/widgets/cells/list_cell.dart';
 import 'package:note/utils/consts.dart';
 import 'package:note/widgets/route_anim/fade_route.dart';
@@ -224,15 +221,22 @@ class _NotePageState extends State<NotePage> {
                           }
                           ElementNote currentElement = list[index - 1];
                           return Container(
-                              alignment: Alignment.centerRight,
-                              padding: EdgeInsets.only(
-                                  right: _height * 0.05,
-                                  top: 100 - scale * 35,
-                                  bottom: 75 - scale * 15),
-                              child: ListCell(
-                                title: currentElement.title,
-                                date: currentElement.date,
-                              ));
+                            alignment: Alignment.centerRight,
+                            padding: EdgeInsets.only(
+                                right: _height * 0.05,
+                                top: 100 - scale * 35,
+                                bottom: 75 - scale * 15),
+                            child: ListCell(
+                              title: currentElement.title,
+                              date: currentElement.date,
+                              happened: currentElement.happened,
+                              percentFun: currentElement.percentFun,
+                              answer: currentElement.answer,
+                              emoji: currentElement.emoji,
+                              iconPreferences: currentElement.iconPreferences,
+                              randomQuestion: currentElement.randomQuestion,
+                            ),
+                          );
                         }),
                   ),
                 ))
@@ -275,6 +279,7 @@ class _NotePageState extends State<NotePage> {
     // ),
     // );
   }
+  // onTap.call();
 
   // Widget buildError(String message) {
   //   return Center(

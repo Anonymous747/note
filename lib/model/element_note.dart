@@ -7,7 +7,7 @@ class ElementNote {
   String happened;
   int percentFun;
   int iconPreferences;
-  int feelingIcon;
+  int emoji;
   String randomQuestion;
   String answer;
 
@@ -17,7 +17,7 @@ class ElementNote {
       this.happened,
       this.percentFun,
       this.iconPreferences,
-      this.feelingIcon,
+      this.emoji,
       this.randomQuestion,
       this.answer});
 
@@ -30,7 +30,7 @@ class ElementNote {
       date: dateFormat.parse(data['date']),
       percentFun: int.parse((data['percentFun'] ?? 0).toString()),
       iconPreferences: int.parse((data['iconPreferences'] ?? 0).toString()),
-      feelingIcon: int.parse((data['iconPreferences'] ?? 0).toString()),
+      emoji: int.parse((data['iconPreferences'] ?? 0).toString()),
       randomQuestion: data['randomQuestion'].toString() ?? '',
       answer: data['answer'].toString() ?? '',
     );
@@ -44,7 +44,7 @@ class ElementNote {
         date: data['date'],
         percentFun: data['percentFun'],
         iconPreferences: data['iconPreferences'],
-        feelingIcon: data['feelingIcon'],
+        emoji: data['emoji'],
         randomQuestion: data['randomQuestion'],
         answer: data['answer']);
   }

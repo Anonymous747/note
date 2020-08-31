@@ -3,6 +3,10 @@ import 'package:note/widgets/painting/line.dart';
 import 'package:note/widgets/smiles/smile.dart';
 
 class RealyTerribleSmile extends Smile {
+  final Color smileColor;
+
+  const RealyTerribleSmile({this.smileColor = Colors.white});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -11,7 +15,7 @@ class RealyTerribleSmile extends Smile {
       decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.transparent,
-          border: Border.all(width: 5, color: Colors.white)),
+          border: Border.all(width: 5, color: smileColor)),
       child: Stack(
         overflow: Overflow.visible,
         children: [
@@ -26,7 +30,7 @@ class RealyTerribleSmile extends Smile {
                         height: 7,
                         width: 13,
                         decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: smileColor,
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(7),
                               topRight: Radius.circular(7),
@@ -37,7 +41,7 @@ class RealyTerribleSmile extends Smile {
                         height: 6,
                         width: 13,
                         decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: smileColor,
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(7),
                               topRight: Radius.circular(7),

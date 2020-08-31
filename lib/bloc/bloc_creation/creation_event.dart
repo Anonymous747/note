@@ -45,16 +45,16 @@ class CreationHappenedChanged extends CreationEvent {
   String toString() => 'CreationHappenedChanged ${this.happened}';
 }
 
-class CreationFeelingIconChanged extends CreationEvent {
-  final int feelingIcon;
+class CreationemojiChanged extends CreationEvent {
+  final int emoji;
 
-  CreationFeelingIconChanged({this.feelingIcon});
-
-  @override
-  List<Object> get props => [this.feelingIcon];
+  CreationemojiChanged({this.emoji});
 
   @override
-  String toString() => 'CreationFeelingIconChanged ${this.feelingIcon}';
+  List<Object> get props => [this.emoji];
+
+  @override
+  String toString() => 'CreationemojiChanged ${this.emoji}';
 }
 
 class CreationRandomQuestionChanged extends CreationEvent {

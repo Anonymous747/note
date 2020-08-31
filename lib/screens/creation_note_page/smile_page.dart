@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/bloc/bloc_creation/bloc.dart';
 import 'package:note/model/icon_element.dart';
+import 'package:note/utils/consts.dart';
 import 'package:note/widgets/texts/font_white_text.dart';
 
 class SmilePage extends StatefulWidget {
@@ -20,17 +21,17 @@ class _SmilePageState extends State<SmilePage> {
   double _viewportFraction = 0.4;
   double iconSize = 100;
   ValueNotifier<double> smileNotifier;
-  List<IconElement> icons = [
-    new IconElement(Icon(Icons.emoji_emotions), 'happy'),
-    new IconElement(Icon(Icons.emoji_emotions), 'blessed'),
-    new IconElement(Icon(Icons.accessibility_new), 'happy'),
-    new IconElement(Icon(Icons.emoji_emotions), 'happy'),
-    new IconElement(Icon(Icons.emoji_emotions), 'happy'),
-    new IconElement(Icon(Icons.emoji_emotions), 'happy'),
-    new IconElement(Icon(Icons.emoji_emotions), 'happy'),
-    new IconElement(Icon(Icons.emoji_emotions), 'happy'),
-    new IconElement(Icon(Icons.emoji_emotions), 'happy'),
-  ];
+  // List<IconElement> icons = [
+  //   new IconElement(Icon(Icons.emoji_emotions), 'happy'),
+  //   new IconElement(Icon(Icons.emoji_emotions), 'blessed'),
+  //   new IconElement(Icon(Icons.accessibility_new), 'happy'),
+  //   new IconElement(Icon(Icons.emoji_emotions), 'happy'),
+  //   new IconElement(Icon(Icons.emoji_emotions), 'happy'),
+  //   new IconElement(Icon(Icons.emoji_emotions), 'happy'),
+  //   new IconElement(Icon(Icons.emoji_emotions), 'happy'),
+  //   new IconElement(Icon(Icons.emoji_emotions), 'happy'),
+  //   new IconElement(Icon(Icons.emoji_emotions), 'happy'),
+  // ];
 
   @override
   void initState() {
@@ -73,8 +74,8 @@ class _SmilePageState extends State<SmilePage> {
                     padding: EdgeInsets.only(top: 100 - scale * 30),
                     child: InkWell(
                       onTap: () {
-                        BlocProvider.of<CreationBloc>(context).add(
-                            CreationFeelingIconChanged(feelingIcon: index));
+                        BlocProvider.of<CreationBloc>(context)
+                            .add(CreationemojiChanged(emoji: index));
                         widget.buttonFunction();
                       },
                       child: Column(
@@ -86,7 +87,7 @@ class _SmilePageState extends State<SmilePage> {
                             child: IconTheme(
                               data: IconThemeData(
                                   size: (scale + 2) * 30, color: Colors.white),
-                              child: icons[index].icon,
+                              child: emojis[index].icon,
                             ),
                           ),
                           SizedBox(height: 5),
@@ -94,7 +95,7 @@ class _SmilePageState extends State<SmilePage> {
                             duration: Duration(milliseconds: 200),
                             opacity: max<double>(
                                 0, 1 - (currentSmile - index).abs()),
-                            child: Text(icons[index].iconName,
+                            child: Text(emojis[index].iconName,
                                 style: TextStyle(color: Colors.white)),
                           ),
                         ],

@@ -1,3 +1,5 @@
 import 'package:flutter/cupertino.dart';
 
-abstract class Smile extends StatelessWidget {}
+abstract class Smile extends StatelessWidget {
+  const Smile();
+}

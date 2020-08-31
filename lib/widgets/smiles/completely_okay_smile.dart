@@ -3,17 +3,19 @@ import 'package:note/widgets/painting/line.dart';
 import 'package:note/widgets/smiles/smile.dart';
 
 class CompletelyOkaySmile extends Smile {
+  final Color smileColor;
+
+  const CompletelyOkaySmile({this.smileColor});
+
   @override
   Widget build(BuildContext context) {
-    // double _height = MediaQuery.of(context).size.height;
-    // double _width = MediaQuery.of(context).size.width;
     return Container(
       height: 120,
       width: 120,
       decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.transparent,
-          border: Border.all(width: 5, color: Colors.white)),
+          border: Border.all(width: 5, color: smileColor)),
       child: Stack(
         overflow: Overflow.visible,
         children: [
@@ -28,7 +30,7 @@ class CompletelyOkaySmile extends Smile {
                       height: 10,
                       width: 12,
                       decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: smileColor,
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(20),
                               topRight: Radius.circular(20),
@@ -39,7 +41,7 @@ class CompletelyOkaySmile extends Smile {
                       height: 10,
                       width: 12,
                       decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: smileColor,
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(20),
                               topRight: Radius.circular(20),

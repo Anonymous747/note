@@ -1,31 +1,61 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:note/utils/consts.dart';
+import 'package:note/widgets/cells/note_cell.dart';
 
 class ListCell extends StatelessWidget {
   final DateTime date;
   final String title;
+  final String happened;
+  final int percentFun;
+  final int iconPreferences;
+  final int emoji;
+  final String randomQuestion;
+  final String answer;
 
-  ListCell({@required this.date, this.title});
+  ListCell(
+      {@required this.date,
+      this.title,
+      this.happened,
+      this.percentFun,
+      this.answer,
+      this.emoji,
+      this.iconPreferences,
+      this.randomQuestion});
   @override
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
     return Stack(
       children: [
-        ClipRRect(
-            borderRadius: BorderRadius.circular(30),
-            // child: Hero(
-            //   transitionOnUserGestures: true,
-            //   tag: 'hero-tag1',
-            child: Image(
-              image: AssetImage(
-                'assets/images/back1.jpg',
-              ),
-              fit: BoxFit.cover,
-              width: _width,
-              // ),
-            )),
+        InkWell(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                return NoteCell(
+                  title: title,
+                  date: date,
+                  happened: happened,
+                  percentFun: percentFun,
+                  answer: answer,
+                  emoji: emoji,
+                  iconPreferences: iconPreferences,
+                  randomQuestion: randomQuestion,
+                );
+              }));
+            },
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(30),
+                // child: Hero(
+                //   transitionOnUserGestures: true,
+                //   tag: 'hero-tag1',
+                child: Image(
+                  image: AssetImage(
+                    'assets/images/back1.jpg',
+                  ),
+                  fit: BoxFit.cover,
+                  width: _width,
+                  // ),
+                ))),
         Padding(
             padding: EdgeInsets.only(
                 top: _height * 0.05, left: _width * 0.06, right: _width * 0.06),
