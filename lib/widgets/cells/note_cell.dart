@@ -66,63 +66,102 @@ class NoteCell extends StatelessWidget {
     int smile = (1).round();
 
     return Scaffold(
-        body: Stack(
-      overflow: Overflow.visible,
-      children: [
-        TweenAnimationBuilder<double>(
-            duration: Duration(milliseconds: 500),
-            tween: Tween(begin: 1.35, end: 1.35),
-            builder: (context, value, child) => Transform.scale(
-                  // offset: Offset(-50, -50),
-                  scale: value,
-                  child: child,
-                ),
-            child: CircleAvatar(
-              radius: radius,
-              backgroundImage: AssetImage('assets/images/back1.jpg'),
-            )),
-        Positioned(top: _height * 0.5, right: -20, child: smiles[smile].smile),
-        Padding(
-          padding: EdgeInsets.only(
-            top: radius * 2 + _height * 0.1,
-            left: 40,
-            right: 60,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(title,
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.w500)),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                '${date.day}. ${months[date.month - 1]} ${date.year}',
-                textAlign: TextAlign.start,
-                style: TextStyle(color: Colors.black38, fontSize: 18),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  IconWrap(icon: Icon(Icons.ac_unit)),
-                  SizedBox(
-                    width: 10,
+        body: SingleChildScrollView(
+      child: Stack(
+        overflow: Overflow.visible,
+        children: [
+          TweenAnimationBuilder<double>(
+              duration: Duration(milliseconds: 500),
+              tween: Tween(begin: 1.35, end: 1.35),
+              builder: (context, value, child) => Transform.scale(
+                    scale: value,
+                    child: child,
                   ),
-                  IconWrap(icon: Icon(Icons.ac_unit)),
-                ],
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Text(happened ?? 'test',
-                  style: TextStyle(color: Colors.amberAccent)),
-            ],
+              child: CircleAvatar(
+                radius: radius,
+                backgroundImage: AssetImage('assets/images/back1.jpg'),
+              )),
+          Positioned(
+              top: _height * 0.5, right: -20, child: smiles[smile].smile),
+          Padding(
+            padding: EdgeInsets.only(
+              top: radius * 2 + _height * 0.1,
+              left: 40,
+              right: 60,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(title,
+                    style:
+                        TextStyle(fontSize: 40, fontWeight: FontWeight.w500)),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  '${date.day}. ${months[date.month - 1]} ${date.year}',
+                  textAlign: TextAlign.start,
+                  style: TextStyle(color: Colors.black38, fontSize: 18),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    IconWrap(
+                      icon: icons[iconPreferences].icon,
+                      color: Colors.black54,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    IconWrap(
+                      icon: emojis[emoji].icon,
+                      color: Colors.black54,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                answerText(happened),
+                SizedBox(
+                  height: 40,
+                ),
+                boldText(randomQuestion),
+                SizedBox(
+                  height: 20,
+                ),
+                answerText(answer),
+                SizedBox(
+                  height: 20,
+                ),
+                boldText('Your daily notes'),
+                SizedBox(
+                  height: 20,
+                ),
+                answerText('Edit story to add some text...'),
+                SizedBox(
+                  height: 60,
+                ),
+                boldText('Images of the day'),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     ));
+  }
+
+  Text boldText(String text) {
+    return Text(
+      text.toUpperCase(),
+      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+    );
+  }
+
+  Text answerText(String text) {
+    return Text(text, style: TextStyle(fontSize: 15, color: Colors.black54));
   }
 }

@@ -192,6 +192,14 @@ class _NotePageState extends State<NotePage> {
                                   child: ListCell(
                                     title: currentElement.title,
                                     date: currentElement.date,
+                                    percentFun: currentElement.percentFun,
+                                    answer: currentElement.answer,
+                                    emoji: currentElement.emoji,
+                                    happened: currentElement.happened,
+                                    iconPreferences:
+                                        currentElement.iconPreferences,
+                                    randomQuestion:
+                                        currentElement.randomQuestion,
                                   ));
                             }
                           });
