@@ -12,25 +12,28 @@ class AddCell extends StatelessWidget {
     return InkWell(
       onLongPress: onLongPress,
       onTap: onTap,
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-            gradient: gradient ?? listColor[0],
-            borderRadius: BorderRadius.circular(30)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.border_color,
-              size: 80,
-              color: Colors.white,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text('Add today\'s story'.toUpperCase(),
-                style: TextStyle(color: Colors.white)),
-          ],
+      child: Hero(
+        tag: 'gradient0',
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+              gradient: gradient ?? listColor[0],
+              borderRadius: BorderRadius.circular(30)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.border_color,
+                size: 80,
+                color: Colors.white,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text('Add today\'s story'.toUpperCase(),
+                  style: TextStyle(color: Colors.white)),
+            ],
+          ),
         ),
       ),
     );

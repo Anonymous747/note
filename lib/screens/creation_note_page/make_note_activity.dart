@@ -107,10 +107,29 @@ class _MakeNoteActivityState extends State<MakeNoteActivity> {
               return Scaffold(
                 body: Stack(
                   children: [
+                    Hero(
+                      tag: 'gradient0',
+                      child: TweenAnimationBuilder(
+                        duration: Duration(milliseconds: 400),
+                        child: AnimatedContainer(
+                            duration: Duration(milliseconds: 300),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: listColor[widget.colorIndex],
+                            )),
+                        builder: (BuildContext context, value, Widget child) {
+                          return Transform.scale(
+                            scale: value,
+                            child: child,
+                          );
+                        },
+                        tween: Tween(begin: 2.3, end: 2.3),
+                      ),
+                    ),
                     AnimatedContainer(
                       duration: Duration(milliseconds: 400),
-                      decoration:
-                          BoxDecoration(gradient: listColor[widget.colorIndex]),
+                      // decoration: BoxDecoration(
+                      //     gradient: listColor[widget.colorIndex]),
                       child: PageView.builder(
                         physics: NeverScrollableScrollPhysics(parent: null),
                         scrollDirection: Axis.vertical,

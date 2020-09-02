@@ -13,6 +13,8 @@ class NoteCell extends StatelessWidget {
   final int emoji;
   final String randomQuestion;
   final String answer;
+  final NetworkImage image;
+  final int index;
 
   Color smileColor;
   List<SmileElement> smiles;
@@ -25,7 +27,9 @@ class NoteCell extends StatelessWidget {
     this.emoji = 1,
     this.happened = '',
     this.iconPreferences,
+    this.image,
     this.randomQuestion,
+    this.index,
   }) {
     smileColor = Colors.black.withOpacity(0.05);
 
@@ -63,7 +67,7 @@ class NoteCell extends StatelessWidget {
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
     double radius = _width * 0.4;
-    int smile = (1).round();
+    int smile = (percentFun / 20).round();
 
     return Scaffold(
         body: SingleChildScrollView(
@@ -71,16 +75,21 @@ class NoteCell extends StatelessWidget {
         overflow: Overflow.visible,
         children: [
           TweenAnimationBuilder<double>(
-              duration: Duration(milliseconds: 500),
-              tween: Tween(begin: 1.35, end: 1.35),
-              builder: (context, value, child) => Transform.scale(
-                    scale: value,
-                    child: child,
-                  ),
+            duration: Duration(milliseconds: 500),
+            tween: Tween(begin: 1.35, end: 1.35),
+            builder: (context, value, child) => Transform.scale(
+              scale: value,
+              child: child,
+            ),
+            child: Hero(
+              tag: 'image${index}',
               child: CircleAvatar(
                 radius: radius,
-                backgroundImage: AssetImage('assets/images/back1.jpg'),
-              )),
+                backgroundImage: image,
+                // backgroundImage: AssetImage('assets/images/back1.jpg'),
+              ),
+            ),
+          ),
           Positioned(
               top: _height * 0.5, right: -20, child: smiles[smile].smile),
           Padding(
@@ -92,9 +101,13 @@ class NoteCell extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(title,
-                    style:
-                        TextStyle(fontSize: 40, fontWeight: FontWeight.w500)),
+                Hero(
+                  tag: 'text${index}',
+                  placeholderBuilder: (context, heroSize, child) => child,
+                  child: Text(title,
+                      style:
+                          TextStyle(fontSize: 40, fontWeight: FontWeight.w500)),
+                ),
                 SizedBox(
                   height: 10,
                 ),

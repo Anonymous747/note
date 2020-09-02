@@ -5,7 +5,7 @@ import 'package:note/widgets/smiles/smile.dart';
 class CompletelyOkaySmile extends Smile {
   final Color smileColor;
 
-  const CompletelyOkaySmile({this.smileColor});
+  const CompletelyOkaySmile({this.smileColor = Colors.white});
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +54,21 @@ class CompletelyOkaySmile extends Smile {
               SizedBox(
                 height: 5,
               ),
-              Line(p1: Offset(-11, 10), p2: Offset(11, 10)),
-              Line(p1: Offset(-15, 7), p2: Offset(-11, 10)),
-              Line(p1: Offset(11, 10), p2: Offset(15, 7)),
+              Line(
+                p1: Offset(-11, 10),
+                p2: Offset(11, 10),
+                color: smileColor,
+              ),
+              Line(
+                p1: Offset(-17, 7),
+                p2: Offset(-15, 9),
+                color: smileColor,
+              ),
+              Line(
+                p1: Offset(17, 7),
+                p2: Offset(15, 9),
+                color: smileColor,
+              ),
             ],
           )
           // Container(

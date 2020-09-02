@@ -51,7 +51,7 @@ class RealyTerribleSmile extends Smile {
                   ],
                 ),
               ),
-              Line(p1: Offset(-15, 15), p2: Offset(10, 20)),
+              Line(p1: Offset(-15, 15), p2: Offset(10, 20), color: smileColor),
             ],
           )
           // Container(

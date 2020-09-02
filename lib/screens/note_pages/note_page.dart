@@ -22,16 +22,12 @@ class NotePage extends StatefulWidget {
 
 class _NotePageState extends State<NotePage> {
   PageController controller;
-  // NoteBloc bloc;
   final double viewportFraction = 0.8;
   double pageOffset;
   ValueNotifier<double> _pageNotifier;
-  // final GlobalKey<AnimatedListState> _listKey = GlobalKey();
   @override
   void initState() {
     super.initState();
-    // bloc = BlocProvider.of<NoteBloc>(context);
-    // bloc.add(FetchNotes());
     pageOffset = 0;
     controller = PageController(
         initialPage: pageOffset.round(), viewportFraction: viewportFraction);
@@ -46,12 +42,6 @@ class _NotePageState extends State<NotePage> {
   Widget build(BuildContext context) {
     return buildLoaded(widget.notes, 1);
   }
-
-  // Widget buidLoading() {
-  //   return Center(
-  //     child: CircularProgressIndicator(),
-  //   );
-  // }
 
   Widget buildLoaded(List<ElementNote> list, int colorIndex) {
     double _height = MediaQuery.of(context).size.height;
@@ -159,7 +149,7 @@ class _NotePageState extends State<NotePage> {
                           controller: controller,
                           itemCount: list.length + 1,
                           itemBuilder: (context, index) {
-                            if (index + 2 >= page && index - 2 <= page) {
+                            if (index + 10 >= page && index - 10 <= page) {
                               double scale = max(
                                   viewportFraction,
                                   (1 -
@@ -200,6 +190,7 @@ class _NotePageState extends State<NotePage> {
                                         currentElement.iconPreferences,
                                     randomQuestion:
                                         currentElement.randomQuestion,
+                                    index: index,
                                   ));
                             }
                           });
@@ -254,50 +245,5 @@ class _NotePageState extends State<NotePage> {
         ],
       ),
     );
-    // appBar: AppBar(title: Text("Title")),
-    // drawer: CustomDrawer(),
-    // floatingActionButton: FloatingActionButton(
-    //   child: Icon(Icons.add),
-    //   onPressed: () => ModalBottomSheets(context).buildIntermediateSheet(
-    //     title: 'I\'m so excited to start this journey with you, Name!',
-    //     firstSubTitle:
-    //         'Let\'s get your great new habit rolling by\ncreating your first story together!',
-    //     secSubTitle:
-    //         'Get started by clicking the \"Add Story\" card,\nand I\'ll guide you through the process.',
-    //     isSubTitleBold: true,
-    //     buttonText: 'Write on!',
-    //     buttonFunc: () {},
-    //   ),
-    // ),
-    //     body: Stack(
-    //   children: [
-    //     AnimatedList(
-    //       key: _listKey,
-    //       initialItemCount: list.length,
-    //       itemBuilder: (BuildContext context, int index, Animation animation) {
-    //         return FadeTransition(
-    //           opacity: animation,
-    //           child: _buildItem(list[index]),
-    //         );
-    //       },
-    //     ),
-    //   ],
-    // ));
-
-    // ),
-    // );
   }
-  // onTap.call();
-
-  // Widget buildError(String message) {
-  //   return Center(
-  //     child: Padding(
-  //       padding: const EdgeInsets.all(8),
-  //       child: Text(
-  //         message,
-  //         style: TextStyle(color: Colors.red),
-  //       ),
-  //     ),
-  //   );
-  // }
 }
