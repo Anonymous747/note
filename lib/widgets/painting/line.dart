@@ -5,17 +5,16 @@ class Line extends StatelessWidget {
   final Offset p1;
   final Offset p2;
   final Color color;
+  final double stroke;
 
-  Line(
-      {this.p1 = Offset.zero,
-      this.p2 = Offset.zero,
-      this.color = Colors.white});
+  Line({this.p1 = Offset.zero, this.p2 = Offset.zero, this.color, this.stroke});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: CustomPaint(
-        painter: CustomLinePainter(p1: p1, p2: p2, color: color),
+        painter:
+            CustomLinePainter(p1: p1, p2: p2, color: color, stroke: stroke),
       ),
     );
   }

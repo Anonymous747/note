@@ -5,9 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:note/model/element_note.dart';
 import 'package:note/screens/creation_note_page/creation_extends.dart';
-import 'package:note/widgets/cells/add_cell.dart';
-import 'package:note/widgets/cells/list_cell.dart';
 import 'package:note/utils/consts.dart';
+import 'package:note/widgets/cells/cells_export.dart';
 import 'package:note/widgets/route_anim/fade_route.dart';
 
 class NotePage extends StatefulWidget {
@@ -141,104 +140,108 @@ class _NotePageState extends State<NotePage> {
                 ),
                 Expanded(
                     child: SizedBox(
-                  width: double.infinity,
-                  child: ValueListenableBuilder<double>(
-                    valueListenable: _pageNotifier,
-                    builder: (_, page, __) {
-                      return PageView.builder(
-                          controller: controller,
-                          itemCount: list.length + 1,
-                          itemBuilder: (context, index) {
-                            if (index + 10 >= page && index - 10 <= page) {
-                              double scale = max(
-                                  viewportFraction,
-                                  (1 -
-                                      (page - index).abs() +
-                                      viewportFraction));
-                              if (index == 0) {
-                                return Container(
-                                    alignment: Alignment.centerRight,
-                                    padding: EdgeInsets.only(
-                                        left: page * 20,
-                                        right: _height * 0.05,
-                                        top: 100 - scale * 35,
-                                        bottom: 75 - scale * 15),
-                                    child: AddCell(
-                                        gradient: listColor[colorIndex ?? 0],
-                                        onTap: () {
-                                          Navigator.of(context).push(FadeRoute(
-                                              page: MakeNoteActivity(
-                                            colorIndex: colorIndex,
-                                          )));
-                                        }));
-                              }
-                              ElementNote currentElement = list[index - 1];
-                              return Container(
-                                  alignment: Alignment.centerRight,
-                                  padding: EdgeInsets.only(
-                                      right: _height * 0.05,
-                                      top: 100 - scale * 35,
-                                      bottom: 75 - scale * 15),
-                                  child: ListCell(
-                                    title: currentElement.title,
-                                    date: currentElement.date,
-                                    percentFun: currentElement.percentFun,
-                                    answer: currentElement.answer,
-                                    emoji: currentElement.emoji,
-                                    happened: currentElement.happened,
-                                    iconPreferences:
-                                        currentElement.iconPreferences,
-                                    randomQuestion:
-                                        currentElement.randomQuestion,
-                                    index: index,
-                                  ));
-                            }
-                          });
-                    },
-                    child: PageView.builder(
-                        controller: controller,
-                        itemCount: list.length + 1,
-                        itemBuilder: (context, index) {
-                          double scale = max(viewportFraction,
-                              (1 - (index - index).abs() + viewportFraction));
-                          if (index == 0) {
-                            return Container(
-                                alignment: Alignment.centerRight,
-                                padding: EdgeInsets.only(
-                                    right: _height * 0.05,
-                                    top: 100 - scale * 35,
-                                    bottom: 75 - scale * 15),
-                                child: AddCell(
-                                  gradient: listColor[colorIndex ?? 0],
-                                  onTap: () {
-                                    Navigator.of(context).push(FadeRoute(
-                                        page: MakeNoteActivity(
-                                      colorIndex: colorIndex,
-                                    )));
-                                  },
-                                ));
-                          }
-                          ElementNote currentElement = list[index - 1];
-                          return Container(
-                            alignment: Alignment.centerRight,
-                            padding: EdgeInsets.only(
-                                right: _height * 0.05,
-                                top: 100 - scale * 35,
-                                bottom: 75 - scale * 15),
-                            child: ListCell(
-                              title: currentElement.title,
-                              date: currentElement.date,
-                              happened: currentElement.happened,
-                              percentFun: currentElement.percentFun,
-                              answer: currentElement.answer,
-                              emoji: currentElement.emoji,
-                              iconPreferences: currentElement.iconPreferences,
-                              randomQuestion: currentElement.randomQuestion,
-                            ),
-                          );
-                        }),
-                  ),
-                ))
+                        width: double.infinity,
+                        child: ValueListenableBuilder<double>(
+                          valueListenable: _pageNotifier,
+                          builder: (_, page, __) {
+                            return PageView.builder(
+                                controller: controller,
+                                itemCount: list.length + 1,
+                                itemBuilder: (context, index) {
+                                  if (index + 10 >= page &&
+                                      index - 10 <= page) {
+                                    double scale = max(
+                                        viewportFraction,
+                                        (1 -
+                                            (page - index).abs() +
+                                            viewportFraction));
+                                    if (index == 0) {
+                                      return Container(
+                                          alignment: Alignment.centerRight,
+                                          padding: EdgeInsets.only(
+                                              left: page * 20,
+                                              right: _height * 0.05,
+                                              top: 100 - scale * 35,
+                                              bottom: 75 - scale * 15),
+                                          child: AddCell(
+                                              gradient:
+                                                  listColor[colorIndex ?? 0],
+                                              onTap: () {
+                                                Navigator.of(context)
+                                                    .push(FadeRoute(
+                                                        page: MakeNoteActivity(
+                                                  colorIndex: colorIndex,
+                                                )));
+                                              }));
+                                    }
+                                    ElementNote currentElement =
+                                        list[index - 1];
+                                    return Container(
+                                        alignment: Alignment.centerRight,
+                                        padding: EdgeInsets.only(
+                                            right: _height * 0.05,
+                                            top: 100 - scale * 35,
+                                            bottom: 75 - scale * 15),
+                                        child: ListCell(
+                                          title: currentElement.title,
+                                          date: currentElement.date,
+                                          percentFun: currentElement.percentFun,
+                                          answer: currentElement.answer,
+                                          emoji: currentElement.emoji,
+                                          happened: currentElement.happened,
+                                          iconPreferences:
+                                              currentElement.iconPreferences,
+                                          randomQuestion:
+                                              currentElement.randomQuestion,
+                                          index: index,
+                                        ));
+                                  }
+                                });
+                          },
+                          //   child: PageView.builder(
+                          //       controller: controller,
+                          //       itemCount: list.length + 1,
+                          //       itemBuilder: (context, index) {
+                          //         double scale = max(viewportFraction,
+                          //             (1 - (index - index).abs() + viewportFraction));
+                          //         if (index == 0) {
+                          //           return Container(
+                          //               alignment: Alignment.centerRight,
+                          //               padding: EdgeInsets.only(
+                          //                   right: _height * 0.05,
+                          //                   top: 100 - scale * 35,
+                          //                   bottom: 75 - scale * 15),
+                          //               child: AddCell(
+                          //                 gradient: listColor[colorIndex ?? 0],
+                          //                 onTap: () {
+                          //                   Navigator.of(context).push(FadeRoute(
+                          //                       page: MakeNoteActivity(
+                          //                     colorIndex: colorIndex,
+                          //                   )));
+                          //                 },
+                          //               ));
+                          //         }
+                          //         ElementNote currentElement = list[index - 1];
+                          //         return Container(
+                          //           alignment: Alignment.centerRight,
+                          //           padding: EdgeInsets.only(
+                          //               right: _height * 0.05,
+                          //               top: 100 - scale * 35,
+                          //               bottom: 75 - scale * 15),
+                          //           child: ListCell(
+                          //             title: currentElement.title,
+                          //             date: currentElement.date,
+                          //             happened: currentElement.happened,
+                          //             percentFun: currentElement.percentFun,
+                          //             answer: currentElement.answer,
+                          //             emoji: currentElement.emoji,
+                          //             iconPreferences: currentElement.iconPreferences,
+                          //             randomQuestion: currentElement.randomQuestion,
+                          //           ),
+                          //         );
+                          //       }),
+                          // ),
+                        )))
               ],
             ),
           ),

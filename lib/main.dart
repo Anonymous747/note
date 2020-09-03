@@ -4,8 +4,7 @@ import 'package:note/bloc/bloc_authentication/authentication_observer.dart';
 import 'package:note/screens/add_note_page.dart';
 import 'package:note/screens/home_page.dart';
 import 'package:note/screens/login_page.dart';
-import 'package:note/screens/note_pages/note_activity.dart';
-import 'package:note/screens/note_pages/note_page.dart';
+import 'package:note/screens/note_pages/note_exports.dart';
 import 'package:note/screens/splash_screen.dart';
 import 'package:note/screens/start_pages/start_exports.dart';
 
@@ -30,7 +29,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      //debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,
       title: "Note",
       theme: ThemeData(
         primarySwatch: Colors.cyan,
@@ -44,6 +43,7 @@ class _AppState extends State<App> {
         'nn': (context) => NicknamePage(),
         'sp': (context) => StartPage(),
         'na': (context) => NoteActivity(),
+        // 'rnp': (context) => ResistrationNotePage(),
       },
       home: BlocBuilder<BeginingBloc, BeginingState>(
         // bloc: BeginingBloc(),
@@ -52,7 +52,7 @@ class _AppState extends State<App> {
             return SplashScreen();
           } else if (state is BeginingSucces) {
             return StartPage(
-              colorIndex: state.colorIndex,
+              colorIndex: state.colorIndex ?? 0,
             );
           } else if (state is BeginingSuccesButEnered) {
             return NoteActivity();

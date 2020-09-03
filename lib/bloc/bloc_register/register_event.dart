@@ -8,6 +8,19 @@ abstract class RegisterEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class RegisterInitialEvent extends RegisterEvent {
+  final BuildContext context;
+  final int colorIndex;
+
+  const RegisterInitialEvent({this.context, this.colorIndex});
+
+  @override
+  List<Object> get props => [this.context, this.colorIndex];
+
+  @override
+  String toString() => 'RegisterInitialEvent';
+}
+
 class RegisterEmailChanged extends RegisterEvent {
   final String email;
 

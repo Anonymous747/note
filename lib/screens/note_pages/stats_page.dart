@@ -10,8 +10,8 @@ class _StatsPageState extends State<StatsPage> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Colors.purple, Colors.purpleAccent[300]])),
+          gradient:
+              LinearGradient(colors: [Colors.purple, Colors.purpleAccent])),
     );
   }
 }

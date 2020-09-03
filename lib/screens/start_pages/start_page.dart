@@ -9,7 +9,7 @@ import 'package:note/screens/start_pages/start_exports.dart';
 class StartPage extends StatefulWidget {
   final int colorIndex;
 
-  StartPage({this.colorIndex});
+  StartPage({this.colorIndex = 0});
   @override
   _StartPageState createState() => _StartPageState();
 }
@@ -42,7 +42,6 @@ class _StartPageState extends State<StartPage> {
     _pageController = PageController(initialPage: 0);
     pageNotifier = ValueNotifier<double>(0);
     isLogoStartState = true;
-    _pageController = PageController(initialPage: 0);
     _currentIndexColor = widget.colorIndex ?? 0;
     _animationColor = Tween(begin: 2.3, end: 2.3);
 

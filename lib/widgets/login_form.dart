@@ -5,7 +5,6 @@ import 'package:note/bloc/bloc_login/bloc.dart';
 import 'package:note/screens/home_page.dart';
 import 'package:note/utils/consts.dart';
 import 'package:note/widgets/alert_dialogs.dart';
-import 'package:note/widgets/flat_transparent_button.dart';
 import 'package:note/widgets/raised_white_button.dart';
 import 'package:note/widgets/route_anim/fade_route.dart';
 

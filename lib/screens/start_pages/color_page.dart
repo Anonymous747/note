@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:note/bloc/bloc_note/bloc.dart';
-import 'package:note/screens/note_pages/note_exports.dart';
-import 'package:note/screens/note_pages/note_page.dart';
+import 'package:note/bloc/bloc_register/bloc.dart';
+import 'package:note/screens/registration_note_page.dart';
 import 'package:note/utils/consts.dart';
 import 'package:note/widgets/change_color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -144,11 +143,13 @@ class _ColorPageState extends State<ColorPage> {
     prefs.setInt('color', _currentIndex.round());
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
-          builder: (context) => BlocProvider<NoteBloc>(
-            create: (context) => NoteBloc(),
-            child: NoteActivity(),
+          builder: (context) => BlocProvider<RegisterBloc>(
+            create: (context) => RegisterBloc(),
+            child: ResistrationNotePage(
+              initialIndex: widget.initialIndex,
+            ),
           ),
         ),
-        ModalRoute.withName('na'));
+        ModalRoute.withName('rnp'));
   }
 }

@@ -4,20 +4,35 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:note/bloc/bloc_register/bloc.dart';
 import 'package:note/repository/user_repository.dart';
+import 'package:note/widgets/modal_bottom_sheets.dart/modal_bottom_sheets.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
-  final UserRepository _userRepository;
+  UserRepository _userRepository;
 
-  RegisterBloc({@required UserRepository userRepository})
-      : assert(userRepository != null),
-        _userRepository = userRepository,
-        super(RegisterState.initial());
+  RegisterBloc() : super(RegisterState.initial()) {
+    _userRepository = UserRepository();
+  }
 
   @override
   Stream<RegisterState> mapEventToState(
     RegisterEvent event,
   ) async* {
-    if (event is RegisterEmailChanged) {
+    if (event is RegisterInitialEvent) {
+      // ModalBottomSheets(event.context).buildIntermediateSheet(
+      //   title: 'I\'m so excited to start this journey with you, Name!',
+      //   firstSubTitle:
+      //       'Let\'s get your great new habit rolling by\ncreating your first story together!',
+      //   secSubTitle:
+      //       'Get started by clicking the \"Add Story\" card,\nand I\'ll guide you through the process.',
+      //   isSubTitleBold: true,
+      //   buttonText: 'Write on!',
+      //   buttonFunc: () {
+      //     Navigator.of(event.context).pop(false);
+      //     print('ok');
+      //   },
+      //   colorIndex: event.colorIndex,
+      // );
+    } else if (event is RegisterEmailChanged) {
       yield* _mapRegisterEmailChangedToState(event.email);
     } else if (event is RegisterPasswordChanged) {
       yield* _mapRegisterPasswordChangedToState(event.password);
