@@ -11,6 +11,10 @@ import 'package:note/widgets/drawer.dart';
 import 'package:note/widgets/route_anim/fade_route.dart';
 
 class HomePage extends StatefulWidget {
+  final int colorIndex;
+
+  HomePage({this.colorIndex});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -38,7 +42,9 @@ class _HomePageState extends State<HomePage> {
                       .push(MaterialPageRoute(builder: (context) {
                     return BlocProvider<NoteBloc>(
                       create: (context) => NoteBloc(),
-                      child: NoteActivity(),
+                      child: NoteActivity(
+                        colorIndex: widget.colorIndex,
+                      ),
                     );
                   }));
                 }

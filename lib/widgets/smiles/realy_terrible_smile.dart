@@ -51,16 +51,14 @@ class RealyTerribleSmile extends Smile {
                   ],
                 ),
               ),
-              Line(p1: Offset(-15, 15), p2: Offset(10, 20), color: smileColor),
+              Line(
+                p1: Offset(-15, 15),
+                p2: Offset(10, 20),
+                color: smileColor,
+                stroke: 5,
+              ),
             ],
           )
-          // Container(
-          //   height: double.infinity,
-          //   decoration: BoxDecoration(
-          //       shape: BoxShape.circle,
-          //       color: backgrounColor,
-          //       border: Border.all(color: Colors.white, width: 5)),
-          // )
         ],
       ),
     );

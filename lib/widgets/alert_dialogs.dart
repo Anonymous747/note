@@ -69,41 +69,46 @@ class AlertDialogs {
   Future<bool> onBackPressed() async {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        title: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Text("Are you sure?".toUpperCase(),
-                  style: TextStyle(color: Colors.red[300])),
-            ),
-            Text(
-              "Are you certain that you want to close Mirroring?",
-              style: TextStyle(fontSize: 15, color: Colors.black45),
-              textAlign: TextAlign.center,
-            )
-          ],
-        ),
-        content: Container(
-          margin: EdgeInsets.only(top: 30),
-          child: Row(
+      builder: (context) => AnimatedPositioned(
+        duration: Duration(milliseconds: 600),
+        curve: Curves.elasticIn,
+        child: AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          title: Column(
             children: <Widget>[
-              Expanded(
-                child: DialogButton(
-                  color: Colors.white,
-                  child: Icon(Icons.clear),
-                  onPressed: () => Navigator.of(context).pop(false),
-                ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Text("Are you sure?".toUpperCase(),
+                    style: TextStyle(color: Colors.red[300])),
               ),
-              Expanded(
-                child: DialogButton(
-                  color: Colors.white,
-                  child: Icon(Icons.check),
-                  onPressed: () => Navigator.of(context).pop(true),
-                ),
-              ),
+              Text(
+                "Are you certain that you want to close Mirroring?",
+                style: TextStyle(fontSize: 15, color: Colors.black45),
+                textAlign: TextAlign.center,
+              )
             ],
+          ),
+          content: Container(
+            margin: EdgeInsets.only(top: 30),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: DialogButton(
+                    color: Colors.white,
+                    child: Icon(Icons.clear),
+                    onPressed: () => Navigator.of(context).pop(false),
+                  ),
+                ),
+                Expanded(
+                  child: DialogButton(
+                    color: Colors.white,
+                    child: Icon(Icons.check),
+                    onPressed: () => Navigator.of(context).pop(true),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

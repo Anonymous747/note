@@ -58,16 +58,19 @@ class CompletelyOkaySmile extends Smile {
                 p1: Offset(-11, 10),
                 p2: Offset(11, 10),
                 color: smileColor,
+                stroke: 5,
               ),
               Line(
                 p1: Offset(-17, 7),
                 p2: Offset(-15, 9),
                 color: smileColor,
+                stroke: 5,
               ),
               Line(
                 p1: Offset(17, 7),
                 p2: Offset(15, 9),
                 color: smileColor,
+                stroke: 5,
               ),
             ],
           )

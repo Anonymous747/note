@@ -6,6 +6,9 @@ import 'package:note/screens/note_pages/note_exports.dart';
 import 'package:note/widgets/drawer.dart';
 
 class NoteActivity extends StatefulWidget {
+  final int colorIndex;
+
+  NoteActivity({this.colorIndex = 0});
   @override
   _NoteActivityState createState() => _NoteActivityState();
 }
@@ -31,7 +34,9 @@ class _NoteActivityState extends State<NoteActivity> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: CustomDrawer(),
+      drawer: CustomDrawer(
+        colorIndex: widget.colorIndex,
+      ),
       bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Colors.black,
           selectedFontSize: 10,

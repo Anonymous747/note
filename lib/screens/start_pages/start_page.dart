@@ -1,10 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note/bloc/bloc_register/bloc.dart';
+import 'package:note/screens/registration_note_page.dart';
 import 'package:note/utils/consts.dart';
 import 'package:note/widgets/alert_dialogs.dart';
 import 'package:note/widgets/logo_widget.dart';
 import 'package:note/screens/start_pages/start_exports.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class StartPage extends StatefulWidget {
   final int colorIndex;
@@ -66,6 +70,7 @@ class _StartPageState extends State<StartPage> {
             _animationColor = Tween(begin: 0.0, end: 2.3);
           });
         },
+        buttonFunction: _onNotePage,
       ),
     ];
   }
@@ -238,5 +243,20 @@ class _StartPageState extends State<StartPage> {
     _pageController.dispose();
     pageNotifier.dispose();
     super.dispose();
+  }
+
+  void _onNotePage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt('color', _currentIndex.round());
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => BlocProvider<RegisterBloc>(
+            create: (context) => RegisterBloc(),
+            child: ResistrationNotePage(
+              initialIndex: _currentIndexColor,
+            ),
+          ),
+        ),
+        ModalRoute.withName('rnp'));
   }
 }

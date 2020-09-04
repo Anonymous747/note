@@ -16,16 +16,17 @@ class ListCell extends StatelessWidget {
   final String answer;
   final int index;
 
-  ListCell(
-      {@required this.date,
-      this.title,
-      this.happened,
-      this.percentFun,
-      this.answer,
-      this.emoji,
-      this.iconPreferences,
-      this.randomQuestion,
-      this.index});
+  ListCell({
+    @required this.date,
+    this.title,
+    this.happened,
+    this.percentFun,
+    this.answer,
+    this.emoji,
+    this.iconPreferences,
+    this.randomQuestion,
+    this.index,
+  });
   @override
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
@@ -36,6 +37,7 @@ class ListCell extends StatelessWidget {
     );
     NetworkImage netImage = image.image;
     return Stack(
+      alignment: Alignment.center,
       children: [
         ClipRRect(
             borderRadius: BorderRadius.circular(30),
@@ -122,6 +124,22 @@ class ListCell extends StatelessWidget {
                   ),
                 ),
               )),
+        ),
+        Positioned(
+          bottom: _height * 0.02,
+          child: Container(
+            alignment: Alignment.topCenter,
+            width: _width / 2,
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                    blurRadius: 20,
+                    color: Colors.black,
+                    offset: Offset(0, 5),
+                    spreadRadius: 10),
+              ],
+            ),
+          ),
         )
       ],
     );

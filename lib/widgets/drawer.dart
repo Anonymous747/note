@@ -8,8 +8,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CustomDrawer extends StatefulWidget {
   UserRepository _repository = new UserRepository();
   FirebaseUser _currentUser;
+  final int colorIndex;
 
-  CustomDrawer() {
+  CustomDrawer({this.colorIndex}) {
     init();
   }
 
@@ -53,13 +54,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
             onTap: () async {
               widget._repository.signOut();
               Navigator.of(context).pop();
-              SharedPreferences shared = await SharedPreferences.getInstance();
-              int indexColor = shared.getInt('color');
-              //Navigator.of(context).popUntil((route) => route.isFirst);
               Navigator.of(context).pushAndRemoveUntil(
                   FadeRoute(
                       page: StartPage(
-                    colorIndex: indexColor,
+                    colorIndex: widget.colorIndex,
                   )),
                   ModalRoute.withName('sp'));
             }),

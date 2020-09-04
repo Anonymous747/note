@@ -10,6 +10,7 @@ import 'package:note/widgets/cells/add_cell.dart';
 import 'package:note/widgets/cells/list_cell.dart';
 import 'package:note/widgets/drawer.dart';
 import 'package:note/widgets/route_anim/fade_route.dart';
+import 'package:note/widgets/texts/opacity_text.dart';
 
 class ResistrationNotePage extends StatefulWidget {
   final int initialIndex;
@@ -52,15 +53,25 @@ class _ResistrationNotePageState extends State<ResistrationNotePage> {
     return WillPopScope(
       onWillPop: AlertDialogs(context).onBackPressed,
       child: Scaffold(
-        drawer: CustomDrawer(),
+        drawer: CustomDrawer(
+          colorIndex: widget.initialIndex,
+        ),
         body: Stack(
           children: [
             Align(
               alignment: Alignment.bottomRight,
               child: Container(
                 width: _width * 0.3,
-                color:
-                    listColor[widget.initialIndex].colors.last.withOpacity(0.1),
+                color: listColor[widget.initialIndex]
+                    .colors
+                    .last
+                    .withOpacity(0.05),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: _height * 0.17, left: 35),
+              child: OpacityText(
+                text: 'Your stories',
               ),
             ),
             Padding(
@@ -110,25 +121,25 @@ class _ResistrationNotePageState extends State<ResistrationNotePage> {
                                               viewportFraction));
                                       if (list.length == 0) {
                                         return Container(
-                                            alignment: Alignment.centerRight,
-                                            padding: EdgeInsets.only(
-                                                // left: page * 20,
-                                                // right: _height * 0.03,
-                                                top: 100 - scale * 35,
-                                                bottom: _height * 0.25 -
-                                                    scale * 15),
-                                            child: AddCell(
-                                                gradient: listColor[
-                                                    widget.initialIndex],
-                                                onTap: () {
-                                                  Navigator.of(context).push(
-                                                      FadeRoute(
-                                                          page:
-                                                              MakeNoteActivity(
-                                                    colorIndex:
-                                                        widget.initialIndex,
-                                                  )));
-                                                }));
+                                          alignment: Alignment.centerRight,
+                                          padding: EdgeInsets.only(
+                                              // left: page * 20,
+                                              // right: _height * 0.03,
+                                              top: 120 - scale * 35,
+                                              bottom:
+                                                  _height * 0.25 - scale * 15),
+                                          child: AddCell(
+                                              gradient: listColor[
+                                                  widget.initialIndex],
+                                              onTap: () {
+                                                Navigator.of(context)
+                                                    .push(FadeRoute(
+                                                        page: MakeNoteActivity(
+                                                  colorIndex:
+                                                      widget.initialIndex,
+                                                )));
+                                              }),
+                                        );
                                       } else {
                                         ElementNote currentElement =
                                             list[index];
@@ -158,16 +169,16 @@ class _ResistrationNotePageState extends State<ResistrationNotePage> {
                                   });
                             },
                           ))),
-                  TweenAnimationBuilder<double>(
-                      duration: Duration(microseconds: 400),
-                      tween: Tween(begin: 0, end: 0),
-                      builder: (context, value, child) {
-                        return Transform.translate(
-                          offset: Offset(0, value),
-                          child: child,
-                        );
-                      },
-                      child: Arrow()),
+                  // TweenAnimationBuilder<double>(
+                  //     duration: Duration(microseconds: 400),
+                  //     tween: Tween(begin: 0, end: 0),
+                  //     builder: (context, value, child) {
+                  //       return Transform.translate(
+                  //         offset: Offset(0, value),
+                  //         child: child,
+                  //       );
+                  //     },
+                  //     child: Arrow(color: Colors.black.withOpacity(0.1))),
                 ],
               ),
             ),

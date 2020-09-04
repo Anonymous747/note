@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:note/bloc/bloc_register/bloc.dart';
-import 'package:note/screens/registration_note_page.dart';
 import 'package:note/utils/consts.dart';
 import 'package:note/widgets/change_color.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ColorPage extends StatefulWidget {
   final ValueChanged<int> valueChanged;
   final int initialIndex;
-  ColorPage({Key key, this.valueChanged, this.initialIndex}) : super(key: key);
+  final Function buttonFunction;
+  ColorPage(
+      {Key key, this.valueChanged, this.initialIndex, this.buttonFunction})
+      : super(key: key);
 
   @override
   _ColorPageState createState() => _ColorPageState();
@@ -124,7 +123,7 @@ class _ColorPageState extends State<ColorPage> {
                                         color: listColor[_currentIndex.round()]
                                             .colors[1]),
                                   ),
-                                  onPressed: _onNotePage,
+                                  onPressed: widget.buttonFunction,
                                 ),
                               ),
                             )
@@ -136,20 +135,5 @@ class _ColorPageState extends State<ColorPage> {
                 ))
           ],
         ));
-  }
-
-  void _onNotePage() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setInt('color', _currentIndex.round());
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (context) => BlocProvider<RegisterBloc>(
-            create: (context) => RegisterBloc(),
-            child: ResistrationNotePage(
-              initialIndex: widget.initialIndex,
-            ),
-          ),
-        ),
-        ModalRoute.withName('rnp'));
   }
 }

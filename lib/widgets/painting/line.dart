@@ -7,7 +7,11 @@ class Line extends StatelessWidget {
   final Color color;
   final double stroke;
 
-  Line({this.p1 = Offset.zero, this.p2 = Offset.zero, this.color, this.stroke});
+  Line(
+      {this.p1 = Offset.zero,
+      this.p2 = Offset.zero,
+      this.color,
+      this.stroke = 5});
 
   @override
   Widget build(BuildContext context) {

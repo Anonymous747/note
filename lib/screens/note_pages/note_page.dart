@@ -104,7 +104,7 @@ class _NotePageState extends State<NotePage> {
                   ],
                 ),
                 SizedBox(
-                  height: _height * 0.05,
+                  height: _height * 0.02,
                 ),
                 Row(
                   children: [
