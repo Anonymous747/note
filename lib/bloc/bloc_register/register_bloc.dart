@@ -18,20 +18,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     RegisterEvent event,
   ) async* {
     if (event is RegisterInitialEvent) {
-      // ModalBottomSheets(event.context).buildIntermediateSheet(
-      //   title: 'I\'m so excited to start this journey with you, Name!',
-      //   firstSubTitle:
-      //       'Let\'s get your great new habit rolling by\ncreating your first story together!',
-      //   secSubTitle:
-      //       'Get started by clicking the \"Add Story\" card,\nand I\'ll guide you through the process.',
-      //   isSubTitleBold: true,
-      //   buttonText: 'Write on!',
-      //   buttonFunc: () {
-      //     Navigator.of(event.context).pop(false);
-      //     print('ok');
-      //   },
-      //   colorIndex: event.colorIndex,
-      // );
+      yield* _mapRegisterInitialToState(event.context, event.colorIndex);
     } else if (event is RegisterEmailChanged) {
       yield* _mapRegisterEmailChangedToState(event.email);
     } else if (event is RegisterPasswordChanged) {
@@ -39,6 +26,25 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     } else if (event is RegisterSubmitted) {
       yield* _mapRegisterSubmittedToState(event.email, event.password);
     }
+  }
+
+  Stream<RegisterState> _mapRegisterInitialToState(
+      BuildContext context, int colorIndex) async* {
+    await Future.delayed(Duration(milliseconds: 1000));
+    ModalBottomSheets(context).buildIntermediateSheet(
+      title: 'I\'m so excited to start this journey with you, Name!',
+      firstSubTitle:
+          'Let\'s get your great new habit rolling by\ncreating your first story together!',
+      secSubTitle:
+          'Get started by clicking the \"Add Story\" card,\nand I\'ll guide you through the process.',
+      isSubTitleBold: true,
+      buttonText: 'Write on!',
+      buttonFunc: () {
+        Navigator.of(context).pop(false);
+        print('ok');
+      },
+      colorIndex: colorIndex,
+    );
   }
 
   Stream<RegisterState> _mapRegisterEmailChangedToState(String email) async* {

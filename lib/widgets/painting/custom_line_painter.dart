@@ -16,6 +16,11 @@ class CustomLinePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint()
       ..color = color
+      // ..invertColors = true
+      // ..maskFilter = MaskFilter.blur(BlurStyle.outer, 1)
+      // ..invertColors = true
+      // ..colorFilter = ColorFilter.mode(color, BlendMode.hue)
+      ..isAntiAlias = false
       ..strokeWidth = stroke
       ..strokeCap = StrokeCap.round;
     canvas.drawLine(p1, p2, paint);

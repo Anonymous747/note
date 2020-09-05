@@ -43,7 +43,7 @@ class _AppState extends State<App> {
         'nn': (context) => NicknamePage(),
         'sp': (context) => StartPage(),
         'na': (context) => NoteActivity(),
-        // 'rnp': (context) => ResistrationNotePage(),
+        // 'rnp': (context) => RegistrationNotePage(),
       },
       home: BlocBuilder<BeginingBloc, BeginingState>(
         // bloc: BeginingBloc(),

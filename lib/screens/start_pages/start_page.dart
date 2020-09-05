@@ -252,7 +252,7 @@ class _StartPageState extends State<StartPage> {
         MaterialPageRoute(
           builder: (context) => BlocProvider<RegisterBloc>(
             create: (context) => RegisterBloc(),
-            child: ResistrationNotePage(
+            child: RegistrationNotePage(
               initialIndex: _currentIndexColor,
             ),
           ),

@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/bloc/bloc_creation/bloc.dart';
 import 'package:note/bloc/bloc_note/bloc.dart';
+import 'package:note/bloc/bloc_register/bloc.dart';
 import 'package:note/screens/note_pages/note_activity.dart';
+import 'package:note/screens/registration_note_page.dart';
 import 'package:note/widgets/custom_text_field.dart';
 import 'package:note/widgets/flat_transparent_button.dart';
 import 'package:note/widgets/raised_white_button.dart';
@@ -10,10 +13,15 @@ import 'package:note/widgets/texts/font_white_text.dart';
 
 class TitlePage extends StatefulWidget {
   final Color textColor;
-  final Function saveFunction;
+  final bool isAuthorized;
   final Function backFunction;
+  final int colorIndex;
 
-  TitlePage({this.textColor, this.saveFunction, this.backFunction});
+  TitlePage(
+      {this.textColor,
+      this.isAuthorized,
+      this.backFunction,
+      this.colorIndex = 0});
 
   @override
   _TitlePageState createState() => _TitlePageState();
@@ -59,7 +67,7 @@ class _TitlePageState extends State<TitlePage> {
                     height: 0.08 * _height,
                     textColor: widget.textColor,
                     onPressed: () {
-                      if (titleController.text != '') {
+                      if (widget.isAuthorized) {
                         BlocProvider.of<CreationBloc>(context).add(
                             CreationSaveStory(title: titleController.text));
                         Navigator.of(context).pushAndRemoveUntil(
@@ -69,6 +77,20 @@ class _TitlePageState extends State<TitlePage> {
                             child: NoteActivity(),
                           );
                         }), ModalRoute.withName('np'));
+                      } else {
+                        BlocProvider.of<RegisterBloc>(context).add(
+                            RegisterCreatedNoteEvent(
+                                context: context,
+                                colorIndex: widget.colorIndex));
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(builder: (context) {
+                          return BlocProvider<RegisterBloc>.value(
+                            value: RegisterBloc(),
+                            child: RegistrationNotePage(
+                              initialIndex: widget.colorIndex,
+                            ),
+                          );
+                        }), ModalRoute.withName('rnp'));
                       }
                     }),
                 FlatTransparentButton(

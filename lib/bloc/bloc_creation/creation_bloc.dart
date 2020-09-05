@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:note/bloc/bloc_creation/bloc.dart';
 import 'package:note/model/element_note.dart';
@@ -9,9 +10,15 @@ import 'package:note/repository/remote_data_repository.dart';
 class CreationBloc extends Bloc<CreationEvent, CreationState> {
   ElementNote note;
   RemDataRepImpl _dataRepository;
+  FirebaseUser currentUser;
   CreationBloc() : super(CreationInitial()) {
     note = ElementNote();
     _dataRepository = RemDataRepImpl();
+    _userStatus();
+  }
+
+  void _userStatus() async {
+    currentUser = await FirebaseAuth.instance.currentUser();
   }
 
   @override
@@ -33,16 +40,21 @@ class CreationBloc extends Bloc<CreationEvent, CreationState> {
       note.title = event.title;
 
       try {
-        await _dataRepository.makeNote(
-          date: DateTime.now(),
-          title: note.title,
-          happened: note.happened,
-          percentFun: note.percentFun,
-          iconPreferences: note.iconPreferences,
-          emoji: note.emoji,
-          randomQuestion: note.randomQuestion,
-          answer: note.answer,
-        );
+        if (currentUser != null) {
+          await _dataRepository.makeNote(
+            date: DateTime.now(),
+            title: note.title,
+            happened: note.happened,
+            percentFun: note.percentFun,
+            iconPreferences: note.iconPreferences,
+            emoji: note.emoji,
+            randomQuestion: note.randomQuestion,
+            answer: note.answer,
+          );
+        } else if (currentUser == null) {
+          note.date = DateTime.now();
+          yield CreationSuccess(note: note);
+        }
       } on PlatformException catch (e) {
         print(e);
       }

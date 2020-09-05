@@ -1,53 +1,129 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note/bloc/bloc_register/bloc.dart';
 import 'package:note/model/element_note.dart';
 import 'package:note/screens/creation_note_page/creation_extends.dart';
+import 'package:note/screens/home_page.dart';
 import 'package:note/utils/consts.dart';
 import 'package:note/widgets/alert_dialogs.dart';
 import 'package:note/widgets/arrow.dart';
-import 'package:note/widgets/cells/add_cell.dart';
-import 'package:note/widgets/cells/list_cell.dart';
+import 'package:note/widgets/cells/cells_export.dart';
 import 'package:note/widgets/drawer.dart';
 import 'package:note/widgets/route_anim/fade_route.dart';
 import 'package:note/widgets/texts/opacity_text.dart';
 
-class ResistrationNotePage extends StatefulWidget {
+class RegistrationNotePage extends StatefulWidget {
   final int initialIndex;
   final List<ElementNote> notes;
 
-  ResistrationNotePage({this.initialIndex, this.notes});
+  RegistrationNotePage({this.initialIndex, this.notes});
 
   @override
-  _ResistrationNotePageState createState() => _ResistrationNotePageState();
+  _RegistrationNotePageState createState() => _RegistrationNotePageState();
 }
 
-class _ResistrationNotePageState extends State<ResistrationNotePage> {
-  PageController controller;
+class _RegistrationNotePageState extends State<RegistrationNotePage>
+    with SingleTickerProviderStateMixin {
+  PageController pageController;
+  AnimationController animationController;
   final double viewportFraction = 0.7;
   double pageOffset;
   ValueNotifier<double> _pageNotifier;
   @override
   void initState() {
     super.initState();
+    BlocProvider.of<RegisterBloc>(context).add(RegisterInitialEvent(
+        context: context, colorIndex: widget.initialIndex));
     pageOffset = 0;
-    controller = PageController(
+    pageController = PageController(
         initialPage: pageOffset.round(), viewportFraction: viewportFraction);
     _pageNotifier = ValueNotifier<double>(pageOffset);
-    controller.addListener(() {
-      pageOffset = controller.page;
-      _pageNotifier.value = controller.page;
+    animationController = AnimationController(
+      duration: Duration(seconds: 2),
+      vsync: this,
+    );
+    pageController.addListener(() {
+      pageOffset = pageController.page;
+      _pageNotifier.value = pageController.page;
+    });
+    animationController.forward();
+    animationController.addStatusListener((status) {
+      print(status);
+      if (status == AnimationStatus.completed)
+        animationController.reverse();
+      else if (status == AnimationStatus.dismissed)
+        animationController.forward();
     });
   }
 
   @override
+  void dispose() {
+    animationController.dispose();
+    pageController.dispose();
+    _pageNotifier.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return buildLoaded(widget.notes, 1);
+    return BlocProvider<RegisterBloc>(
+      create: (context) => RegisterBloc(),
+      child: BlocListener<RegisterBloc, RegisterState>(
+        listener: (context, state) {
+          if (state.isFailure) {
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  content: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [Text('Login Failure'), Icon(Icons.error)],
+                  ),
+                  backgroundColor: Colors.red,
+                ),
+              );
+          }
+          if (state.isSubmitting) {
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  content: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Logging In...'),
+                      CircularProgressIndicator(),
+                    ],
+                  ),
+                ),
+              );
+          }
+          if (state.isSuccess) {
+            // BlocProvider.of<RegisterBloc>(context);
+            // .add(RegisterSubmitted(email: state));
+            //navigation to home page if the user authenticated
+            // Navigator.of(context).push(FadeRoute(page: HomePage()));
+            Navigator.of(context).pushAndRemoveUntil(
+                FadeRoute(page: HomePage(colorIndex: widget.initialIndex)),
+                ModalRoute.withName('hp'));
+          }
+        },
+        child: BlocBuilder<RegisterBloc, RegisterState>(
+          builder: (context, state) {
+            return buildLoaded(widget.notes, 1);
+          },
+        ),
+      ),
+    );
   }
 
   Widget buildLoaded(List<ElementNote> list, int colorIndex) {
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
+    final animation =
+        Tween<double>(begin: 0, end: 1).animate(animationController);
 
     if (list == null) list = new List<ElementNote>();
     return WillPopScope(
@@ -109,7 +185,7 @@ class _ResistrationNotePageState extends State<ResistrationNotePage> {
                             valueListenable: _pageNotifier,
                             builder: (_, page, __) {
                               return PageView.builder(
-                                  controller: controller,
+                                  controller: pageController,
                                   itemCount: list.length + 1,
                                   itemBuilder: (context, index) {
                                     if (index + 10 >= page &&
@@ -169,16 +245,17 @@ class _ResistrationNotePageState extends State<ResistrationNotePage> {
                                   });
                             },
                           ))),
-                  // TweenAnimationBuilder<double>(
-                  //     duration: Duration(microseconds: 400),
-                  //     tween: Tween(begin: 0, end: 0),
-                  //     builder: (context, value, child) {
-                  //       return Transform.translate(
-                  //         offset: Offset(0, value),
-                  //         child: child,
-                  //       );
-                  //     },
-                  //     child: Arrow(color: Colors.black.withOpacity(0.1))),
+                  AnimatedBuilder(
+                    animation: animation,
+                    child: Arrow(
+                      color: Color.fromRGBO(192, 192, 192, 1),
+                    ),
+                    builder: (context, child) {
+                      final yPos = _height * 0.05 * animation.value;
+                      return Transform.translate(
+                          offset: Offset(0, -yPos), child: child);
+                    },
+                  ),
                 ],
               ),
             ),

@@ -22,7 +22,7 @@ class ModalBottomSheets {
         enableDrag: false,
         elevation: 0,
         backgroundColor: Colors.transparent,
-        barrierColor: Colors.black54,
+        barrierColor: Colors.black87,
         isDismissible: false,
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(

@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/bloc/bloc_creation/bloc.dart';
+import 'package:note/bloc/bloc_note/bloc.dart';
 import 'package:note/screens/creation_note_page/creation_extends.dart';
+import 'package:note/screens/note_pages/note_exports.dart';
 import 'package:note/utils/consts.dart';
 import 'package:note/widgets/alert_dialogs.dart';
 import 'package:note/widgets/logo_widget.dart';
@@ -22,6 +25,7 @@ class _MakeNoteActivityState extends State<MakeNoteActivity> {
   ValueNotifier<double> logoNotifier;
   bool isLogoStartState;
   List<Widget> pages;
+  FirebaseUser currentUser;
 
   @override
   void initState() {
@@ -62,8 +66,23 @@ class _MakeNoteActivityState extends State<MakeNoteActivity> {
       TitlePage(
         textColor: currentColor,
         backFunction: onBackPressed,
+        isAuthorized: currentUser == null ? false : true,
+        colorIndex: widget.colorIndex,
       )
     ];
+
+    _userStatus();
+  }
+
+  void _userStatus() async {
+    currentUser = await FirebaseAuth.instance.currentUser();
+  }
+
+  @override
+  void dispose() {
+    logoNotifier.dispose();
+    controller.dispose();
+    super.dispose();
   }
 
   void transitionFunction() {
