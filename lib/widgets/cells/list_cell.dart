@@ -32,8 +32,8 @@ class ListCell extends StatelessWidget {
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
     Image image = Image.network(
-      'https://picsum.photos/id/${index + 11}/${(0.8 * _width).round()}/${(0.65 * _height).round()}',
-      fit: BoxFit.fill,
+      'https://picsum.photos/id/${index + 13}/${(0.8 * _width).round()}/${(0.65 * _height).round()}',
+      fit: BoxFit.scaleDown,
     );
     NetworkImage netImage = image.image;
     return Stack(

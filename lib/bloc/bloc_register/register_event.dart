@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:note/model/element_note.dart';
 
 abstract class RegisterEvent extends Equatable {
   const RegisterEvent();
@@ -24,11 +25,12 @@ class RegisterInitialEvent extends RegisterEvent {
 class RegisterCreatedNoteEvent extends RegisterEvent {
   final BuildContext context;
   final int colorIndex;
+  final ElementNote notes;
 
-  const RegisterCreatedNoteEvent({this.context, this.colorIndex});
+  const RegisterCreatedNoteEvent({this.context, this.colorIndex, this.notes});
 
   @override
-  List<Object> get props => [this.context, this.colorIndex];
+  List<Object> get props => [this.context, this.colorIndex, this.notes];
 
   @override
   String toString() => 'RegisterCreatedNoteEvent';

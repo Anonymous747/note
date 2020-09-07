@@ -3,7 +3,11 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note/bloc/bloc_account_creation/account_creation_bloc.dart';
+import 'package:note/bloc/bloc_account_creation/bloc.dart';
 import 'package:note/bloc/bloc_creation/bloc.dart';
+import 'package:note/bloc/bloc_register/bloc.dart';
 import 'package:note/model/element_note.dart';
 import 'package:note/repository/remote_data_repository.dart';
 
@@ -54,6 +58,8 @@ class CreationBloc extends Bloc<CreationEvent, CreationState> {
         } else if (currentUser == null) {
           note.date = DateTime.now();
           yield CreationSuccess(note: note);
+          // BlocProvider.of<AccountCreationBloc>(event.context)
+          //     .add(AccountNoteCreatedEvent(context: event.context, note: note));
         }
       } on PlatformException catch (e) {
         print(e);

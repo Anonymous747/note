@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note/bloc/bloc_account_creation/account_creation_bloc.dart';
+import 'package:note/bloc/bloc_account_creation/bloc.dart';
 import 'package:note/bloc/bloc_register/bloc.dart';
 import 'package:note/model/element_note.dart';
 import 'package:note/screens/creation_note_page/creation_extends.dart';
@@ -11,14 +13,15 @@ import 'package:note/widgets/alert_dialogs.dart';
 import 'package:note/widgets/arrow.dart';
 import 'package:note/widgets/cells/cells_export.dart';
 import 'package:note/widgets/drawer.dart';
+import 'package:note/widgets/modal_bottom_sheets.dart/modal_bottom_sheets.dart';
 import 'package:note/widgets/route_anim/fade_route.dart';
 import 'package:note/widgets/texts/opacity_text.dart';
 
 class RegistrationNotePage extends StatefulWidget {
   final int initialIndex;
-  final List<ElementNote> notes;
+  final ElementNote note;
 
-  RegistrationNotePage({this.initialIndex, this.notes});
+  RegistrationNotePage({this.initialIndex, this.note});
 
   @override
   _RegistrationNotePageState createState() => _RegistrationNotePageState();
@@ -34,8 +37,9 @@ class _RegistrationNotePageState extends State<RegistrationNotePage>
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<RegisterBloc>(context).add(RegisterInitialEvent(
-        context: context, colorIndex: widget.initialIndex));
+    // BlocProvider.of<AccountCreationBloc>(context).add(
+    //     AccountCreationInitialEvent(
+    //         context: context, colorIndex: widget.initialIndex));
     pageOffset = 0;
     pageController = PageController(
         initialPage: pageOffset.round(), viewportFraction: viewportFraction);
@@ -50,7 +54,6 @@ class _RegistrationNotePageState extends State<RegistrationNotePage>
     });
     animationController.forward();
     animationController.addStatusListener((status) {
-      print(status);
       if (status == AnimationStatus.completed)
         animationController.reverse();
       else if (status == AnimationStatus.dismissed)
@@ -68,64 +71,42 @@ class _RegistrationNotePageState extends State<RegistrationNotePage>
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<RegisterBloc>(
-      create: (context) => RegisterBloc(),
-      child: BlocListener<RegisterBloc, RegisterState>(
-        listener: (context, state) {
-          if (state.isFailure) {
-            Scaffold.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                SnackBar(
-                  content: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [Text('Login Failure'), Icon(Icons.error)],
-                  ),
-                  backgroundColor: Colors.red,
-                ),
-              );
-          }
-          if (state.isSubmitting) {
-            Scaffold.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                SnackBar(
-                  content: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Logging In...'),
-                      CircularProgressIndicator(),
-                    ],
-                  ),
-                ),
-              );
-          }
-          if (state.isSuccess) {
-            // BlocProvider.of<RegisterBloc>(context);
-            // .add(RegisterSubmitted(email: state));
-            //navigation to home page if the user authenticated
-            // Navigator.of(context).push(FadeRoute(page: HomePage()));
-            Navigator.of(context).pushAndRemoveUntil(
-                FadeRoute(page: HomePage(colorIndex: widget.initialIndex)),
-                ModalRoute.withName('hp'));
+    return BlocProvider<AccountCreationBloc>(
+      create: (context) => AccountCreationBloc(),
+      child: BlocBuilder<AccountCreationBloc, AccountCreationState>(
+        builder: (context, state) {
+          if (state is AccountCreationInitial) {
+            return buildLoaded(widget.note, widget.initialIndex);
+          } else if (state is AccountCreationGreeting) {
+            ModalBottomSheets(context).buildIntermediateSheet(
+              title: 'I\'m so excited to start this journey with you, Name!',
+              firstSubTitle:
+                  'Let\'s get your great new habit rolling by\ncreating your first story together!',
+              secSubTitle:
+                  'Get started by clicking the \"Add Story\" card,\nand I\'ll guide you through the process.',
+              isSubTitleBold: true,
+              buttonText: 'Write on!',
+              buttonFunc: () {
+                Navigator.of(context).pop(false);
+                print('ok');
+              },
+              colorIndex: widget.initialIndex,
+            );
+          } else if (state is AccountNoteCreatedState) {
+            return buildLoaded(state.note, widget.initialIndex);
           }
         },
-        child: BlocBuilder<RegisterBloc, RegisterState>(
-          builder: (context, state) {
-            return buildLoaded(widget.notes, 1);
-          },
-        ),
       ),
     );
   }
 
-  Widget buildLoaded(List<ElementNote> list, int colorIndex) {
+  Widget buildLoaded(ElementNote note, int colorIndex) {
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
     final animation =
         Tween<double>(begin: 0, end: 1).animate(animationController);
 
-    if (list == null) list = new List<ElementNote>();
+    // if (note == null) note = new ElementNote();
     return WillPopScope(
       onWillPop: AlertDialogs(context).onBackPressed,
       child: Scaffold(
@@ -186,7 +167,7 @@ class _RegistrationNotePageState extends State<RegistrationNotePage>
                             builder: (_, page, __) {
                               return PageView.builder(
                                   controller: pageController,
-                                  itemCount: list.length + 1,
+                                  itemCount: 1,
                                   itemBuilder: (context, index) {
                                     if (index + 10 >= page &&
                                         index - 10 <= page) {
@@ -195,7 +176,7 @@ class _RegistrationNotePageState extends State<RegistrationNotePage>
                                           (1 -
                                               (page - index).abs() +
                                               viewportFraction));
-                                      if (list.length == 0) {
+                                      if (note == null) {
                                         return Container(
                                           alignment: Alignment.centerRight,
                                           padding: EdgeInsets.only(
@@ -217,8 +198,7 @@ class _RegistrationNotePageState extends State<RegistrationNotePage>
                                               }),
                                         );
                                       } else {
-                                        ElementNote currentElement =
-                                            list[index];
+                                        ElementNote currentElement = note;
                                         return Container(
                                             alignment: Alignment.centerRight,
                                             padding: EdgeInsets.only(

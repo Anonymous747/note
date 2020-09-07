@@ -55,7 +55,9 @@ class _AppState extends State<App> {
               colorIndex: state.colorIndex ?? 0,
             );
           } else if (state is BeginingSuccesButEnered) {
-            return NoteActivity();
+            return NoteActivity(
+              colorIndex: state.colorIndex,
+            );
           } else if (state is BeginingFailure) {
             return Scaffold(
               body: Center(

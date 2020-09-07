@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note/bloc/bloc_account_creation/account_creation_bloc.dart';
 import 'package:note/bloc/bloc_register/bloc.dart';
 import 'package:note/screens/registration_note_page.dart';
 import 'package:note/utils/consts.dart';
@@ -250,8 +251,8 @@ class _StartPageState extends State<StartPage> {
     prefs.setInt('color', _currentIndex.round());
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
-          builder: (context) => BlocProvider<RegisterBloc>(
-            create: (context) => RegisterBloc(),
+          builder: (context) => BlocProvider<AccountCreationBloc>(
+            create: (context) => AccountCreationBloc(),
             child: RegistrationNotePage(
               initialIndex: _currentIndexColor,
             ),

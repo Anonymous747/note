@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:note/bloc/bloc_register/bloc.dart';
+import 'package:note/model/element_note.dart';
 import 'package:note/repository/user_repository.dart';
 import 'package:note/widgets/modal_bottom_sheets.dart/modal_bottom_sheets.dart';
 
@@ -17,9 +18,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   Stream<RegisterState> mapEventToState(
     RegisterEvent event,
   ) async* {
-    if (event is RegisterInitialEvent) {
-      yield* _mapRegisterInitialToState(event.context, event.colorIndex);
-    } else if (event is RegisterEmailChanged) {
+    if (event is RegisterEmailChanged) {
       yield* _mapRegisterEmailChangedToState(event.email);
     } else if (event is RegisterPasswordChanged) {
       yield* _mapRegisterPasswordChangedToState(event.password);
@@ -28,24 +27,43 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     }
   }
 
-  Stream<RegisterState> _mapRegisterInitialToState(
-      BuildContext context, int colorIndex) async* {
-    await Future.delayed(Duration(milliseconds: 1000));
-    ModalBottomSheets(context).buildIntermediateSheet(
-      title: 'I\'m so excited to start this journey with you, Name!',
-      firstSubTitle:
-          'Let\'s get your great new habit rolling by\ncreating your first story together!',
-      secSubTitle:
-          'Get started by clicking the \"Add Story\" card,\nand I\'ll guide you through the process.',
-      isSubTitleBold: true,
-      buttonText: 'Write on!',
-      buttonFunc: () {
-        Navigator.of(context).pop(false);
-        print('ok');
-      },
-      colorIndex: colorIndex,
-    );
-  }
+  // Stream<RegisterState> _mapRegisterInitialToState(
+  //     BuildContext context, int colorIndex) async* {
+  //   await Future.delayed(Duration(milliseconds: 1000));
+  //   ModalBottomSheets(context).buildIntermediateSheet(
+  //     title: 'I\'m so excited to start this journey with you, Name!',
+  //     firstSubTitle:
+  //         'Let\'s get your great new habit rolling by\ncreating your first story together!',
+  //     secSubTitle:
+  //         'Get started by clicking the \"Add Story\" card,\nand I\'ll guide you through the process.',
+  //     isSubTitleBold: true,
+  //     buttonText: 'Write on!',
+  //     buttonFunc: () {
+  //       Navigator.of(context).pop(false);
+  //       print('ok');
+  //     },
+  //     colorIndex: colorIndex,
+  //   );
+  // }
+
+  // Stream<RegisterState> _mapRegisterCreationNoteToState(
+  //     BuildContext context, int colorIndex, ElementNote note) async* {
+  //   ModalBottomSheets(context).buildIntermediateSheet(
+  //     title: 'I\'m so excited to start this journey with you, Name!',
+  //     firstSubTitle:
+  //         'Let\'s get your great new habit rolling by\ncreating your first story together!',
+  //     secSubTitle:
+  //         'Get started by clicking the \"Add Story\" card,\nand I\'ll guide you through the process.',
+  //     isSubTitleBold: true,
+  //     buttonText: 'Write on!',
+  //     buttonFunc: () {
+  //       Navigator.of(context).pop(false);
+  //       print('ok');
+  //     },
+  //     colorIndex: colorIndex,
+  //   );
+  //   // yield Register
+  // }
 
   Stream<RegisterState> _mapRegisterEmailChangedToState(String email) async* {
     yield state.update(isEmailValid: true //Validators.isValidEmail(email),

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 abstract class CreationEvent extends Equatable {
   const CreationEvent();
@@ -73,11 +74,12 @@ class CreationRandomQuestionChanged extends CreationEvent {
 
 class CreationSaveStory extends CreationEvent {
   final String title;
+  final BuildContext context;
 
-  CreationSaveStory({this.title});
+  CreationSaveStory({this.title, this.context});
 
   @override
-  List<Object> get props => [this.title];
+  List<Object> get props => [this.title, this.context];
 
   @override
   String toString() => 'CreationSaveStory ${this.title}';
