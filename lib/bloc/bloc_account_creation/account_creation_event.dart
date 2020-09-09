@@ -36,4 +36,18 @@ class AccountNoteCreatedEvent extends AccountCreationEvent {
   String toString() => 'AccountNoteCreatedEvent';
 }
 
+class AccountContinueEvent extends AccountCreationEvent {
+  final BuildContext context;
+  final int colorIndex;
+  final ElementNote note;
+
+  const AccountContinueEvent({this.context, this.colorIndex, this.note});
+
+  @override
+  List<Object> get props => [this.context, this.colorIndex, this.note];
+
+  @override
+  String toString() => 'AccountContinueEvent';
+}
+
 class AccountRegistrationEvent extends AccountCreationEvent {}

@@ -21,4 +21,6 @@ class AccountNoteCreatedState extends AccountCreationState {
   List<Object> get props => [this.note];
 }
 
+class AccountContinueState extends AccountCreationState {}
+
 class AccountCreationSuccess extends AccountCreationState {}

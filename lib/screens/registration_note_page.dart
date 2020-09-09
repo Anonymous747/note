@@ -37,9 +37,9 @@ class _RegistrationNotePageState extends State<RegistrationNotePage>
   @override
   void initState() {
     super.initState();
-    // BlocProvider.of<AccountCreationBloc>(context).add(
-    //     AccountCreationInitialEvent(
-    //         context: context, colorIndex: widget.initialIndex));
+    // BlocProvider.of<AccountCreationBloc>(context)
+    //   ..add(AccountCreationInitialEvent(
+    //       context: context, colorIndex: widget.initialIndex));
     pageOffset = 0;
     pageController = PageController(
         initialPage: pageOffset.round(), viewportFraction: viewportFraction);
@@ -71,32 +71,17 @@ class _RegistrationNotePageState extends State<RegistrationNotePage>
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AccountCreationBloc>(
-      create: (context) => AccountCreationBloc(),
-      child: BlocBuilder<AccountCreationBloc, AccountCreationState>(
-        builder: (context, state) {
-          if (state is AccountCreationInitial) {
-            return buildLoaded(widget.note, widget.initialIndex);
-          } else if (state is AccountCreationGreeting) {
-            ModalBottomSheets(context).buildIntermediateSheet(
-              title: 'I\'m so excited to start this journey with you, Name!',
-              firstSubTitle:
-                  'Let\'s get your great new habit rolling by\ncreating your first story together!',
-              secSubTitle:
-                  'Get started by clicking the \"Add Story\" card,\nand I\'ll guide you through the process.',
-              isSubTitleBold: true,
-              buttonText: 'Write on!',
-              buttonFunc: () {
-                Navigator.of(context).pop(false);
-                print('ok');
-              },
-              colorIndex: widget.initialIndex,
-            );
-          } else if (state is AccountNoteCreatedState) {
-            return buildLoaded(state.note, widget.initialIndex);
-          }
-        },
-      ),
+    return BlocBuilder<AccountCreationBloc, AccountCreationState>(
+      builder: (context, state) {
+        // if (state is AccountCreationInitial) {
+        //   return buildLoaded(widget.note, widget.initialIndex);
+        // } else if (state is AccountCreationGreeting) {
+        //   return buildLoaded(widget.note, widget.initialIndex);
+        // } else if (state is AccountNoteCreatedState) {
+        //   return buildLoaded(state.note, widget.initialIndex);
+        // }
+        return buildLoaded(widget.note, widget.initialIndex);
+      },
     );
   }
 

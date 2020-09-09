@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/bloc/bloc_account_creation/account_creation_bloc.dart';
+import 'package:note/bloc/bloc_account_creation/bloc.dart';
 import 'package:note/bloc/bloc_creation/bloc.dart';
 import 'package:note/bloc/bloc_note/bloc.dart';
 import 'package:note/bloc/bloc_register/bloc.dart';
@@ -82,6 +83,10 @@ class _TitlePageState extends State<TitlePage> {
                           );
                         }), ModalRoute.withName('np'));
                       } else {
+                        // BlocProvider.of<AccountCreationBloc>(context).add(
+                        // AccountNoteCreatedEvent(
+                        //     context: context,
+                        //     colorIndex: widget.colorIndex));
                         // Navigator.of(context).pushAndRemoveUntil(
                         //     MaterialPageRoute(builder: (context) {
                         //   return BlocProvider<AccountCreationBloc>.value(

@@ -15,6 +15,7 @@ class ModalBottomSheets {
     String buttonText,
     int colorIndex,
     Function buttonFunc,
+    double height,
   }) async {
     // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     // int colorIndex = sharedPreferences.get('color');
@@ -32,7 +33,7 @@ class ModalBottomSheets {
         context: _context,
         builder: (context) {
           return Container(
-            // height: MediaQuery.of(context).,
+            height: height,
             child: Stack(
               alignment: Alignment.topCenter,
               children: [
@@ -47,7 +48,7 @@ class ModalBottomSheets {
                       ),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.only(top: 100, right: 25, left: 25),
+                      padding: EdgeInsets.only(top: 80, right: 25, left: 25),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
