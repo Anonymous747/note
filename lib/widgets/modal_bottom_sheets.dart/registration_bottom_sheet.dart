@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:note/utils/consts.dart';
 import 'package:note/widgets/buttons/dialog_button.dart';
 import 'package:note/widgets/logo_widget.dart';
-import 'package:note/utils/consts.dart';
 
-class ModalBottomSheets {
+class RegistrationBottomSheets {
   BuildContext _context;
 
-  ModalBottomSheets(this._context);
-  Future<void> buildIntermediateSheet({
+  RegistrationBottomSheets(this._context);
+  Future<void> buildRegistrationSheet({
     String title,
     String firstSubTitle,
     String secSubTitle,
