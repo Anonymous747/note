@@ -22,19 +22,19 @@ class RegisterInitialEvent extends RegisterEvent {
   String toString() => 'RegisterInitialEvent';
 }
 
-class RegisterCreatedNoteEvent extends RegisterEvent {
-  final BuildContext context;
-  final int colorIndex;
-  final ElementNote notes;
+// class RegisterCreatedNoteEvent extends RegisterEvent {
+//   final BuildContext context;
+//   final int colorIndex;
+//   final ElementNote notes;
 
-  const RegisterCreatedNoteEvent({this.context, this.colorIndex, this.notes});
+//   const RegisterCreatedNoteEvent({this.context, this.colorIndex, this.notes});
 
-  @override
-  List<Object> get props => [this.context, this.colorIndex, this.notes];
+//   @override
+//   List<Object> get props => [this.context, this.colorIndex, this.notes];
 
-  @override
-  String toString() => 'RegisterCreatedNoteEvent';
-}
+//   @override
+//   String toString() => 'RegisterCreatedNoteEvent';
+// }
 
 class RegisterEmailChanged extends RegisterEvent {
   final String email;

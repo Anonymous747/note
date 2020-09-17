@@ -84,3 +84,8 @@ class CreationSaveStory extends CreationEvent {
   @override
   String toString() => 'CreationSaveStory ${this.title}';
 }
+
+class CreationSuccesEvent extends CreationEvent {
+  @override
+  String toString() => 'CreationSucces';
+}

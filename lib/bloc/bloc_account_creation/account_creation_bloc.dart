@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note/bloc/bloc_account_creation/bloc.dart';
+import 'package:note/bloc/bloc_register/bloc.dart';
 import 'package:note/widgets/modal_bottom_sheets.dart/modal_bottom_sheets.dart';
 import 'package:note/widgets/modal_bottom_sheets.dart/registration_bottom_sheet.dart';
 
@@ -14,7 +15,8 @@ class AccountCreationBloc
     AccountCreationEvent event,
   ) async* {
     if (event is AccountCreationInitialEvent) {
-      await Future.delayed(Duration(seconds: 1));
+      // await Future.delayed(Duration(seconds: 1));
+      yield AccountCreationGreeting();
       ModalBottomSheets(event.context).buildIntermediateSheet(
         title: 'I\'m so excited to start this journey with you, Name!',
         firstSubTitle:
@@ -29,9 +31,8 @@ class AccountCreationBloc
         colorIndex: event.colorIndex,
         height: MediaQuery.of(event.context).size.height * 0.55,
       );
-      yield AccountCreationGreeting();
     } else if (event is AccountNoteCreatedEvent) {
-      await Future.delayed(Duration(seconds: 1));
+      // await Future.delayed(Duration(seconds: 1));
       ModalBottomSheets(event.context).buildIntermediateSheet(
         title: 'Awesome, first one in the books!',
         firstSubTitle:
@@ -41,7 +42,8 @@ class AccountCreationBloc
         buttonFunc: () {
           Navigator.of(event.context).pop(false);
           print('ok');
-          preRegistration(event.context, event.colorIndex);
+          this.add(AccountContinueEvent(
+              context: event.context, colorIndex: event.colorIndex));
         },
         colorIndex: event.colorIndex,
         height: MediaQuery.of(event.context).size.height * 0.45,
@@ -50,43 +52,11 @@ class AccountCreationBloc
       yield AccountNoteCreatedState(note: event.note);
     } else if (event is AccountContinueEvent) {
       yield AccountContinueState();
-      await Future.delayed(Duration(seconds: 1));
-      ModalBottomSheets(event.context).buildIntermediateSheet(
-        title: 'Awesome, first one in the books!',
-        firstSubTitle:
-            'Going forward, I\'ll also have othe questions to help you reflect.',
-        isSubTitleBold: true,
-        buttonText: 'Amazing!',
-        buttonFunc: () {
-          BlocProvider.of<AccountCreationBloc>(event.context)
-            ..add(AccountContinueEvent(
-                context: event.context, colorIndex: event.colorIndex));
-          Navigator.of(event.context).pop(false);
-          print('ok');
-        },
-        colorIndex: event.colorIndex,
-        height: MediaQuery.of(event.context).size.height * 0.45,
-      );
-    } else if (event is AccountContinueEvent) {
-      await Future.delayed(Duration(seconds: 1));
-      ModalBottomSheets(event.context).buildIntermediateSheet(
-        title: '1',
-        firstSubTitle:
-            'Going forward, I\'ll also have othe questions to help you reflect.',
-        isSubTitleBold: true,
-        buttonText: 'Amazing!',
-        buttonFunc: () {
-          BlocProvider.of<AccountCreationBloc>(event.context)
-            ..add(AccountContinueEvent(
-                context: event.context, colorIndex: event.colorIndex));
-          Navigator.of(event.context).pop(false);
-          print('ok');
-        },
-        colorIndex: event.colorIndex,
-        height: MediaQuery.of(event.context).size.height * 0.45,
-      );
+      // await Future.delayed(Duration(seconds: 1));
+      preRegistration(event.context, event.colorIndex);
     } else if (event is AccountRegistrationEvent) {
       yield AccountCreationSuccess();
+      registration(event.context, event.colorIndex);
     }
   }
 
@@ -101,7 +71,8 @@ class AccountCreationBloc
       buttonText: 'Sound Awesome!',
       buttonFunc: () {
         Navigator.of(context).pop(false);
-        registration(context, colorIndex);
+        this.add(
+            AccountRegistrationEvent(context: context, colorIndex: colorIndex));
       },
       colorIndex: colorIndex,
       height: MediaQuery.of(context).size.height * 0.55,
@@ -109,6 +80,11 @@ class AccountCreationBloc
   }
 
   void registration(BuildContext context, int colorIndex) {
-    RegistrationBottomSheets(context).buildRegistrationSheet();
+    // this.add(
+    //     AccountRegistrationEvent(context: context, colorIndex: colorIndex));
+    RegistrationBottomSheets(context).buildRegistrationSheet(
+        title: 'Let\'s get your account finished up:',
+        height: MediaQuery.of(context).size.height * 0.8,
+        colorIndex: colorIndex);
   }
 }

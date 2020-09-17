@@ -143,8 +143,8 @@ class _RegistrationNotePageState extends State<RegistrationNotePage>
                       return Container(
                         alignment: Alignment.centerRight,
                         padding: EdgeInsets.only(
-                            left: _width * 0.15,
-                            right: _width * 0.15,
+                            left: _width * 0.2,
+                            right: _width * 0.2,
                             top: 60,
                             bottom: _height * 0.2),
                         child: Container(

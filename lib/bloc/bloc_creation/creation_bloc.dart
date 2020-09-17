@@ -58,12 +58,15 @@ class CreationBloc extends Bloc<CreationEvent, CreationState> {
         } else if (currentUser == null) {
           note.date = DateTime.now();
           yield CreationSuccess(note: note);
+
           // BlocProvider.of<AccountCreationBloc>(event.context)
           //     .add(AccountNoteCreatedEvent(context: event.context, note: note));
         }
       } on PlatformException catch (e) {
         print(e);
       }
+    } else if (event is CreationSuccesEvent) {
+      yield CreationMoveToNote(note: note);
     }
   }
 }

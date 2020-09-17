@@ -18,3 +18,13 @@ class CreationSuccess extends CreationState {
   @override
   List<Object> get props => [this.note];
 }
+
+class CreationMoveToNote extends CreationState {
+  final ElementNote note;
+
+  CreationMoveToNote({this.note});
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [this.note];
+}

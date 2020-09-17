@@ -42,6 +42,13 @@ class _NotePageState extends State<NotePage> {
     return buildLoaded(widget.notes, 1);
   }
 
+  void adding() {
+    Navigator.of(context).push(FadeRoute(
+        page: MakeNoteActivity(
+      colorIndex: widget.initialIndex,
+    )));
+  }
+
   Widget buildLoaded(List<ElementNote> list, int colorIndex) {
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
@@ -86,7 +93,8 @@ class _NotePageState extends State<NotePage> {
             alignment: Alignment.bottomRight,
             child: Container(
               width: _width * 0.2,
-              color: Colors.black12,
+              color:
+                  listColor[widget.initialIndex].colors.last.withOpacity(0.05),
             ),
           ),
           Padding(
@@ -135,7 +143,7 @@ class _NotePageState extends State<NotePage> {
                           Icons.add,
                           size: 30,
                         ),
-                        onPressed: () {})
+                        onPressed: adding)
                   ],
                 ),
                 Expanded(
@@ -164,15 +172,10 @@ class _NotePageState extends State<NotePage> {
                                               top: 100 - scale * 35,
                                               bottom: 75 - scale * 15),
                                           child: AddCell(
-                                              gradient:
-                                                  listColor[colorIndex ?? 0],
-                                              onTap: () {
-                                                Navigator.of(context)
-                                                    .push(FadeRoute(
-                                                        page: MakeNoteActivity(
-                                                  colorIndex: colorIndex,
-                                                )));
-                                              }));
+                                            gradient:
+                                                listColor[colorIndex ?? 0],
+                                            onTap: adding,
+                                          ));
                                     }
                                     ElementNote currentElement =
                                         list[index - 1];
