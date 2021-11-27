@@ -22,7 +22,7 @@ class RemDataRepImpl extends RemDataRep {
           query.documents.map((doc) => ElementNote.fromFirestore(doc)).toList();
       return elements;
     }
-    return new List<ElementNote>();
+    return List<ElementNote>();
   }
 
   Future<void> makeNote(

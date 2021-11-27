@@ -8,12 +8,6 @@ class AuthBlocObserver extends BlocObserver {
   }
 
   @override
-  void onError(Bloc bloc, Object error, StackTrace stacktrace) {
-    print(error);
-    super.onError(bloc, error, stacktrace);
-  }
-
-  @override
   void onTransition(Bloc bloc, Transition transition) {
     print(transition);
     super.onTransition(bloc, transition);

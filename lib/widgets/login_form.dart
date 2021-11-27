@@ -125,7 +125,6 @@ class _LoginFormState extends State<LoginForm> {
                                     hintStyle: TextStyle(
                                         fontSize: 20, color: Colors.white54)),
                                 keyboardType: TextInputType.emailAddress,
-                                autovalidate: true,
                                 style: TextStyle(color: Colors.white),
                                 autocorrect: false,
                                 validator: (_) {
@@ -157,7 +156,6 @@ class _LoginFormState extends State<LoginForm> {
                                 ),
                                 style: TextStyle(color: Colors.white),
                                 obscureText: true,
-                                autovalidate: true,
                                 autocorrect: false,
                                 validator: (_) {
                                   return !state.isPasswordValid
