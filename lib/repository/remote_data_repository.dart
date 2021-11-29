@@ -25,21 +25,25 @@ class RemDataRepImpl extends RemDataRep {
     return List<ElementNote>();
   }
 
-  Future<void> makeNote(
-      {DateTime date,
-      String title,
-      String happened,
-      int percentFun,
-      int iconPreferences,
-      int emoji,
-      String randomQuestion,
-      String answer}) async {
+  Future<void> makeNote({
+    DateTime date,
+    String title,
+    String happened,
+    int percentFun,
+    int iconPreferences,
+    int emoji,
+    String randomQuestion,
+    String answer,
+    String collectionName = 'Note',
+  }) async {
     try {
       FirebaseUser user = await authentication.currentUser();
       if (user != null) {
         //QuerySnapshot query =
         //    await Firestore.instance.collection(user.uid).getDocuments();
-        await Firestore.instance.collection(user.uid).document(title).setData({
+        final currentDate = new DateFormat.yMMMd().format(new DateTime.now());
+
+        await Firestore.instance.collection(user.uid).document(collectionName).collection(currentDate).document(title).setData({
           'title': title,
           'date': new DateFormat.yMMMd().format(new DateTime.now()),
           'happened': happened,

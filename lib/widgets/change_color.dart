@@ -27,7 +27,9 @@ class ChangeColor extends StatelessWidget {
           curve: Curves.easeOut,
           top: index > offset.round()
               ? (_height * 0.2)
-              : index == offset.round() ? (_height * 0.25) : (_height * 0.3),
+              : index == offset.round()
+                  ? (_height * 0.25)
+                  : (_height * 0.3),
           child: GestureDetector(
             onTap: onTap,
             child: Center(
